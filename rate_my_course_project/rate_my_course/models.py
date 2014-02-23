@@ -17,12 +17,6 @@ class UserProfile(models.Model):
 
     is_email_verified = models.BooleanField(default=False)
 
-
-    class Meta:
-        permissions = (
-            ("can_add_course", "Can add courses"),
-        )
-
     def __unicode__(self):
         return self.user.username
 
@@ -60,6 +54,7 @@ class Course(models.Model):
 
 class Rating(models.Model):
     course = models.ForeignKey(Course)
+    user = models.ForeignKey(UserProfile)
     comment = models.CharField(max_length=1000, null=True, blank=True)
     date = models.DateTimeField()
 
