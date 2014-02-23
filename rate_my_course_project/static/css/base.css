@@ -1,0 +1,59 @@
+body {
+    background-color: #eee;
+}
+
+ul {
+    list-style: none;
+}
+
+h1 {
+    color: #285e8e;
+    font-size: 3.5em;
+
+}
+
+li {
+    display: inline-block;
+    margin-right: 14px;
+}
+
+.header {
+    display: inline-block;
+}
+
+a {
+    color: #285e8e;
+    text-decoration: none;
+}
+
+.selected {
+    color: #285e8e;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #285e8e;
+}
+
+hr {
+    border-top: 3px solid #285e8e;;
+    margin-top: 5px;
+
+}
+
+.form-inline{
+    max-width: 838px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#search {
+    clear: both;
+    padding: 10px;
+    background-color: #D4D4D4;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
