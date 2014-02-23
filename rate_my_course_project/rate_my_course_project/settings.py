@@ -1,4 +1,4 @@
-# Django settings for tango_with_django_project project.
+# Django settings for rate_my_course_project project.
 import os
 
 DEBUG = True
@@ -104,10 +104,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'tango_with_django_project.urls'
+ROOT_URLCONF = 'rate_my_course_project.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'tango_with_django_project.wsgi.application'
+WSGI_APPLICATION = 'rate_my_course_project.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
