@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-        <div> {{ top5 }} </div>
-        <div> {{ worst5 }} </div>
+        <div id = "toprated">
+            Top 5 Rated Courses
+            {% for course in top5 %}
+                <div class="course">
+                    {{ course.course_code }}: {{ course.course_name }} <br />
+                    {{ course.lecturer }} <br />
+                    {{ course.uni }}
+                    Average Overall Rating: {{ course.average_overall }}
+                </div>
+            {% endfor %}
+            <hr />
+            Worst 5 Rated Courses
+            {% for course in worst5 %}
+                <div class="course">
+                    {{ course.course_code }}: {{ course.course_name }} <br />
+                    {{ course.lecturer }} <br />
+                    {{ course.uni }}
+                    Average Overall Rating: {{ course.average_overall }}
+                </div>
+            {% endfor %}
+            <hr />
+
+        </div>
         <div> {{ latest_ratings }} </div>
 {% endblock %}
