@@ -61,6 +61,7 @@ def add_uni(name, email, country=None, city=None, tel=None) :
 
 def add_user(username, email, password, can_add_course=False):
     u = User.objects.get_or_create(username=username, email=email, password=password)[0]
+    u.set_password(u.password)
     u.save()
     if can_add_course:
         g = Group.objects.get_or_create(name="CourseAdders")[0]
