@@ -18,7 +18,7 @@ def populate():
     u5 = add_user("donduck", "dduck@student.gla.ac.uk", "pass")
     u6 = add_user("charizard", "charizard@student.gla.ac.uk", "pass")
 
-    c1 = add_course(code="CS1P", name="Introduction to Programming", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
+    c1 = add_course(code="CS1P", name="Introduction to Programming", avg_overall=75, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
                     avg_teaching=50, numratings=2, year=1, lecturer=l1, uni=gu)
 
     c2 = add_course(code="CS1Q", name="Introduction to Non Programming", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
@@ -30,12 +30,12 @@ def populate():
     c4 = add_course(code="CS3Y", name="OS3", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
                     avg_teaching=50, numratings=1, year=3, lecturer=l1, uni=gu)
 
-    c5 = add_course(code="CS3Z", name="NS3", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
+    c5 = add_course(code="CS3Z", name="NS3", avg_overall=0, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
                     avg_teaching=50, numratings=1, year=3, lecturer=l2, uni=gu)
 
     c6 = add_course(code="BIO4", name="Biology 4", numratings=0, year=4, lecturer=l3, uni=gcu)
 
-    r1 = add_rating(c1, u1, datetime.now(), 0, 0 ,0, 0, 0, "BAD COURSE - bloody terrible")
+    r1 = add_rating(c1, u1, datetime.now(), 50, 0 ,0, 0, 0, "BAD COURSE - bloody terrible")
     r2 = add_rating(c1, u3, datetime.now(), 100, 100 ,100, 100, 100, "This is possibly the greatest course in the history of mankind")
 
     r3 = add_rating(c2, u1, datetime.now(), 50, 50 ,50, 50, 50)
@@ -50,9 +50,9 @@ def populate():
     r10 = add_rating(c4, u5, datetime.now(), 50, 50 ,50, 50, 50)
     r11 = add_rating(c4, u4, datetime.now(), 50, 50 ,50, 50, 50)
 
-    r12 = add_rating(c5, u4, datetime.now(), 50, 50 ,50, 50, 50)
-    r13 = add_rating(c5, u6, datetime.now(), 50, 50 ,50, 50, 50)
-    r14 = add_rating(c5, u1, datetime.now(), 50, 50 ,50, 50, 50)
+    r12 = add_rating(c5, u4, datetime.now(), 0, 50 ,50, 50, 50)
+    r13 = add_rating(c5, u6, datetime.now(), 0, 50 ,50, 50, 50)
+    r14 = add_rating(c5, u1, datetime.now(), 0, 50 ,50, 50, 50)
 
 
 def add_uni(name, email, country=None, city=None, tel=None) :
