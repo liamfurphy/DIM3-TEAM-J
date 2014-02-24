@@ -66,6 +66,6 @@ class Rating(models.Model):
 
 
     def __unicode__(self):
-        return "{0}, rating {1}".format(self.course.course_id, self.id)
+        return "{0}, rating {1}".format(self.course.course_code, self.id)
 
 
