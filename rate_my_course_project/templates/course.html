@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-<title>{{c.course_name}} Summary</title>
+{% block title %}{{c.course_name}} Summary{% endblock %}
 <!--<link rel="stylesheet" type="text/css" href="{% static '' %}" media="screen"/> -->
 {% endblock %}
 {% block content %}
