@@ -6,53 +6,68 @@
 <head>
     <title>{% block title %}RateMyCourse{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.css' %}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" media="screen"/>
     <script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
 
-	{% block head %} {% endblock %}
+    {% block head %} {% endblock %}
 
 
 </head>
 
 <body>
 
-<div class="container col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-    <h1 class="header">RateMyCourse</h1>
-
-    <ul class="header">
-        <li class="selected"><a href="/">Index</a></li>
-        <li><a href="/browse/">Browse Courses</a></li>
-        <li><a href="/top/">Top Rated</a></li>
-        <li><a href="/worst/">Worst Rated</a></li>
-        {% if user_can_add_course %}
-        <li><a href="/addcourse/">Add a Course</a></li>
-        {% endif %}
-    </ul>
-    <div id="signin-buttons" class="header">
-        <a href="#" class="btn btn-primary btn-sm">Login/Register</a>
-
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" id="head" href="#">RateMyCourse</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Index</a></li>
+                <li><a href="/browse/">Browse Courses</a></li>
+                <li><a href="/top/">Top Rated</a></li>
+                <li><a href="/worst/">Worst Rated</a></li>
+                {% if user_can_add_course %}
+                <li><a href="/addcourse/">Add a Course</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login/">Sign Up</a></li>
+                <li><a href="/login/">Sign In</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
     </div>
+</div>
 
+<div id="search" class="container col-xs-10 col-xs-offset-1 col-lg-8 col-lg-offset-2">
+    <form id="searchform" class="form-inline" role="form" action="/results">
+
+        <div class="form-group col-xs-12">
+            <label class="sr-only" for="searchBox">Enter search parameters here</label>
+
+            <div class="col-xs-12 col-md-10">
+                <input type="text" class="form-control input-lg" name="s" id="searchBox" placeholder="Enter search parameters here">
+            </div>
+        <button class="btn btn-lg btn-primary col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-0" type="submit">Find Courses
+        </button>
+        </div>
+
+    </form>
 
 </div>
-<div class="container col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1">
-    <hr>
+
+<div id="content"
+     class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1z">
+    {% block content %}{% endblock %}
 </div>
-<div id="search" class="container col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
-<form id="searchform" class="form-inline" role="form" action="/results">
-    <div class="form-group col-xs-12 col-md-10">
-        <label class="sr-only" for="searchBox">Enter search parameters here</label>
-        <input type="text" class="form-control col-xs-12 col-md-10" name="s" id="searchBox" placeholder="Enter search parameters here">
-    </div>
-     <button class="btn btn-primary" type="submit">Find Courses</button>
-
-</form>
-
-    </div>
-
-	<div id="content" class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1z">{% block content %}{% endblock %} </div>
 </body>
 </html>

@@ -1,10 +1,13 @@
 body {
-    background-color: #eee;
+    background-color: #EEEEEE;
 }
 
 #content {
-    background-color: #ffffff;
-    margin-top:40px;
+    margin-top: 40px;
+}
+
+#head {
+    font-size: 2em;
 }
 
 ul {
@@ -44,16 +47,14 @@ a:hover {
 hr {
     border-top: 3px solid #285e8e;;
     margin-top: 5px;
-
 }
 
-.form-inline{
-    max-width: 838px;
-    margin-left: auto;
-    margin-right: auto;
+.form-control{
+    width: 100% !important;
 }
 
 #search {
+    margin-top: 15px;
     clear: both;
     padding: 10px;
     background-color: #D4D4D4;
@@ -62,7 +63,68 @@ hr {
     border-radius: 10px;
 }
 
+@media (max-width:768px){
+    #search{
+        margin-top:10px;
+        padding: 5px;
+    }
+}
+.navbar-default {
+	background-color: #428bca;
+	border-color: #5294cf;
+}
+.navbar-default .navbar-brand {
+	color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+	color: #c2daef;
+}
+.navbar-default .navbar-text {
+	color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+	color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color: #c2daef;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+	color: #c2daef;
+	background-color: #5294cf;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+	color: #c2daef;
+	background-color: #5294cf;
+}
+.navbar-default .navbar-toggle {
+	border-color: #5294cf;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+	background-color: #5294cf;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+	border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+	color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+	color: #c2daef;
+}
 
-#searchBox {
-    width: 100% !important;
+@media (max-width: 893px) {
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #ecf0f1;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+		color: #c2daef;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+		color: #c2daef;
+		background-color: #5294cf;
+	}
 }
