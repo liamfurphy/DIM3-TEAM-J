@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id = "coursesummary">
+    {{c.course_code}} <br />
+    {{c.course_name}} <br />
+    {{c.description}} <br />
+    {{c.year_of_degree}} <br />
+    {{c.number_of_ratings}} <br />
+    {{c.average_overall}} <br />
+    {{c.average_difficulty}} <br />
+    {{c.average_teaching}} <br />
+    {{c.average_materials}} <br />
+    {{c.average_satisfaction}} <br />
+    {{c.lecturer.first_name}} {{c.lecturer.last_name}} <br />
+    {{c.uni.name}} <br />
+</div>
+{% endblock %}
