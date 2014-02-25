@@ -1,17 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>{{c.course_name}} Summary</title>
+<!--<link rel="stylesheet" type="text/css" href="{% static '' %}" media="screen"/> -->
+{% endblock %}
 {% block content %}
-<div id = "coursesummary">
-    {{c.course_code}} <br />
-    {{c.course_name}} <br />
-    {{c.description}} <br />
-    {{c.year_of_degree}} <br />
-    {{c.number_of_ratings}} <br />
-    {{c.average_overall}} <br />
-    {{c.average_difficulty}} <br />
-    {{c.average_teaching}} <br />
-    {{c.average_materials}} <br />
-    {{c.average_satisfaction}} <br />
-    {{c.lecturer.first_name}} {{c.lecturer.last_name}} <br />
-    {{c.uni.name}} <br />
+<div class=" container col-xs-12 col-md-4 col-offset-1">
+    <div class="panel panel-primary">
+        <div class="panel-heading">{{c.course_name}} Summary</div>
+        <div class="coursesummary col-xs-12 col-lg-10" >
+            Course code: {{c.course_code}} <br />
+            Course name: {{c.course_name}} <br />
+            Course descriotion: Course name: {{c.description}} <br />
+            Course year: {{c.year_of_degree}} <br />
+            Course # of ratings: {{c.number_of_ratings}} <br />
+            Course avg overall: {{c.average_overall}} <br />
+            Course avg difficulty: {{c.average_difficulty}} <br />
+            Course avg teaching: {{c.average_teaching}} <br />
+            Course avg materials: {{c.average_materials}} <br />
+            Course avg satisfaction: {{c.average_satisfaction}} <br />
+            Course lecturer: {{c.lecturer.first_name}} {{c.lecturer.last_name}} <br />
+            University: {{c.uni.name}} <br />
+        </div>
+    </div>
 </div>
 {% endblock %}
