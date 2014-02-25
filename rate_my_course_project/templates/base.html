@@ -42,23 +42,12 @@
     <hr>
 </div>
 <div id="search" class="container col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
-<form id="searchform" class="form-inline" role="form">
-    <div class="form-group">
-        <label class="sr-only" for="courseCode">Course Code</label>
-        <input type="text" class="form-control" id="courseCode" placeholder="Course Code">
+<form id="searchform" class="form-inline" role="form" action="/results">
+    <div class="form-group col-xs-12 col-md-10">
+        <label class="sr-only" for="searchBox">Enter search parameters here</label>
+        <input type="text" class="form-control col-xs-12 col-md-10" name="s" id="searchBox" placeholder="Enter search parameters here">
     </div>
-    <div class="form-group">
-        <label class="sr-only" for="courseName">Course Name</label>
-        <input type="text" class="form-control" id="courseName" placeholder="Course Name">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="lecturer">Lecturer</label>
-        <input type="text" class="form-control" id="lecturer" placeholder="Lecturer">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="university">University</label>
-        <input type="text" class="form-control" id="university" placeholder="University">
-    </div>        <button class="btn btn-primary" type="submit">Find Courses</button>
+     <button class="btn btn-primary" type="submit">Find Courses</button>
 
 </form>
 
