@@ -3,6 +3,7 @@ body {
 }
 
 #content {
+    background-color: #ffffff;
     margin-top:40px;
 }
 
@@ -61,3 +62,7 @@ hr {
     border-radius: 10px;
 }
 
+
+#searchBox {
+    width: 100% !important;
+}

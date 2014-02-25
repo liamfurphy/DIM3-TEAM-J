@@ -5,68 +5,69 @@
 {% endblock %}
 {% block content %}
 <div class="container col-xs-12">
-    <div class="contain col-xs-12"></div>
-    <div class=" container col-xs-12 col-md-4 col-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Top Rated Courses</div>
-            <ul class="list-group">
-                {% for course in top5 %}
-                <li class="list-group-item course">
-                    <div class="details col-xs-12 col-lg-10">
-                        {{ course.course_code }}:
-                        {{ course.course_name }} <br/>
-                        {{ course.lecturer }} <br/>
-                        {{ course.uni }}
-                    </div>
-                    <div class="rating col-lg-2">{{ course.average_overall }}</div>
-                </li>
-                {% endfor %}
+    <div class="contain col-xs-12">
+        <div class=" container col-xs-12 col-md-4 col-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Top Rated Courses</div>
+                <ul class="list-group">
+                    {% for course in top5 %}
+                    <li class="list-group-item course">
+                        <div class="details col-xs-12 col-lg-10">
+                            {{ course.course_code }}:
+                            {{ course.course_name }} <br/>
+                            {{ course.lecturer }} <br/>
+                            {{ course.uni }}
+                        </div>
+                        <div class="rating col-lg-2">{{ course.average_overall }}</div>
+                    </li>
+                    {% endfor %}
 
-            </ul>
+                </ul>
 
 
+            </div>
         </div>
-    </div>
-    <div class=" container col-xs-12 col-md-4 col-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Worst Rated Courses</div>
-            <ul class="list-group">
-                {% for course in worst5 %}
-                <li class="list-group-item course">
-                    <div class="details col-xs-12 col-lg-10">
-                        {{ course.course_code }}:
-                        {{ course.course_name }} <br/>
-                        {{ course.lecturer }} <br/>
-                        {{ course.uni }}
-                    </div>
-                    <div class="rating col-lg-2">{{ course.average_overall }}</div>
-                </li>
-                {% endfor %}
+        <div class=" container col-xs-12 col-md-4 col-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Worst Rated Courses</div>
+                <ul class="list-group">
+                    {% for course in worst5 %}
+                    <li class="list-group-item course">
+                        <div class="details col-xs-12 col-lg-10">
+                            {{ course.course_code }}:
+                            {{ course.course_name }} <br/>
+                            {{ course.lecturer }} <br/>
+                            {{ course.uni }}
+                        </div>
+                        <div class="rating col-lg-2">{{ course.average_overall }}</div>
+                    </li>
+                    {% endfor %}
 
-            </ul>
+                </ul>
 
 
+            </div>
         </div>
-    </div>
 
-    <div class=" container col-xs-12 col-md-4 col-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Latest Ratings</div>
-            <ul class="list-group">
-                {% for rating in latest_ratings %}
-                <li class="list-group-item course">
-                    <div class="details col-xs-12 col-lg-10">
-                        {{ rating.user}} <br />
-                        {{ rating.course.course_code }} {{rating.course.course_name }} <br />
-                        {{ rating.date }} <br />
-                    </div>
-                    <div class="rating col-lg-2">{{ rating.overall_rating }}</div>
-                </li>
-                {% endfor %}
+        <div class=" container col-xs-12 col-md-4 col-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Latest Ratings</div>
+                <ul class="list-group">
+                    {% for rating in latest_ratings %}
+                    <li class="list-group-item course">
+                        <div class="details col-xs-12 col-lg-10">
+                            {{ rating.user}} <br/>
+                            {{ rating.course.course_code }} {{rating.course.course_name }} <br/>
+                            {{ rating.date }} <br/>
+                        </div>
+                        <div class="rating col-lg-2">{{ rating.overall_rating }}</div>
+                    </li>
+                    {% endfor %}
 
-            </ul>
+                </ul>
 
 
+            </div>
         </div>
     </div>
 
