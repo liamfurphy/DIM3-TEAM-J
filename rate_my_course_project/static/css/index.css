@@ -4,11 +4,8 @@
     line-height: 90px;
 }
 
-.course{
-    min-height: 110px;
-}
 .indexpanel {
-    max-height: 600px;
+    max-height: 560px;
     overflow-y: auto;
 }
 
@@ -26,4 +23,11 @@
 }
 .unilink {
     font-size: 1.1em;
+}
+
+.comment{
+    background-color: #eeeeee;
+    margin-right: 0;
+    display: none;
+    width: 100%;
 }

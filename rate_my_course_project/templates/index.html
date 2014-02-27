@@ -2,6 +2,7 @@
 {% load static %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" media="screen"/>
+        <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
 {% block content %}
 <div class="container col-xs-12">
@@ -50,15 +51,34 @@
     <div class=" container col-xs-12 col-md-4 col-offset-1">
         <div class="panel panel-primary">
             <div class="panel-heading"><h1 class="panel-title">Latest Ratings</h1></div>
-            <ul class="list-group indexpanl">
+            <ul class="list-group indexpanel">
                 {% for rating in latest_ratings %}
-                <li class="list-group-item course">
+                <li class="list-group-item course clearfix">
                     <div class="details col-xs-12 col-lg-10">
-                        {{ rating.user}} <br/>
-                        {{ rating.course.course_code }} {{rating.course.course_name }} <br/>
+                        {% if rating.user.user.first_name %} {{rating.user.user.first_name}}
+                        {{rating.user.user.last_name}}<br/>
+                        {% else %}{{ rating.user.user.username}} <br/>
+                        {% endif %}
+                        <a href="/summary/course/{{rating.course.id}}/" class="courselink">
+                            {{ rating.course.course_code}} <br/>
+                            {{ rating.course.course_name }}</a><br/>
+                        <a href="/summary/uni/{{rating.course.uni.id}}/" class="unilink">
+                            {{ rating.course.uni}}</a><br/>
                         {{ rating.date }} <br/>
+
+                        <button id="rating{{rating.id}}" class="ratingbreakdown btn btn-primary btn-sm">View More</button>
                     </div>
                     <div class="rating col-lg-2">{{ rating.overall_rating }}</div>
+                </li>
+                <li class="list-group-item course clearfix comment" id="ratingpanel{{rating.id}}">
+                    <div class="panel-body">
+                        {% if rating.comment %} "{{rating.comment}}" {% else %} No Comment.{% endif %}
+                        <br />Overall Rating: {{rating.overall_rating}}
+                        <br />Difficulty Rating: {{rating.difficulty_rating}}
+                        <br />Teaching Rating: {{rating.teaching_rating}}
+                        <br />Materials Rating: {{rating.materials_rating}}
+                        <br />Satisfaction Rating: {{rating.satisfaction_rating}}
+                    </div>
                 </li>
                 {% endfor %}
 
