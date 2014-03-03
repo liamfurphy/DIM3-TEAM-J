@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" media="screen"/>
         <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
+ {% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
 {% block content %}
 <div class="container col-xs-12">
     <div class=" container col-xs-12 col-md-4">

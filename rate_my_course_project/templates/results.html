@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}" media="screen"/>
+        <script type="text/javascript" src="{% static 'js/results.js' %}"></script>
+{% endblock %}
+ {% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
+{% block content %}
+{% endblock %}

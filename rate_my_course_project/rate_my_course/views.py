@@ -13,6 +13,10 @@ def index(request):
 
     return render_to_response('index.html', locals(), context)
 
+def results(request):
+    context = RequestContext(request)
+
+    return render_to_response('results.html', locals(), context)
 
 def course(request, course_id):
     # Obtain the context from the HTTP request.
