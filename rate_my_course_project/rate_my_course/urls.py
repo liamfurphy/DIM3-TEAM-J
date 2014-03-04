@@ -5,6 +5,8 @@ from rate_my_course import views
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
                        url(r'^results/$', views.results, name='results'),
+                       url(r'^login/$', views.user_login, name='login'),
+                       url(r'^logout/$', views.user_logout, name='user_logout'),
                        url(r'^summary/course/(?P<course_id>\w+)/$', views.course, name='course'),
                        url(r'^summary/uni/(?P<uni_id>\w+)/$', views.uni, name='uni'),
                        )

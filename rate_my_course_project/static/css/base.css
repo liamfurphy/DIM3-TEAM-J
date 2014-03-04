@@ -2,6 +2,27 @@ body {
     background-color: #EEEEEE;
 }
 
+.rating{
+    font-size: 3em;
+    color: #428bca;
+    line-height: 90px;
+}
+
+.indexpanel {
+    overflow-y: auto;
+}
+.panel-title{
+    text-align: center;
+    font-size: 1.7em;
+}
+
+.courselink {
+    font-size: 1.2em;
+}
+.unilink {
+    font-size: 1.1em;
+}
+
 #content {
     margin-top: 40px;
 }

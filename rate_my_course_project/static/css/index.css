@@ -1,28 +1,9 @@
-.rating{
-    font-size: 3em;
-    color: #428bca;
-    line-height: 90px;
-}
-
-.indexpanel {
-    max-height: 554px;
-    overflow-y: auto;
-}
 
 .details{
     z-index: 5;
 }
 
-.panel-title{
-    text-align: center;
-    font-size: 1.7em;
-}
-
-.courselink {
-    font-size: 1.2em;
-}
-.unilink {
-    font-size: 1.1em;
+.indexpanel{    max-height: 554px;
 }
 
 .comment{
