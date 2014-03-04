@@ -1,29 +1,61 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}" media="screen"/>
-        <script type="text/javascript" src="{% static 'js/results.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/results.css' %}" media="screen"/>
+<script type="text/javascript" src="{% static 'js/results.js' %}"></script>
 {% endblock %}
- {% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
+{% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
 {% block content %}
-        <div class=" container col-xs-12 col-md-10 col-md-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h1 class="panel-title">Search Results</h1></div>
-            <ul class="list-group indexpanel">
-                {% for r in res %}
-                <li class="list-group-item course clearfix">
-                    <div class="details col-xs-12 col-lg-10">
-                        <a href="/summary/course/{{r.id}}/" class="courselink">{{ r.course_code }} <br/>
-                            {{ r.course_name }}</a><br/>
-                        {{ r.lecturer }} <br/>
-                        <a href="/summary/uni/{{r.uni.id}}/" class="unilink">{{ r.uni }}</a>
-                    </div>
-                    <div class="rating col-lg-2 clearfix">{{ r.average_overall }}</div>
-                </li>
-                {% endfor %}
+<div class=" container col-xs-12 col-md-2 filters hidden">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1 class="panel-title">Search Filters</h1></div>
+        <ul class="list-group filters-list">
+            <li class="list-group-item clearfix">
+                <div class="col-xs-12 filter-heading">
+                    Sort By
+                </div>
+                <div class="btn-group col-xs-12">
+                    <button  id="rating-sort" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Select to Sort <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Overall Rating</a></li>
+                        <li><a href="#">Difficulty Rating</a></li>
+                        <li><a href="#">Satisfaction Rating</a></li>
+                        <li><a href="#">Teaching Rating</a></li>
+                        <li><a href="#">Materials Rating</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group col-xs-12">
+                    <button id="asc" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                            value="Ascending">
+                        Ascending<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Ascending</a></li>
+                        <li><a href="#">Descending</a></li>
+                    </ul>
+                </div>
+            </li>
 
-            </ul>
+
+        </ul>
+
+
+    </div>
+</div>
+<div class=" container col-xs-12 col-md-12 results-container">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1 class="panel-title">Search Results</h1></div>
+        <div class="panel-body loading">
 
         </div>
+        <ul class="list-group indexpanel results hidden">
+
+
+        </ul>
+
+
     </div>
+</div>
 {% endblock %}

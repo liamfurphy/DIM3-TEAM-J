@@ -1,4 +1,3 @@
-
 <div id="search" class="container col-xs-10 col-xs-offset-1 col-lg-8 col-lg-offset-2">
     <form id="searchform" class="form-inline" role="form" action="/results/">
 
@@ -6,10 +5,14 @@
             <label class="sr-only" for="searchBox">Enter search parameters here</label>
 
             <div class="col-xs-12 col-md-10">
-                <input type="text" class="form-control input-lg" name="s" id="searchBox" placeholder="Enter course code, course name, lecturer or university">
+                <input {% if request.GET.s %}value = "{{ request.GET.s }}"
+                {% endif %} type="text" class="form-control input-lg" name="s" id="searchBox" placeholder="Enter course
+                code, course name, lecturer or university">
+
             </div>
-        <button class="btn btn-lg btn-primary col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-0" type="submit">Find Courses
-        </button>
+            <button class="btn btn-lg btn-primary col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-0" type="submit">Find
+                Courses
+            </button>
         </div>
 
     </form>

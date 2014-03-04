@@ -5,8 +5,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
+from django.core import serializers
 from models import Course, Rating, University
+import json
 
 
 def index(request):
@@ -68,19 +69,10 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render_to_response('login.html', {}, context)
+
+
 def results(request):
     context = RequestContext(request)
-    errors = []
-    res = None
-    if request.method == 'GET':
-        if 's' in request.GET:
-            s = request.GET['s']
-            res = Course.objects.all().filter(Q(course_code__icontains=s)|Q(course_name__icontains=s)|Q(lecturer__name__icontains=s)|Q(uni__name__icontains=s))
-        else:
-            errors.push("Search parameter was not provided")
-    else:
-        errors.push("Page was not accessed using HTTP GET")
-
     return render_to_response('results.html', locals(), context)
 
 def course(request, course_id):
@@ -103,3 +95,27 @@ def uni(request, uni_id):
         return HttpResponseRedirect('/')
 
     return render_to_response('uni.html', locals(), context)
+
+def api_search_results(request, term):
+    term = term.replace("_", " ")
+    res = Course.objects.all().filter(Q(course_code__icontains=term)|Q(course_name__icontains=term)|Q(lecturer__name__icontains=term)|Q(uni__name__icontains=term))
+    results = []
+    for r in res:
+        o = {
+            "course_id" : r.id,
+            "average_satisfaction": r.average_satisfaction,
+         "average_difficulty": r.average_difficulty,
+         "average_materials": r.average_materials,
+         "course_name": r.course_name,
+         "description": r.description,
+         "lecturer": r.lecturer.name,
+         "average_teaching": r.average_teaching,
+         "number_of_ratings":r.number_of_ratings,
+         "average_overall":r.average_overall,
+         "uni":r.uni.name,
+         "course_code":r.course_code,
+         "year_of_degree":r.year_of_degree,
+         "uni_id": r.uni.id}
+        results.append(o)
+
+    return HttpResponse(json.dumps(results), content_type="application/json")

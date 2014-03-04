@@ -27,26 +27,34 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" id="head" href="#">RateMyCourse</a>
+            <a class="navbar-brand" id="head" href="/">RateMyCourse</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li {% if request.path == '/' %}class="active"{% endif %}><a href="/">Index</a></li>
-                <li {% if request.path == '/browse/' %}class="active"{% endif %}><a href="/browse/">Browse Courses</a></li>
-                <li {% if request.path == '/top/' %}class="active"{% endif %}><a href="/top/">Top Rated</a></li>
-                <li {% if request.path == '/worst/' %}class="active"{% endif %}><a href="/worst/">Worst Rated</a></li>
+                <li
+                {% if request.path == '/' %}class="active"{% endif %}><a href="/">Index</a></li>
+                <li
+                {% if request.path == '/browse/' %}class="active"{% endif %}><a href="/browse/">Browse Courses</a></li>
+                <li
+                {% if request.path == '/top/' %}class="active"{% endif %}><a href="/top/">Top Rated</a></li>
+                <li
+                {% if request.path == '/worst/' %}class="active"{% endif %}><a href="/worst/">Worst Rated</a></li>
                 {% if user_can_add_course %}
-                <li {% if request.path == '/addcourse/' %}class="active"{% endif %}><a href="/addcourse/">Add a Course</a></li>
+                <li
+                {% if request.path == '/addcourse/' %}class="active"{% endif %}><a href="/addcourse/">Add a
+                Course</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                            {% if not user.is_authenticated %}
+                {% if not user.is_authenticated %}
 
-                <li {% if request.path == '/register/' %}class="active"{% endif %}><a href="/register/">Sign Up</a></li>
-                <li {% if request.path == '/login/' %}class="active"{% endif %}><a href="/login/">Sign In</a></li>
+                <li
+                {% if request.path == '/register/' %}class="active"{% endif %}><a href="/register/">Sign Up</a></li>
+                <li
+                {% if request.path == '/login/' %}class="active"{% endif %}><a href="/login/">Sign In</a></li>
                 {% else %}
                 <li><a href="/logout/">Sign Out {{user.username}}</a></li>
-                            {% endif %}
+                {% endif %}
 
             </ul>
         </div>

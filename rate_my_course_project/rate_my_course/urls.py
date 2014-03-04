@@ -9,6 +9,7 @@ urlpatterns = patterns('',
                        url(r'^logout/$', views.user_logout, name='user_logout'),
                        url(r'^summary/course/(?P<course_id>\w+)/$', views.course, name='course'),
                        url(r'^summary/uni/(?P<uni_id>\w+)/$', views.uni, name='uni'),
+                       url(r'^api/results/(?P<term>\w+)/$', views.api_search_results, name='api_results')
                        )
 
 # UNDERNEATH your urlpatterns definition, add the following two lines:
