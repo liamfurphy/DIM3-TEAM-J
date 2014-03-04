@@ -20,8 +20,8 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 class LecturerAdmin(admin.ModelAdmin):
-    list_display = ('title', 'first_name', 'last_name', 'email')
-    search_fields = ['first_name', 'last_name', 'email']
+    list_display = ('title', 'name', 'email')
+    search_fields = ['name', 'email']
 
 class RatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'course', 'user', 'date')

@@ -26,13 +26,12 @@ class UserProfile(models.Model):
 
 class Lecturer(models.Model):
     title = models.CharField(max_length=10)
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
     email = models.EmailField(null=True, blank=True)
     department = models.CharField(max_length=128, null=True, blank=True)
 
     def __unicode__(self):
-        return "{0}. {1} {2}".format(self.title, self.first_name, self.last_name)
+        return "{0}. {1}".format(self.title, self.name)
 
 
 class Course(models.Model):

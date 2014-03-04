@@ -1,6 +1,7 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from models import Course, Rating, Lecturer, University
 
 def index(request):
@@ -15,6 +16,16 @@ def index(request):
 
 def results(request):
     context = RequestContext(request)
+    errors = []
+    res = None
+    if request.method == 'GET':
+        if 's' in request.GET:
+            s = request.GET['s']
+            res = Course.objects.all().filter(Q(course_code__icontains=s)|Q(course_name__icontains=s)|Q(lecturer__name__icontains=s)|Q(uni__name__icontains=s))
+        else:
+            errors.push("Search parameter was not provided")
+    else:
+        errors.push("Page was not accessed using HTTP GET")
 
     return render_to_response('results.html', locals(), context)
 
