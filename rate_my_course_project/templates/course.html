@@ -8,10 +8,10 @@
 <div class=" container col-xs-12 col-md-4 col-offset-1">
     <div class="panel panel-primary">
         <div class="panel-heading">{{c.course_name}} Summary</div>
-        <div class="coursesummary panel-body col-xs-12 col-lg-10">
+        <div class="course-summary panel-body col-xs-12 col-lg-10">
             Course code: {{c.course_code}} <br/>
             Course name: {{c.course_name}} <br/>
-            Course descriotion: Course name: {{c.description}} <br/>
+            Course description: Course name: {{c.description}} <br/>
             Course year: {{c.year_of_degree}} <br/>
             Course # of ratings: {{c.number_of_ratings}} <br/>
             Course avg overall: {{c.average_overall}} <br/>
@@ -21,6 +21,29 @@
             Course avg satisfaction: {{c.average_satisfaction}} <br/>
             Course lecturer: {{c.lecturer.first_name}} {{c.lecturer.last_name}} <br/>
             University: {{c.uni.name}} <br/>
+        </div>
+    </div>
+</div>
+
+<div class=" container col-xs-12 col-md-4 col-offset-1">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Post new rating for {{c.course_name}}</div>
+        <div class="post-rating panel-body col-xs-12 col-lg-10">
+            {% if user.is_authenticated %}
+            <form id="rating_form" method="post" action="/api/rating/{{ c.id }}/">
+            {% csrf_token %}
+            Input scores between 0 and 100<br />
+            {% for field in form.visible_fields %}
+                {{ field.help_text}}
+                {{ field }}<br/>
+                {{ field.errors }}<br/>
+            {% endfor %}
+            <input type="submit" value="submit" />
+        </form>
+            {% else %}
+            <a href="/register/">Register Here</a><br />
+            <a href="/login/">Login</a><br />
+            {% endif %}
         </div>
     </div>
 </div>

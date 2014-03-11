@@ -6,7 +6,9 @@ from django.db.models import Q
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from models import Course, Rating, University
+from models import Course, Rating, University, UserProfile
+from rate_my_course.forms import RatingForm
+from datetime import datetime
 import json
 
 
@@ -78,6 +80,7 @@ def results(request):
 def course(request, course_id):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
+    form = RatingForm(request.GET)
     try:
         c = Course.objects.get(id=int(course_id))
     except:
@@ -102,20 +105,74 @@ def api_search_results(request, term):
     results = []
     for r in res:
         o = {
-            "course_id" : r.id,
+            "course_id": r.id,
             "average_satisfaction": r.average_satisfaction,
-         "average_difficulty": r.average_difficulty,
-         "average_materials": r.average_materials,
-         "course_name": r.course_name,
-         "description": r.description,
-         "lecturer": r.lecturer.name,
-         "average_teaching": r.average_teaching,
-         "number_of_ratings":r.number_of_ratings,
-         "average_overall":r.average_overall,
-         "uni":r.uni.name,
-         "course_code":r.course_code,
-         "year_of_degree":r.year_of_degree,
-         "uni_id": r.uni.id}
+            "average_difficulty": r.average_difficulty,
+            "average_materials": r.average_materials,
+            "course_name": r.course_name,
+            "description": r.description,
+            "lecturer": r.lecturer.name,
+            "average_teaching": r.average_teaching,
+            "number_of_ratings": r.number_of_ratings,
+            "average_overall": r.average_overall,
+            "uni": r.uni.name,
+            "course_code": r.course_code,
+            "year_of_degree": r.year_of_degree,
+            "uni_id": r.uni.id}
         results.append(o)
 
     return HttpResponse(json.dumps(results), content_type="application/json")
+
+def api_add_rating(request, course_id):
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        results = []
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            rating = form.save(commit=False)
+            rating.user = UserProfile.objects.get(id=int(request.user.id))
+            rating.date = datetime.now()
+            #try:
+            c = Course.objects.get(id=int(course_id))
+            rating.course = c
+
+            rating.save()
+
+            c.number_of_ratings += 1
+            num = c.number_of_ratings
+            c.average_difficulty = (c.average_difficulty * (num - 1) + int(form.cleaned_data['difficulty_rating']))/(num)
+            c.average_teaching = (c.average_teaching * (num - 1) + int(form.cleaned_data['teaching_rating']))/(num)
+            c.average_materials = (c.average_materials * (num - 1) + int(form.cleaned_data['materials_rating']))/(num)
+            c.average_overall = (c.average_overall * (num - 1) + int(form.cleaned_data['overall_rating']))/(num)
+            c.average_satisfaction = (c.average_satisfaction * (num - 1) + int(form.cleaned_data['satisfaction_rating']))/(num)
+
+            msg = {"data": {
+                "overall": c.average_overall,
+                "satisfaction": c.average_satisfaction,
+                "difficulty": c.average_difficulty,
+                "teaching": c.average_teaching,
+                "materials": c.average_materials,
+                "ratings": num
+                }
+            }
+            results.append(msg)
+            #except:
+             #   return HttpResponseRedirect('/')
+        else:
+            print form.errors
+            errors = {"errors": form.errors
+                #{ "overall": form.overall_rating.error_messages,
+                # "satisfaction_rating": form.satisfaction_rating.error_messages,
+                # "difficulty": form.difficulty_rating.error_messages,
+                # "teaching": form.teaching_rating.error_messages,
+                # "materials": form.materials_rating.error_messages,
+                # "comment": form.comment.error_messages}
+            }
+            results.append(errors)
+        return HttpResponse(json.dumps(results), content_type="application/json")
+
+    else:
+        return course(request, course_id)

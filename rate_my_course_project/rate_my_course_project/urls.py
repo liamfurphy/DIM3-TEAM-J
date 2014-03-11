@@ -6,7 +6,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'', lambda : include()),
     url(r'', include('rate_my_course.urls')),
-
 )
