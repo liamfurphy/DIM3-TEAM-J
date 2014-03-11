@@ -20,19 +20,19 @@ def populate():
     u6 = add_user("charizard", "charizard@student.gla.ac.uk", "pass")
 
     c1 = add_course(code="CS1P", name="Introduction to Programming", avg_overall=75, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
-                    avg_teaching=50, numratings=2, year=1, lecturer=l1, uni=gu)
+                    avg_teaching=50, numratings=2, year=1, lecturer=l1, uni=gu, hits=40)
 
     c2 = add_course(code="CS1Q", name="Introduction to Non Programming", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
-                    avg_teaching=50, numratings=1, year=1, lecturer=l4, uni=gu)
+                    avg_teaching=50, numratings=1, year=1, lecturer=l4, uni=gu, hits=2)
 
     c3 = add_course(code="CS3X", name="DIM3", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
-                    avg_teaching=50, numratings=1, year=3, lecturer=l1, uni=gu)
+                    avg_teaching=50, numratings=1, year=3, lecturer=l1, uni=gu, hits=12)
 
     c4 = add_course(code="MATH1R", name="Maths 1R", avg_overall=50, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
-                    avg_teaching=50, numratings=1, year=1, lecturer=l2, uni=gu)
+                    avg_teaching=50, numratings=1, year=1, lecturer=l2, uni=gu, hits=33)
 
     c5 = add_course(code="CS3Z", name="NS3", avg_overall=0, avg_difficulty=50, avg_materials=50, avg_satisfaction=50,
-                    avg_teaching=50, numratings=1, year=3, lecturer=l3, uni=gu)
+                    avg_teaching=50, numratings=1, year=3, lecturer=l3, uni=gu, hits=453)
 
     c6 = add_course(code="CS3A", name="Advanced Programming 3", numratings=0, year=3, lecturer=l4, uni=gu)
 
@@ -79,9 +79,9 @@ def add_lecturer(title, name, email=None, dept=None):
     l = Lecturer.objects.get_or_create(title=title, name=name,email=email, department=dept)[0]
     return l
 
-def add_course(code, name, numratings, lecturer, uni, avg_overall=None, avg_difficulty=None, avg_teaching=None, avg_materials=None, avg_satisfaction=None, year=None, desc=None):
+def add_course(code, name, numratings, lecturer, uni, avg_overall=None, avg_difficulty=None, avg_teaching=None, avg_materials=None, avg_satisfaction=None, year=None, desc=None, hits=0):
     c = Course.objects.get_or_create(course_code=code, course_name=name, year_of_degree=year, description=desc, number_of_ratings=numratings, average_overall=avg_overall, average_difficulty=avg_difficulty,
-                                     average_teaching=avg_teaching, average_materials=avg_materials, average_satisfaction=avg_satisfaction, lecturer=lecturer, uni=uni)[0]
+                                     average_teaching=avg_teaching, average_materials=avg_materials, average_satisfaction=avg_satisfaction, lecturer=lecturer, uni=uni, hits=hits)[0]
     return c
 
 def add_rating(course, user, date, overall, difficulty, teaching, materials, satisfaction, comment=None):

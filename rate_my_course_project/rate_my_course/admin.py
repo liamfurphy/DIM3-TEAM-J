@@ -28,6 +28,8 @@ class RatingAdmin(admin.ModelAdmin):
     search_fields = ['course', 'user']
     list_filter = ['date']
 
+class SearchAdmin(admin.ModelAdmin):
+    list_display = ['search', 'hits']
 
 admin.site.register(University, UniversityAdmin)
 admin.site.register(Course, CourseAdmin)

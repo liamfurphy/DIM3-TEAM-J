@@ -1,8 +1,10 @@
+import json
+
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -19,6 +21,8 @@ def index(request):
     top5 = Course.objects.all().filter(average_overall__isnull=False).order_by('-average_overall')[:5]
     worst5 = Course.objects.all().filter(average_overall__isnull=False).order_by('average_overall')[:5]
     latest_ratings = Rating.objects.all().order_by("-date")[:5]
+    popular = Course.objects.all().order_by('-hits')[:5]
+
 
     return render_to_response('index.html', locals(), context)
 
@@ -83,6 +87,7 @@ def course(request, course_id):
     form = RatingForm(request.GET)
     try:
         c = Course.objects.get(id=int(course_id))
+        c.update(hits=F('hits')+1)
     except:
         return HttpResponseRedirect('/')
 

@@ -6,20 +6,20 @@
 {% endblock %}
 {% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
 {% block content %}
-<div class="container col-xs-12">
-    <div class=" container col-xs-12 col-md-4">
+<div class="container col-xs-12 col-lg-10 col-lg-offset-1">
+    <div class=" container col-xs-12 col-sm-6 col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading"><h1 class="panel-title">Top Rated Courses</h1></div>
             <ul class="list-group indexpanel">
                 {% for course in top5 %}
                 <li class="list-group-item course clearfix">
-                    <div class="details col-xs-12 col-lg-10">
-                        <a href="/summary/course/{{course.id}}/" class="courselink">{{ course.course_code }} <br/>
+                    <div class="details col-xs-10 col-sm-9 col-lg-10">
+                        <a href="/summary/course/{{course.id}}/" class="courselink">
                             {{ course.course_name }}</a><br/>
                         {{ course.lecturer }} <br/>
                         <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
                     </div>
-                    <div class="rating col-lg-2 clearfix">{{ course.average_overall }}</div>
+                    <div class="rating col-sm-3 col-lg-2 clearfix">{{ course.average_overall }}</div>
                 </li>
                 {% endfor %}
 
@@ -27,19 +27,40 @@
 
         </div>
     </div>
-    <div class=" container col-xs-12 col-md-4">
+    <div class=" container col-xs-12 col-sm-6 col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading"><h1 class="panel-title">Worst Rated Courses</h1></div>
             <ul class="list-group indexpanel">
                 {% for course in worst5 %}
                 <li class="list-group-item course clearfix">
-                    <div class="details col-xs-12 col-lg-10">
-                        <a href="/summary/course/{{course.id}}/" class="courselink">{{ course.course_code }} <br/>
+                    <div class="details col-xs-12 col-sm-9 col-lg-10">
+                        <a href="/summary/course/{{course.id}}/" class="courselink">
                             {{ course.course_name }}</a><br/>
                         {{ course.lecturer }} <br/>
                         <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
                     </div>
-                    <div class="rating col-lg-2 clearfix">{{ course.average_overall }}</div>
+                    <div class="rating col-sm-3 col-lg-2 clearfix">{{ course.average_overall }}</div>
+                </li>
+                {% endfor %}
+
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="popularpanel container col-xs-12 col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h1 class="panel-title">Most Viewed Courses</h1></div>
+            <ul class="list-group indexpanel">
+                {% for course in popular %}
+                <li class="list-group-item course clearfix">
+                    <div class="details col-xs-12 col-sm-9 col-lg-10">
+                        <a href="/summary/course/{{course.id}}/" class="courselink">
+                            {{ course.course_name }}</a><br/>
+                        {{ course.lecturer }} <br/>
+                        <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
+                    </div>
+                    <div class="rating col-sm-3 col-lg-2 clearfix">{{ course.average_overall }}</div>
                 </li>
                 {% endfor %}
 
@@ -49,7 +70,7 @@
         </div>
     </div>
 
-    <div class=" container col-xs-12 col-md-4 col-offset-1">
+   <!-- <div class=" container col-xs-12 col-md-4 col-offset-1">
         <div class="panel panel-primary">
             <div class="panel-heading"><h1 class="panel-title">Latest Ratings</h1></div>
             <ul class="list-group indexpanel">
@@ -88,7 +109,7 @@
 
 
         </div>
-    </div>
+    </div> -->
 </div>
 
 </div>
