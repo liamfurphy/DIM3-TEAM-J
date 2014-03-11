@@ -2,8 +2,15 @@
 .details{
     z-index: 5;
 }
+@media(min-width: 1200px){
+.indexpanel{    max-height: 480px;
+}
+}
 
-.indexpanel{    max-height: 554px;
+@media(max-width: 992px){
+    .popularpanel{
+        display:None;
+    }
 }
 
 .comment{

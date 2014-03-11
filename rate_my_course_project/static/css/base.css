@@ -12,9 +12,9 @@ body {
 }
 
 .rating{
-    font-size: 3em;
+    font-size: 2.8em;
     color: #428bca;
-    line-height: 90px;
+    line-height: 60px;
 }
 
 .indexpanel {
@@ -23,13 +23,6 @@ body {
 .panel-title{
     text-align: center;
     font-size: 1.7em;
-}
-
-.courselink {
-    font-size: 1.2em;
-}
-.unilink {
-    font-size: 1.1em;
 }
 
 #content {
@@ -74,13 +67,21 @@ a:hover {
     color: #285e8e;
 }
 
+
+@media (max-width: 992px){
+    #searchtxt{
+        display: None;
+    }
+}
+
+@media(min-width: 992px){
+    #searchico{
+        display:None;
+    }
+}
 hr {
     border-top: 3px solid #285e8e;;
     margin-top: 5px;
-}
-
-.form-control{
-    width: 100% !important;
 }
 
 #search {
@@ -93,12 +94,6 @@ hr {
     border-radius: 10px;
 }
 
-@media (max-width:768px){
-    #search{
-        margin-top:10px;
-        padding: 5px;
-    }
-}
 .navbar-default {
 	background-color: #428bca;
 	border-color: #5294cf;

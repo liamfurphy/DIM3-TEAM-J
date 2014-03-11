@@ -33,13 +33,13 @@ class Lecturer(models.Model):
     def __unicode__(self):
         return "{0}. {1}".format(self.title, self.name)
 
-
 class Course(models.Model):
     course_code = models.CharField(max_length=30)
     course_name = models.CharField(max_length=200)
     description = models.CharField(max_length=200, null=True, blank=True)
     year_of_degree = models.IntegerField(null=True, blank=True)
     number_of_ratings = models.IntegerField()
+    hits = models.IntegerField(default=0)
 
     average_overall = models.IntegerField(blank=True, null=True)
     average_difficulty = models.IntegerField(blank=True, null=True)
