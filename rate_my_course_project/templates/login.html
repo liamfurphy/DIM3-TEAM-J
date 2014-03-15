@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<form id="login_form" method="post" action="/login/">
+
+
+<form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/login/">
     {% csrf_token %}
-    Username: <input type="text" name="username" value="" size="50"/>
+    <div class="input-group">
+      <span class="input-group-addon">Username</span><input type="text" class="form-control" name="username" value="" size="50"/></div>
     <br/>
-    Password: <input type="password" name="password" value="" size="50"/>
+    <div class="input-group">
+  <span class="input-group-addon">Password</span> <input class="form-control" type="password" name="password" value="" size="50"/></div>
+
     <br/>
 
-    <input type="submit" value="submit"/>
+    <br/>
+    <button class="btn btn-primary col-xs-12" type="submit">Login</button>
 </form>
 {% endblock %}
 
