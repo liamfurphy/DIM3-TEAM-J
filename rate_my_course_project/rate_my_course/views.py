@@ -10,9 +10,25 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from models import Course, Rating, University, UserProfile
 from rate_my_course.forms import RatingForm
-from datetime import datetime
+import datetime
 import json
 
+
+def api_get_latest(request, since=None):
+    ticker = []
+    if since is not None:
+        latest_ratings = Rating.objects.all().order_by("-date").filter(date__range=(datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S")+datetime.timedelta(0, 1), datetime.datetime.now()))
+        if len(latest_ratings)>5:
+            latest_ratings = latest_ratings[:5]
+    else:
+        latest_ratings = Rating.objects.all().order_by("-date")[:5]
+    for r in latest_ratings:
+        ticker.append({'datestr' : r.date.strftime("%Y_%m_%d_%H_%M_%S"),
+                       'username' :r.user.user.username,
+                       'classname' : r.course.course_name,
+                       'score' : r.overall_rating})
+
+    return HttpResponse(json.dumps(ticker), content_type="application/json")
 
 def index(request):
     # Obtain the context from the HTTP request.
@@ -87,7 +103,8 @@ def course(request, course_id):
     form = RatingForm(request.GET)
     try:
         c = Course.objects.get(id=int(course_id))
-        c.update(hits=F('hits')+1)
+        c.hit()
+        c.save()
     except:
         return HttpResponseRedirect('/')
 
@@ -139,7 +156,7 @@ def api_add_rating(request, course_id):
             # Save the new category to the database.
             rating = form.save(commit=False)
             rating.user = UserProfile.objects.get(id=int(request.user.id))
-            rating.date = datetime.now()
+            rating.date = datetime.datetime.now()
             #try:
             c = Course.objects.get(id=int(course_id))
             rating.course = c

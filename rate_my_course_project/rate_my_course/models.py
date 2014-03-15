@@ -53,6 +53,9 @@ class Course(models.Model):
     def __unicode__(self):
         return self.course_name
 
+    def hit(self):
+        self.hits += 1
+
 
 class Rating(models.Model):
     course = models.ForeignKey(Course)
