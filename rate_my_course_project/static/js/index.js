@@ -23,7 +23,7 @@ $.get("/api/latest/"+since, function (data) {
     since = data[0].datestr;
         updateTicker(data);
          window.setTimeout(loadSince, 1000);
-    }};
+    }});
 }
 function updateTicker(data){
         var x = data[0];
