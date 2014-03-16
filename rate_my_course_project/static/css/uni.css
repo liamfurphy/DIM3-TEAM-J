@@ -11,3 +11,10 @@
     min-height: 304px;
     max-height: 304px;
 }}
+
+h2{
+    margin-top: -10px;
+    margin-bottom: 40px;
+    font-weight: bolder;
+    color: #285e8e;
+}
