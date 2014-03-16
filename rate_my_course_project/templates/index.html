@@ -9,114 +9,22 @@
 <div class="container col-xs-12 col-lg-10 col-lg-offset-1">
 
     <div class="container col-xs-12 ticker">
-<span class=" head label label-default col-xs-1">Latest</span>
+        <span class=" head label label-default col-xs-1">Latest</span>
 
-        <ul id="ticker"  class="col-xs-11"></ul>
+        <ul id="ticker" class="col-xs-11"></ul>
 
-        </div>
-    <div class=" container col-xs-12 col-sm-6 col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h1 class="panel-title">Top Rated Courses</h1></div>
-            <ul class="list-group indexpanel">
-                {% for course in top5 %}
-                <li class="list-group-item course clearfix">
-                    <div class="details col-xs-10 col-sm-9 col-lg-10">
-                        <a href="/summary/course/{{course.id}}/" class="courselink">
-                            {{ course.course_name }}</a><br/>
-                        {{ course.lecturer }} <br/>
-                        <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
-                    </div>
-                    <div class="rating col-sm-3 col-lg-2 clearfix">{{ course.average_overall }}</div>
-                </li>
-                {% endfor %}
-
-            </ul>
-
-        </div>
     </div>
     <div class=" container col-xs-12 col-sm-6 col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h1 class="panel-title">Worst Rated Courses</h1></div>
-            <ul class="list-group indexpanel">
-                {% for course in worst5 %}
-                <li class="list-group-item course clearfix">
-                    <div class="details col-xs-12 col-sm-9 col-lg-10">
-                        <a href="/summary/course/{{course.id}}/" class="courselink">
-                            {{ course.course_name }}</a><br/>
-                        {{ course.lecturer }} <br/>
-                        <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
-                    </div>
-                    <div class="rating col-sm-3 col-lg-2 clearfix">{{ course.average_overall }}</div>
-                </li>
-                {% endfor %}
-
-            </ul>
-
-
-        </div>
+        {% include "summary_panel.html" with courses=top5 title="Top Rated Courses" %}
+    </div>
+    <div class=" container col-xs-12 col-sm-6 col-md-4">
+            {% include "summary_panel.html" with courses=worst5 title="Worst Rated Courses" %}
     </div>
     <div class="popularpanel container col-xs-12 col-md-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h1 class="panel-title">Most Viewed Courses</h1></div>
-            <ul class="list-group indexpanel">
-                {% for course in popular %}
-                <li class="list-group-item course clearfix">
-                    <div class="details col-xs-12 col-sm-9 col-lg-10">
-                        <a href="/summary/course/{{course.id}}/" class="courselink">
-                            {{ course.course_name }}</a><br/>
-                        {{ course.lecturer }} <br/>
-                        <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
-                    </div>
-                    <div class="rating col-sm-3 col-lg-2 clearfix">{{ course.average_overall }}</div>
-                </li>
-                {% endfor %}
-
-            </ul>
-
-
-        </div>
+        {% include "summary_panel.html" with courses=popular title="Most Viewed Courses" %}
     </div>
 
-   <!-- <div class=" container col-xs-12 col-md-4 col-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading"><h1 class="panel-title">Latest Ratings</h1></div>
-            <ul class="list-group indexpanel">
-                {% for rating in latest_ratings %}
-                <li class="list-group-item course clearfix">
-                    <div class="details col-xs-12 col-lg-10">
-                        {% if rating.user.user.first_name %} {{rating.user.user.first_name}}
-                        {{rating.user.user.last_name}}<br/>
-                        {% else %}{{ rating.user.user.username}} <br/>
-                        {% endif %}
-                        <a href="/summary/course/{{rating.course.id}}/" class="courselink">
-                            {{ rating.course.course_code}} <br/>
-                            {{ rating.course.course_name }}</a><br/>
-                        <a href="/summary/uni/{{rating.course.uni.id}}/" class="unilink">
-                            {{ rating.course.uni}}</a><br/>
-                        {{ rating.date }} <br/>
 
-                        <button id="rating{{rating.id}}" class="ratingbreakdown btn btn-primary btn-sm">View More
-                        </button>
-                    </div>
-                    <div class="rating col-lg-2">{{ rating.overall_rating }}</div>
-                </li>
-                <li class="list-group-item course clearfix comment" id="ratingpanel{{rating.id}}">
-                    <div class="panel-body">
-                        {% if rating.comment %} "{{rating.comment}}" {% else %} No Comment.{% endif %}
-                        <br/>Overall Rating: {{rating.overall_rating}}
-                        <br/>Difficulty Rating: {{rating.difficulty_rating}}
-                        <br/>Teaching Rating: {{rating.teaching_rating}}
-                        <br/>Materials Rating: {{rating.materials_rating}}
-                        <br/>Satisfaction Rating: {{rating.satisfaction_rating}}
-                    </div>
-                </li>
-                {% endfor %}
-
-            </ul>
-
-
-        </div>
-    </div> -->
 </div>
 
 </div>
