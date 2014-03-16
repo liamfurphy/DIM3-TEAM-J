@@ -1,0 +1,13 @@
+.panel-body{
+    font-weight: bold;
+}
+.bluetext{
+    font-weight: normal;
+    color: #285e8e;
+}
+
+@media(min-width: 768px){
+.list-group{
+    min-height: 304px;
+    max-height: 304px;
+}}

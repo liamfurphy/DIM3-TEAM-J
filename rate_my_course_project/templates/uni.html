@@ -1,20 +1,79 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block head %}
 {% block title %}{{u.name}} Summary{% endblock %}
-<!--<link rel="stylesheet" type="text/css" href="{% static '' %}" media="screen"/> -->
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/uni.css' %}" media="screen"/>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="{% static 'js/uni.js' %}"></script>
+
 {% endblock %}
 {% block content %}
-<div class=" container col-xs-12 col-md-4 col-offset-1">
-    <div class="panel panel-primary">
-        <div class="panel-heading">{{u.name}} Summary</div>
-        <div class="unisummary panel-body col-xs-12 col-lg-10">
-            University: {{u.name}} <br/>
-            Domain: {{u.email_domain}} <br/>
-            Country: {{u.country}} <br/>
-            City: {{u.city}} <br/>
-            Telephone: {{u.telephone}} <br/>
+{% if courses %}
+<div class=" container col-xs-12 col-sm-6 col-lg-3">
+    {% else %}
+    <div class=" container col-xs-12">
+        {% endif %}
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h1 class="panel-title">Details</h1></div>
+            <ul class="list-group">
+                <li class="list-group-item">University Name <br>
+
+                    <div class="bluetext">{{u.name}}</div>
+                </li>
+                <li class="list-group-item">Email Domain <br>
+
+                    <div class="bluetext">{{u.email_domain}}</div>
+                </li>
+                <li class="list-group-item">Country <br>
+
+                    <div class="bluetext">{% if u.country %}{{u.country}}{% else %} Not specified {% endif %}</div>
+                </li>
+                <li class="list-group-item">City <br>
+
+                    <div class="bluetext">{% if u.city %}{{u.city}}{% else %} Not specified {% endif %}</div>
+                </li>
+                <li class="list-group-item">Telephone <br>
+
+                    <div class="bluetext">{% if u.telephone %}{{u.telephone}}{% else %} Not specified {% endif %}</div>
+                </li>
+            </ul>
         </div>
     </div>
+{% if courses %}
+    <div class=" container col-xs-12 col-sm-6 col-lg-push-6 col-lg-3">
+    {% include "summary_panel.html" with courses=courses title="Courses" %}
 </div>
+<div class="container col-sm-12  col-lg-6  col-lg-pull-3 clearfix" id="statspanel" val="{{u.id}}">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1 class="panel-title">Stats</h1></div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                Average
+                <div class="btn-group">
+                    <button id="rating" type="button" class="btn btn-primary btn-xs dropdown-toggle"
+                            data-toggle="dropdown" val="average_overall">
+                        Overall <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" val="average_overall">Overall</a></li>
+                        <li><a href="#" val="average_difficulty">Difficulty</a></li>
+                        <li><a href="#" val="average_satisfaction">Satisfaction</a></li>
+                        <li><a href="#" val="average_teaching">Teaching</a></li>
+                        <li><a href="#" val="average_materials">Materials</a></li>
+                    </ul>
+                </div>
+                Rating per {{u.name}} course
+            </li>
+            <li class="list-group-item">
+
+                <div id="chart_div"></div>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+
+{% endif %}
 {% endblock %}

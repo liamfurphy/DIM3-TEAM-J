@@ -141,7 +141,6 @@ def results(request):
     context = RequestContext(request)
     return render_to_response('results.html', locals(), context)
 
-
 def top_rated(request):
     context = RequestContext(request)
     return render_to_response('top.html', locals(), context)
@@ -171,6 +170,7 @@ def uni(request, uni_id):
     context = RequestContext(request)
     try:
         u = University.objects.get(id=int(uni_id))
+        courses = Course.objects.all().filter(uni=int(uni_id))
     except:
         return HttpResponseRedirect('/')
 
@@ -195,6 +195,10 @@ def api_get_latest(request, since=None):
 
     return HttpResponse(json.dumps(ticker), content_type="application/json")
 
+
+def api_get_uni_courses(request, uni):
+    results = build_course_list_for_api(courses = Course.objects.all().filter(uni=int(uni)))
+    return HttpResponse(json.dumps(results), content_type="application/json")
 
 def api_search_results(request, term):
     term = term.replace("_", " ")
