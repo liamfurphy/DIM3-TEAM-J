@@ -14,11 +14,14 @@ function GetURLParameter(sParam) {
 
 var asc = "Ascending";
 var uni = [];
-var overall=[0, 100];
-var diff = [0, 100];
-var sat = [0, 100];
-var mat = [0, 100];
-var teac = [0, 100];
+cols = ["average_overall", "average_difficulty", "average_materials", "average_satisfaction", "average_teaching"];
+cols_limits = {"average_overall": {"currentmin": 0, "currentmax": 100, "text": "Overall"},
+    "average_difficulty": {"currentmin": 0, "currentmax": 100, "text": "Diffculty"},
+    "average_materials": {"currentmin": 0, "currentmax": 100, "text": "Materials"},
+    "average_satisfaction": {"currentmin": 0, "currentmax": 100, "text": "Satisfaction"},
+    "average_teaching": {"currentmin": 0, "currentmax": 100, "text": "Teaching"}
+
+}
 var lec = [];
 
 function loadResults() {
@@ -72,8 +75,23 @@ function loadResults() {
     $(".filters").removeClass("hidden");
     var match = 0;
     for (var i = 0; i < results.length; i++) {
-        if ((lec.length == 0 || lec.indexOf(results[i].lecturer) != -1) && (uni.length == 0 || uni.indexOf(results[i].uni) != -1) &&
-            (results[i].average_overall < overall[1] && results[i].average_overall > overall[0])) {
+        if ((lec.length == 0 || lec.indexOf(results[i].lecturer) != -1) && (uni.length == 0 || uni.indexOf(results[i].uni) != -1) ) {
+            var show = true;
+            for (var key in results[i]) {
+
+
+                if (cols.indexOf(key) == -1) continue; // Skip over the N values.
+                var value = Number(results[i][key]);
+
+                if (value < cols_limits[key].currentmin) {
+                    show = false;
+                }
+                if (value > cols_limits[key].currentmax) {
+                    show = false;
+                }
+            }
+
+            if (show === true) {
             match++;
             $(".results").append('<li class="list-group-item course clearfix">' +
                 '<div class="details col-xs-12 col-sm-4">' +
@@ -87,7 +105,7 @@ function loadResults() {
                 "Difficulty Rating: " + results[i].average_difficulty + "</div><div class=\"col-sm-6 col-lg-4\">Teaching Rating: " + results[i].average_teaching + "</div>" +
                 "<div class=\"col-sm-6 col-lg-4\">Satisfaction Rating: " + results[i].average_satisfaction + "</div>") + '</div>' +
                 '</li>');
-        }
+        }}
     }
 
     if (match === 0) {
@@ -126,10 +144,14 @@ function createLecturerChecks() {
     }
 }
 
+var width;
 
 $(document).ready(function () {
 
-
+    width = $(window).width();
+    if(width<992){
+        $("#filterlist").collapse();
+    }
     $.get("/api/results/" + GetURLParameter("s").replace("+", "_"), function (data) {
         results = data;
         createUniChecks();
@@ -194,19 +216,43 @@ $(document).ready(function () {
         loadResults();
     });
 
-    $( "#slider-range-overall" ).slider({
-      range: true,
-      min: 0,
-      max: 100,
-      values: [ 0, 100 ],
-      slide: function( event, ui ) {
-          overall=[ui.values[0], ui.values[1]];
-        $( "#amount-overall" ).val (ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-          loadResults();
-      }
+   for (var i = 0; i < cols.length; i++) {
+        var txt = cols[i];
+        $('#sliders').append('<label class="field">' + cols_limits[txt]["text"] + ': </label><label type="text" style="border:0; color:#428bca; font-weight:bold;"></label><div class="slider-range" id="' + txt + '"></div>');
+
+    }
+
+    /* Add the sliders to each slider element */
+    $(".slider-range").each(function () {
+        var current = $(this);
+        current.slider({
+            range: true,
+            min: 0,
+            max: 100,
+            values: [0, 100],
+            slide: function (event, ui) {
+                cols_limits[current.attr('id')].currentmax = ui.values[1];
+                cols_limits[current.attr('id')].currentmin = ui.values[0];
+                setTimeout(function () {
+                    current.prev().text(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+                }, 15);
+                loadResults();
+
+            }
+        });
+         current.prev().text(current.slider("values", 0) + " - " + current.slider("values", 1));
     });
-    $( "#amount-overall" ).val( $( "#slider-range-overall" ).slider( "values", 0 ) +
-      " - " + $( "#slider-range-overall" ).slider( "values", 1 ) );
+
+       $( window ).resize(function() {
+           console.log($(window).width()+"  "+width);
+           if($(window).width() <992 && width >=992){
+  $( "#filterlist").collapse("hide");}
+           else if($(window).width() >= 992 && width < 992){
+               $("#filterlist").collapse("show");
+           }
+           width = $(window).width();
+});
+
 
 
 })

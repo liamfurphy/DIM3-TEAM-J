@@ -3,8 +3,10 @@
     text-align: center;
 }
 
+@media(min-width: 992px){
 .filters {
-    height:222px;
+    max-width:300px;
+}
 }
 
 .filter-heading{
@@ -13,5 +15,10 @@
 }
 
 .btn-group{
+    margin-bottom: 5px;
+}
+
+#sliders > label{
+    margin-top:10px;
     margin-bottom: 5px;
 }
