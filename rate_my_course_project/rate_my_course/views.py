@@ -10,35 +10,19 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from models import Course, Rating, University, UserProfile
 from rate_my_course.forms import RatingForm
+from helpers import *
 import datetime
 import json
 
 
-def api_get_latest(request, since=None):
-    ticker = []
-    if since is not None:
-        latest_ratings = Rating.objects.all().order_by("-date").filter(date__range=(datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S")+datetime.timedelta(0, 1), datetime.datetime.now()))
-        if len(latest_ratings)>5:
-            latest_ratings = latest_ratings[:5]
-    else:
-        latest_ratings = Rating.objects.all().order_by("-date")[:5]
-    for r in latest_ratings:
-        ticker.append({'datestr' : r.date.strftime("%Y_%m_%d_%H_%M_%S"),
-                       'username' :r.user.user.username,
-                       'classname' : r.course.course_name,
-                       'score' : r.overall_rating})
-
-    return HttpResponse(json.dumps(ticker), content_type="application/json")
-
+# FRONTEND VIEWS
 def index(request):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
 
     top5 = Course.objects.all().filter(average_overall__isnull=False).order_by('-average_overall')[:5]
     worst5 = Course.objects.all().filter(average_overall__isnull=False).order_by('average_overall')[:5]
-    latest_ratings = Rating.objects.all().order_by("-date")[:5]
     popular = Course.objects.all().order_by('-hits')[:5]
-
 
     return render_to_response('index.html', locals(), context)
 
@@ -121,27 +105,28 @@ def uni(request, uni_id):
 
     return render_to_response('uni.html', locals(), context)
 
+
+# API VIEWS
+def api_get_latest(request, since=None):
+    ticker = []
+    if since is not None:
+        latest_ratings = Rating.objects.all().order_by("-date").filter(date__range=(datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S")+datetime.timedelta(0, 1), datetime.datetime.now()))
+        if len(latest_ratings)>5:
+            latest_ratings = latest_ratings[:5]
+    else:
+        latest_ratings = Rating.objects.all().order_by("-date")[:5]
+    for r in latest_ratings:
+        ticker.append({'datestr' : r.date.strftime("%Y_%m_%d_%H_%M_%S"),
+                       'username' :r.user.user.username,
+                       'classname' : r.course.course_name,
+                       'score' : r.overall_rating})
+
+    return HttpResponse(json.dumps(ticker), content_type="application/json")
+
 def api_search_results(request, term):
     term = term.replace("_", " ")
     res = Course.objects.all().filter(Q(course_code__icontains=term)|Q(course_name__icontains=term)|Q(lecturer__name__icontains=term)|Q(uni__name__icontains=term))
-    results = []
-    for r in res:
-        o = {
-            "course_id": r.id,
-            "average_satisfaction": r.average_satisfaction,
-            "average_difficulty": r.average_difficulty,
-            "average_materials": r.average_materials,
-            "course_name": r.course_name,
-            "description": r.description,
-            "lecturer": r.lecturer.name,
-            "average_teaching": r.average_teaching,
-            "number_of_ratings": r.number_of_ratings,
-            "average_overall": r.average_overall,
-            "uni": r.uni.name,
-            "course_code": r.course_code,
-            "year_of_degree": r.year_of_degree,
-            "uni_id": r.uni.id}
-        results.append(o)
+    results = build_course_list_for_api(res)
 
     return HttpResponse(json.dumps(results), content_type="application/json")
 
