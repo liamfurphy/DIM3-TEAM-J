@@ -9,10 +9,14 @@ urlpatterns = patterns('',
                        url(r'^logout/$', views.user_logout, name='user_logout'),
                        url(r'^summary/course/(?P<course_id>\w+)/$', views.course, name='course'),
                        url(r'^summary/uni/(?P<uni_id>\w+)/$', views.uni, name='uni'),
+                       url(r'^top/$', views.top_rated, name='top'),
+                       url(r'^worst/$', views.worst_rated, name='worst'),
                        url(r'^api/results/(?P<term>\w+)/$', views.api_search_results, name='api_results'),
                        url(r'^api/rating/(?P<course_id>\w+)/$', views.api_add_rating, name='api_rating'),
                        url(r'^api/latest/(?P<since>\w+)/$', views.api_get_latest, name='api_latest'),
                        url(r'^api/latest/$', views.api_get_latest, name='api_latest'),
+                       url(r'^api/top/(?P<amount>\w+)/$', views.api_get_top, name='api_top'),
+                       url(r'^api/worst/(?P<amount>\w+)/$', views.api_get_worst, name='api_worst'),
                        )
 
 # UNDERNEATH your urlpatterns definition, add the following two lines:

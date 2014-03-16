@@ -81,6 +81,17 @@ def results(request):
     context = RequestContext(request)
     return render_to_response('results.html', locals(), context)
 
+
+def top_rated(request):
+    context = RequestContext(request)
+    return render_to_response('top.html', locals(), context)
+
+
+def worst_rated(request):
+    context = RequestContext(request)
+    return render_to_response('worst.html', locals(), context)
+
+
 def course(request, course_id):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
@@ -110,23 +121,43 @@ def uni(request, uni_id):
 def api_get_latest(request, since=None):
     ticker = []
     if since is not None:
-        latest_ratings = Rating.objects.all().order_by("-date").filter(date__range=(datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S")+datetime.timedelta(0, 1), datetime.datetime.now()))
-        if len(latest_ratings)>5:
+        latest_ratings = Rating.objects.all().order_by("-date").filter(date__range=(
+        datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S") + datetime.timedelta(0, 1), datetime.datetime.now()))
+        if len(latest_ratings) > 5:
             latest_ratings = latest_ratings[:5]
     else:
         latest_ratings = Rating.objects.all().order_by("-date")[:5]
     for r in latest_ratings:
-        ticker.append({'datestr' : r.date.strftime("%Y_%m_%d_%H_%M_%S"),
-                       'username' :r.user.user.username,
-                       'classname' : r.course.course_name,
-                       'score' : r.overall_rating})
+        ticker.append({'datestr': r.date.strftime("%Y_%m_%d_%H_%M_%S"),
+                       'username': r.user.user.username,
+                       'classname': r.course.course_name,
+                       'score': r.overall_rating})
 
     return HttpResponse(json.dumps(ticker), content_type="application/json")
 
+
 def api_search_results(request, term):
     term = term.replace("_", " ")
-    res = Course.objects.all().filter(Q(course_code__icontains=term)|Q(course_name__icontains=term)|Q(lecturer__name__icontains=term)|Q(uni__name__icontains=term))
+    res = Course.objects.all().filter(
+        Q(course_code__icontains=term) | Q(course_name__icontains=term) | Q(lecturer__name__icontains=term) | Q(
+            uni__name__icontains=term))
     results = build_course_list_for_api(res)
+
+    return HttpResponse(json.dumps(results), content_type="application/json")
+
+def api_get_worst(request, amount):
+    worst = Course.objects.all().filter(average_overall__isnull=False).order_by('average_overall')
+    if len(worst) > amount:
+        worst = worst[:amount]
+    results = build_course_list_for_api(worst)
+
+    return HttpResponse(json.dumps(results), content_type="application/json")
+
+def api_get_top(request, amount):
+    top = Course.objects.all().filter(average_overall__isnull=False).order_by('-average_overall')
+    if len(top) > amount:
+        worst = top[:amount]
+    results = build_course_list_for_api(top)
 
     return HttpResponse(json.dumps(results), content_type="application/json")
 
@@ -150,11 +181,13 @@ def api_add_rating(request, course_id):
 
             c.number_of_ratings += 1
             num = c.number_of_ratings
-            c.average_difficulty = (c.average_difficulty * (num - 1) + int(form.cleaned_data['difficulty_rating']))/(num)
-            c.average_teaching = (c.average_teaching * (num - 1) + int(form.cleaned_data['teaching_rating']))/(num)
-            c.average_materials = (c.average_materials * (num - 1) + int(form.cleaned_data['materials_rating']))/(num)
-            c.average_overall = (c.average_overall * (num - 1) + int(form.cleaned_data['overall_rating']))/(num)
-            c.average_satisfaction = (c.average_satisfaction * (num - 1) + int(form.cleaned_data['satisfaction_rating']))/(num)
+            c.average_difficulty = (c.average_difficulty * (num - 1) + int(form.cleaned_data['difficulty_rating'])) / (
+            num)
+            c.average_teaching = (c.average_teaching * (num - 1) + int(form.cleaned_data['teaching_rating'])) / (num)
+            c.average_materials = (c.average_materials * (num - 1) + int(form.cleaned_data['materials_rating'])) / (num)
+            c.average_overall = (c.average_overall * (num - 1) + int(form.cleaned_data['overall_rating'])) / (num)
+            c.average_satisfaction = (c.average_satisfaction * (num - 1) + int(
+                form.cleaned_data['satisfaction_rating'])) / (num)
 
             msg = {"data": {
                 "overall": c.average_overall,
@@ -163,20 +196,20 @@ def api_add_rating(request, course_id):
                 "teaching": c.average_teaching,
                 "materials": c.average_materials,
                 "ratings": num
-                }
+            }
             }
             results.append(msg)
             #except:
-             #   return HttpResponseRedirect('/')
+            #   return HttpResponseRedirect('/')
         else:
             print form.errors
             errors = {"errors": form.errors
-                #{ "overall": form.overall_rating.error_messages,
-                # "satisfaction_rating": form.satisfaction_rating.error_messages,
-                # "difficulty": form.difficulty_rating.error_messages,
-                # "teaching": form.teaching_rating.error_messages,
-                # "materials": form.materials_rating.error_messages,
-                # "comment": form.comment.error_messages}
+                      #{ "overall": form.overall_rating.error_messages,
+                      # "satisfaction_rating": form.satisfaction_rating.error_messages,
+                      # "difficulty": form.difficulty_rating.error_messages,
+                      # "teaching": form.teaching_rating.error_messages,
+                      # "materials": form.materials_rating.error_messages,
+                      # "comment": form.comment.error_messages}
             }
             results.append(errors)
         return HttpResponse(json.dumps(results), content_type="application/json")

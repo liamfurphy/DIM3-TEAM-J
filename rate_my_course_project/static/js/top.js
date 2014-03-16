@@ -1,0 +1,1 @@
+var url = "/api/top/50";
