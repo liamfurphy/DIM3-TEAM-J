@@ -6,7 +6,8 @@
 {% endblock %}
 {% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
 {% block content %}
-<div class=" container col-xs-12 col-md-2 filters hidden">
+
+<div class=" container col-xs-12 col-md-2 col-md-offset-1 filters hidden">
     <div class="panel panel-primary">
         <div class="panel-heading"><h1 class="panel-title">Search Filters</h1></div>
         <ul class="list-group filters-list">
@@ -14,9 +15,10 @@
                 <div class="col-xs-12 filter-heading">
                     Sort By
                 </div>
-                <div class="btn-group col-xs-12">
-                    <button  id="rating-sort" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        Select to Sort <span class="caret"></span>
+                <div class="btn-group col-xs-6 col-md-12 col-lg-6">
+                    <button id="rating-sort" type="button" class="btn btn-primary btn-xs dropdown-toggle"
+                            data-toggle="dropdown">
+                        Select to sort <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Overall Rating</a></li>
@@ -26,16 +28,42 @@
                         <li><a href="#">Materials Rating</a></li>
                     </ul>
                 </div>
-                <div class="btn-group col-xs-12">
-                    <button id="asc" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                            value="Ascending">
-                        Ascending<span class="caret"></span>
+                <div class="col-xs-6 col-md-12 col-lg-6">
+                    <button id="asc" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-arrow-up"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Ascending</a></li>
-                        <li><a href="#">Descending</a></li>
-                    </ul>
+                    <button id="desc" class="btn btn-primary btn-xs"><span
+                            class="glyphicon glyphicon-arrow-down"></span></button>
                 </div>
+
+            </li>
+            <li class="list-group-item clearfix hidden" id="uniCheck">
+                <div class="col-xs-12 filter-heading">
+                    Filter By Uni
+                </div>
+                <div class="checklist col-xs-12" id="uniCheckList">
+                    <button type="button" class="btn btn-primary btn-xs" id="unireset">Reset</button>
+                    <br>
+
+                </div>
+
+            </li>
+            <li class="list-group-item clearfix hidden" id="lecCheck">
+                <div class="col-xs-12 filter-heading">
+                    Filter By Lecturer
+                </div>
+                <div class="checklist col-xs-12" id="lecCheckList">
+                    <button type="button" class="btn btn-primary btn-xs" id="lecreset">Reset</button>
+                    <br>
+
+                </div>
+
+            </li>
+            <li class="list-group-item clearfix" ><p>
+                <label for="amount-overall">Overall Rating:</label>
+                <input type="text" id="amount-overall" style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+
+                <div id="slider-range-overall"></div>
             </li>
 
 
@@ -44,7 +72,7 @@
 
     </div>
 </div>
-<div class=" container col-xs-12 col-md-12 results-container">
+<div class=" container col-xs-12 results-container">
     <div class="panel panel-primary">
         <div class="panel-heading"><h1 class="panel-title">Search Results</h1></div>
         <div class="panel-body loading">
