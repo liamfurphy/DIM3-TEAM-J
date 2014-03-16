@@ -2,7 +2,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#">
+                <a data-toggle="collapse" data-parent="#accordion" href="#filterlist">
                     Filters
                 </a>
             </h4>
@@ -18,11 +18,11 @@
                         Select to sort <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Overall Rating</a></li>
-                        <li><a href="#">Difficulty Rating</a></li>
-                        <li><a href="#">Satisfaction Rating</a></li>
-                        <li><a href="#">Teaching Rating</a></li>
-                        <li><a href="#">Materials Rating</a></li>
+                        <li><a href="#" val="average_overall">Overall Rating</a></li>
+                        <li><a href="#" val="average_difficulty">Difficulty Rating</a></li>
+                        <li><a href="#" val="average_satisfaction">Satisfaction Rating</a></li>
+                        <li><a href="#" val="average_teaching">Teaching Rating</a></li>
+                        <li><a href="#" val="average_materials">Materials Rating</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-12">
@@ -33,7 +33,7 @@
                 </div>
 
             </li>
-            <li class="list-group-item clearfix hidden" id="uniCheck">
+            <li class="list-group-item clearfix hidden" id="uniCheckSection">
                 <div class="col-xs-12 filter-heading">
                     Filter By Uni
                 </div>
@@ -44,7 +44,7 @@
                 </div>
 
             </li>
-            <li class="list-group-item clearfix hidden" id="lecCheck">
+            <li class="list-group-item clearfix hidden" id="lecCheckSection">
                 <div class="col-xs-12 filter-heading">
                     Filter By Lecturer
                 </div>
