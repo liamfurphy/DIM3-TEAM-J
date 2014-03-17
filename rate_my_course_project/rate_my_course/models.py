@@ -14,7 +14,6 @@ class University(models.Model):
     class Meta:
         verbose_name_plural = "Universities"
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
@@ -22,6 +21,8 @@ class UserProfile(models.Model):
 	
     def __unicode__(self):
         return self.user.username
+		
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 
 class Lecturer(models.Model):

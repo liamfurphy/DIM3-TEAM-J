@@ -2,16 +2,24 @@
 
 {% block title %}Profile{% endblock %}
 
-{% block body_block %}
-<div class="hero-unit">
-    <h1> Profile <h1> <br/>
-    <h2>{{ user.username }}</h2>
-    <p>Email: {{ user.email }}</p>
+{% block content %}
+    <div class="container col-xs-12 col-lg-8 col-lg-offset-2">
 
-    {% if userprofile %}
-        {% if userprofile.picture %}
-            <img src="{{ userprofile.picture.url }}"  />
-        {% endif %}
-    {% endif %}
-</div>
+    <div class="col-xs-12">
+        <h2>Account Details</h2>
+		<br/>
+    </div>
+	
+     <div class="input-group">
+      <span class="input-group-addon">Username</span><input type="text" placeholder={{user.profile}} class="form-control" name="username" value="" size="50"/></div>
+    <br/>
+	 <div class="input-group">
+  <span class="input-group-addon">email</span> <input type="text" placeholder= {{user.email}}  class="form-control" name="email" value="" size="50"/></div>
+    <br/>
+	<div class="input-group">
+  <span class="input-group-addon">New Password</span> <input class="form-control" placeholder="Password" type="password" name="password" value="" size="50"/></div>
+  <br/>
+	<div class="input-group">
+  <span class="input-group-addon">Confirm Password</span> <input class="form-control" placeholder="Password" type="password" name="password" value="" size="50"/></div>
+
 {% endblock %}

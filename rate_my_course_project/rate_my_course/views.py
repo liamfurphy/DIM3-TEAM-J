@@ -156,14 +156,24 @@ def user_login(request):
 
 @login_required
 def profile(request):
-    context = RequestContext(request)
-    try:
-        up = UserProfile.objects.get(user=request.user)
-    except:
-        up = None
+    success = False
+    u = User.objects.get(id=1)
+    
+    if request.method == 'POST':
+        upform = UserProfileForm(request.POST, instance=u.profile)
+        if upform.is_valid():
+            up = upform.save(commit=False)
+            up.user = request.user
+            up.save()
+            success = True
+    else:
+        upform = UserProfileForm(instance=u.profile)       
 
-    return render_to_response('profile.html', context)
+    return render_to_response('profile.html',
+        locals(), context_instance=RequestContext(request))	
 
+	
+	
 
 def results(request):
     context = RequestContext(request)
