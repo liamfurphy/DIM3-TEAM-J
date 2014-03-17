@@ -34,8 +34,10 @@ class UserForm(forms.ModelForm):
         fields = ('username','first_name','last_name', 'email', 'password')
 	
 class UserProfileForm(forms.ModelForm):
-
+	
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'id':'datepicker'}))
+	
     class Meta:
 		model = UserProfile
-		fields = ('picture',)
+		fields = ('date_of_birth',)
         
