@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+                {% load static %}
+{% block title %}Confirmation{% endblock %}
+
+{% block head %}
+
+<script type="text/javascript" src="{% static 'js/confirm.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class=" col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+
+    {% if success %}
+    <h2>Confirmation Successful!</h2><br>
+    {% if user.is_authenticated %}
+    You are now ready to begin rating courses, enjoy!
+    {% else %}
+    You are now ready to begin rating courses, but first you must login <a href="/login/">here!</a>
+    {% endif %}
+    {% else %}
+    <h2>Confirmation Unsuccessful!</h2><br>
+    Please try again, or alternatively we can resend a confirmation email for {{username}} if you click <a href="#" id="reset"
+                                                                                                           val="{{username}}">here.</a>
+    {% endif %}
+</div>
+
+{% endblock %}
