@@ -15,6 +15,7 @@ from models import Course, Rating, University, UserProfile, Lecturer
 from rate_my_course.forms import RatingForm, UserForm, UserProfileForm, CourseForm
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
+from context_processors import can_add_course
 
 from helpers import *
 from decimal import *
@@ -467,8 +468,13 @@ def get_lec_choices(uni):
 
 
 def add_course(request):
+
     context = RequestContext(request)
-    # Obtain the context from the HTTP request.
-    form = CourseForm(request.GET)
-    #return api_add_course(request)
-    return render_to_response('add_course.html', locals(), context)
+    print request.user.groups.filter(name='CourseAdders')
+    if request.user.is_authenticated()==True and request.user.groups.filter(name='CourseAdders').exists():
+            # Obtain the context from the HTTP request.
+            form = CourseForm(request.GET)
+            #return api_add_course(request)
+            return render_to_response('add_course.html', locals(), context)
+    else:
+        return HttpResponseRedirect('/browse')
