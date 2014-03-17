@@ -136,6 +136,18 @@ def user_login(request):
 
         return render_to_response('login.html', locals(), context)
 
+@login_required
+def profile(request):
+    context = RequestContext(request)
+
+    u = User.objects.get(username=request.user)
+
+    try:
+        up = UserProfile.objects.get(user=u)
+    except:
+        up = None
+
+    return render_to_response('profile.html', context)		
 
 def results(request):
     context = RequestContext(request)
