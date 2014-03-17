@@ -5,9 +5,9 @@
 	$(".uni" ).click(function(){
 		
 		uni = $(this).find("#uni_name").text();
-		$(".uni").removeClass("list-group-item-success");
+		$(".uni").removeClass("light_blue");
 		$("#final_list").fadeOut();
-		$(this).addClass("list-group-item-success");
+		$(this).addClass("light_blue");
 		$("#uni_list").addClass("hidden-xs");
 		$.get('/get_uni_courses/', {university: uni}, function(data){
 		
@@ -19,14 +19,14 @@
 					$("#c_list").removeClass("hidden-xs");
 				});
 				course = $(this).find("#course_name").text();
-				$(".course").removeClass("list-group-item-success");
-				$(this).addClass("list-group-item-success");
+				$(".course").removeClass("light_blue");
+				$(this).addClass("light_blue");
 				$.get('/get_course_instances/', {course:course, university:uni}, function(data){
 					$("#final_list").html(data);
 	   				$("#final_list").slideDown();
 	   				
 	   				
-	   				$(".title_good").click(function(){
+	   				$("#title_good").click(function(){
 	   					$(".gcollapse").slideToggle();
 	   					if ($("#gIcon").hasClass("glyphicon-chevron-down")){
 	   						$("#gIcon").removeClass("glyphicon-chevron-down");
@@ -37,7 +37,7 @@
 	   						$("#gIcon").addClass("glyphicon-chevron-down")
 	   					}	   					
 	   				});
-	   				$(".title_bad").click(function(){
+	   				$("#title_bad").click(function(){
 	   					$(".bcollapse").slideToggle();
 	   					if ($("#bIcon").hasClass("glyphicon-chevron-down")){
 	   						$("#bIcon").removeClass("glyphicon-chevron-down");
