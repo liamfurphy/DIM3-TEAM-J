@@ -60,7 +60,8 @@ class CourseForm(forms.ModelForm):
                               widget=forms.Textarea(attrs={'rows': '4'}))
     year_of_degree = forms.IntegerField(help_text="Enter year fo degree*: ")
     uni = forms.ModelChoiceField(queryset=University.objects.all(),help_text="Select a university*: ")
-    lecturer = forms.ChoiceField(choices=[(-1,"-please, select university-")],help_text="Select a lecturer*: ")
+    #lecturer = forms.ChoiceField(choices=[(-1,"-please, select university-")],help_text="Select a lecturer*: ")
+    lecturer = forms.ModelChoiceField(queryset=Lecturer.objects.all(),help_text="Select a lecturer*: ")
 
 
     class Meta:

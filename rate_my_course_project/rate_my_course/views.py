@@ -385,4 +385,5 @@ def add_course(request):
     context = RequestContext(request)
     # Obtain the context from the HTTP request.
     form = CourseForm(request.GET)
+    #return api_add_course(request)
     return render_to_response('add_course.html', locals(), context)
