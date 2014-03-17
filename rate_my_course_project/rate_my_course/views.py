@@ -255,34 +255,45 @@ def api_add_rating(request, course_id):
             rating = form.save(commit=False)
             rating.user = UserProfile.objects.get(id=int(request.user.id))
             rating.date = datetime.datetime.now()
-            #try:
-            c = Course.objects.get(id=int(course_id))
-            rating.course = c
+            try:
+                c = Course.objects.get(id=int(course_id))
+                rating.course = c
 
-            rating.save()
+                rating.save()
 
-            c.number_of_ratings += 1
-            num = c.number_of_ratings
-            c.average_difficulty = (c.average_difficulty * (num - 1) + int(form.cleaned_data['difficulty_rating'])) / (
-            num)
-            c.average_teaching = (c.average_teaching * (num - 1) + int(form.cleaned_data['teaching_rating'])) / (num)
-            c.average_materials = (c.average_materials * (num - 1) + int(form.cleaned_data['materials_rating'])) / (num)
-            c.average_overall = (c.average_overall * (num - 1) + int(form.cleaned_data['overall_rating'])) / (num)
-            c.average_satisfaction = (c.average_satisfaction * (num - 1) + int(
-                form.cleaned_data['satisfaction_rating'])) / (num)
+                num = c.number_of_ratings
+                if num is None:
+                    num = 0
+                c.number_of_ratings = num+1
+                num = num+1
 
-            msg = {"data": {
-                "overall": c.average_overall,
-                "satisfaction": c.average_satisfaction,
-                "difficulty": c.average_difficulty,
-                "teaching": c.average_teaching,
-                "materials": c.average_materials,
-                "ratings": num
-            }
-            }
-            results.append(msg)
-            #except:
-            #   return HttpResponseRedirect('/')
+
+                c.average_difficulty = ((c.average_difficulty if c.average_difficulty else 0) * (num-1) + int(form.cleaned_data['difficulty_rating'])) / (
+                num)
+                c.average_teaching = ((c.average_teaching if c.average_teaching else 0)  * (num - 1) + int(form.cleaned_data['teaching_rating'])) / (num)
+                c.average_materials = ((c.average_materials if c.average_materials else 0) * (num - 1) + int(form.cleaned_data['materials_rating'])) / (num)
+                c.average_overall = ((c.average_overall if c.average_overall else 0) * (num - 1) + int(form.cleaned_data['overall_rating'])) / (num)
+                c.average_satisfaction = ((c.average_satisfaction if c.average_satisfaction else 0) * (num - 1) + int(
+                    form.cleaned_data['satisfaction_rating'])) / (num)
+
+                c.save()
+
+                msg = {"data": {
+                    "overall": c.average_overall,
+                    "satisfaction": c.average_satisfaction,
+                    "difficulty": c.average_difficulty,
+                    "teaching": c.average_teaching,
+                    "materials": c.average_materials,
+                    "ratings": num
+                }
+                }
+                results.append(msg)
+            except Exception as e:
+               print e.message
+               import traceback
+               traceback.print_exc()
+               raise e
+               return HttpResponseRedirect('/')
         else:
             print form.errors
             errors = {"errors": form.errors
@@ -294,6 +305,7 @@ def api_add_rating(request, course_id):
                       # "comment": form.comment.error_messages}
             }
             results.append(errors)
+        print "Going to return"
         return HttpResponse(json.dumps(results), content_type="application/json")
 
     else:

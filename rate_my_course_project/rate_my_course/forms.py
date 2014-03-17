@@ -4,13 +4,13 @@ from rate_my_course.models import Course, Rating, UserProfile, University, Lectu
 from django.contrib.auth.models import User
 
 class RatingForm(forms.ModelForm):
-    overall_rating = forms.IntegerField(help_text="Course overall: ")
-    difficulty_rating = forms.IntegerField(help_text="Course difficulty: ")
-    teaching_rating = forms.IntegerField(help_text="Course teaching: ")
-    materials_rating = forms.IntegerField(help_text="Course materials: ")
-    satisfaction_rating = forms.IntegerField(help_text="Course satisfaction: ")
-    comment = forms.CharField(max_length=200, help_text="Comment about the course: ",
-                              widget=forms.Textarea(attrs={'rows': '4'}))
+    difficulty_rating = forms.ChoiceField(help_text="Difficulty Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    teaching_rating = forms.ChoiceField(help_text="Teaching Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    materials_rating = forms.ChoiceField(help_text="Materials Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    satisfaction_rating = forms.ChoiceField(help_text="Satisfaction Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    comment = forms.CharField(required=False, max_length=200, help_text="Comments", widget=forms.Textarea(attrs={'rows' : 5, 'class': 'form-control', 'placeholder': 'Enter comments about the course'}))
+    overall_rating = forms.ChoiceField(help_text= "Overall Rating", choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+
     class Meta:
         model = Rating
         exclude = ('user', 'date', 'course')
