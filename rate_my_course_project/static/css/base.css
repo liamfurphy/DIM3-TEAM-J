@@ -42,6 +42,26 @@ body {
     margin-top: 20px;
 }
 
+.ticker-title{
+    display: inline-block;
+    font-size: 1.7em;
+}
+
+.ticker-content{
+    display: inline-block;
+    margin-left: 15px;
+}
+
+#ticker{
+    margin-bottom: 30px;
+}
+
+#tickeraddon{
+      color: #ffffff;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+
 #head {
     font-size: 2em;
 }

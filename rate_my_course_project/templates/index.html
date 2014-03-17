@@ -3,18 +3,21 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" media="screen"/>
 <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.ticker.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 {% endblock %}
 {% block searchbar %} {% include 'searchbar.html' %}{% endblock %}
 {% block content %}
 <div class="container col-xs-12 col-lg-10 col-lg-offset-1">
 
-    <div class="container col-xs-12 ticker">
-        <span class=" head label label-default col-xs-1">Latest</span>
+    <div class="input-group input-group-sm col-xs-12" id="ticker">
+        <span class="input-group-addon" id="tickeraddon">Latest Ratings</span>
+        <div class="form-control" id="ticker-form">
 
-        <ul id="ticker" class="col-xs-11"></ul>
-
+        </div>
     </div>
+
+
     <div class=" container col-xs-12 col-sm-6 col-md-4">
         {% include "summary_panel.html" with courses=top5 title="Top Rated Courses" %}
     </div>
