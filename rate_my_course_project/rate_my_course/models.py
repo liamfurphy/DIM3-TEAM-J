@@ -28,7 +28,7 @@ User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 
 class Lecturer(models.Model):
-    title = models.CharField(max_length=10)
+    title = models.CharField(max_length=10,null=True)
     name = models.CharField(max_length=128)
     email = models.EmailField(null=True, blank=True)
     department = models.CharField(max_length=128, null=True, blank=True)

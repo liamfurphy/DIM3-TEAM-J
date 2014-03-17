@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from django.conf import settings
-from rate_my_course import views
+import views
 
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
@@ -26,8 +26,8 @@ urlpatterns = patterns('',
                        url(r'^api/courses/(?P<uni>\w+)/$', views.api_get_uni_courses, name='api_unis_courses'),
                        url(r'^addcourse/$', views.add_course, name='addcourse'),
                        url(r'^api/add_course/$', views.api_add_course, name='api_add_course'),
-                       url(r'^api/get_lecturers/(?P<uni_id>\w+)/$', views.api_get_lecturers, name='api_get_lecturers'),
                        url(r'^api/confirm/(?P<username>\w+)/$', views.api_resend_confirmation, name='api_resend_confirmation'),
+                       url(r'^api/get_lecturers/(?P<uni>\w+)/$', views.api_get_lecturers, name='api_get_lecturers'),
                        )
 
 # UNDERNEATH your urlpatterns definition, add the following two lines:

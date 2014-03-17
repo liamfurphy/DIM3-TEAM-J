@@ -1,6 +1,6 @@
 from django import forms
 from django.db import models
-from rate_my_course.models import Course, Rating, UserProfile, University, Lecturer
+from models import Course, Rating, UserProfile, University, Lecturer
 from django.contrib.auth.models import User
 
 
@@ -60,14 +60,14 @@ class CourseForm(forms.ModelForm):
                               widget=forms.Textarea(attrs={'rows': '4'}))
     year_of_degree = forms.IntegerField(help_text="Enter year fo degree*: ")
     uni = forms.ModelChoiceField(queryset=University.objects.all(),help_text="Select a university*: ")
-    #lecturer = forms.ChoiceField(choices=[(-1,"-please, select university-")],help_text="Select a lecturer*: ")
-    lecturer = forms.ModelChoiceField(queryset=Lecturer.objects.all(),help_text="Select a lecturer*: ")
+    lecturer = forms.ChoiceField(choices=[(-1,"-please, select university-")],help_text="Select a lecturer*: ")
+
 
 
     class Meta:
         model = Course
         exclude = ('number_of_ratings', 'hits', 'average_overall', 'average_difficulty', 'average_teaching',
-                   'average_materials', 'average_satisfaction')
+                   'average_materials', 'average_satisfaction', 'lecturer')
 
     def __init__(self, *args, **kwargs):
         super(CourseForm, self).__init__(*args, **kwargs)
