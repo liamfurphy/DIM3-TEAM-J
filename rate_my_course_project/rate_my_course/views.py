@@ -192,19 +192,18 @@ def user_login(request):
 
 @login_required
 def profile(request):
-    success = False
-    u = User.objects.get(id=1)
-
     if request.method == 'POST':
-        upform = UserProfileForm(request.POST, instance=u.profile)
-        if upform.is_valid():
-            up = upform.save(commit=False)
-            up.user = request.user
-            up.save()
-            success = True
-    else:
-        upform = UserProfileForm(instance=u.profile)
+        if 'save' in request.POST:
+            user = User.objects.get(pk=request.user.id)
+            user.user = request.POST.get('username')
+            user.email= request.POST.get('email')
+            user.set_password(form.clean_passwords())
+            user.save()
+            
+            
+            return HttpResponseRedirect('/view_profile/') 
 
+    user_profile = request.user.get_profile()
     return render_to_response('profile.html',
                               locals(), context_instance=RequestContext(request))
 
