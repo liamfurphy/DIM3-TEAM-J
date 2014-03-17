@@ -18,6 +18,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     is_email_verified = models.BooleanField(default=False)
+    confirmation_code = models.CharField(max_length=200)
+
 	
     def __unicode__(self):
         return self.user.username
