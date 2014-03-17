@@ -177,6 +177,7 @@ def course(request, course_id):
         c = Course.objects.get(id=int(course_id))
         c.hit()
         c.save()
+        ratings = Rating.objects.all().filter(course = int(course_id))
     except:
         return HttpResponseRedirect('/')
 

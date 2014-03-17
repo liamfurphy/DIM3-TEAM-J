@@ -1,6 +1,11 @@
 .panel-body{
     font-weight: bold;
 }
+.ratingbreakdown{
+        font-weight: normal;
+    color: #285e8e;
+    display: inline-block;
+}
 .bluetext{
     font-weight: normal;
     color: #285e8e;
@@ -14,4 +19,8 @@ h2{
     margin-bottom: 40px;
     font-weight: bolder;
     color: #285e8e;
+}
+
+.ratingcomment{
+    font-style: italic;
 }
