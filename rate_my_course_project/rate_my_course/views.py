@@ -346,19 +346,19 @@ def api_add_course(request):
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new category to the database.
-            course = form.save(commit=True)
-            course_id = course.course_id
-            return course(request, course_id)
+            c = form.save(commit=True)
+            return course(request, c.id)
         else:
             # The supplied form contained errors - just print them to the terminal.
             print form.errors
+            return add_course(request)
     else:
         # If the request was not a POST, display the form to enter details.
         form = CourseForm()
 
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
-    return render_to_response('templates/add_course.html', {'form': form}, context)
+    return add_course(request)
 
 
 def api_get_lecturers(uni):

@@ -38,7 +38,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=200)
     description = models.CharField(max_length=200, null=True, blank=True)
     year_of_degree = models.IntegerField(null=True, blank=True)
-    number_of_ratings = models.IntegerField()
+    number_of_ratings = models.IntegerField(default=0)
     hits = models.IntegerField(default=0)
 
     average_overall = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
