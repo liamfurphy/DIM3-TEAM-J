@@ -42,11 +42,11 @@ class Course(models.Model):
     number_of_ratings = models.IntegerField(default=0)
     hits = models.IntegerField(default=0)
 
-    average_overall = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
-    average_difficulty = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
-    average_teaching = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
-    average_materials = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
-    average_satisfaction = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=2)
+    average_overall = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=1)
+    average_difficulty = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=1)
+    average_teaching = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=1)
+    average_materials = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=1)
+    average_satisfaction = models.DecimalField(blank=True, null=True, max_digits=4, decimal_places=1)
 
     lecturer = models.ForeignKey(Lecturer)
     uni = models.ForeignKey(University)

@@ -5,11 +5,11 @@ $(document).ready(function () {
             var data = d[0].data;
             //[{"data": {"ratings": 9, "overall": 1, "satisfaction": 1, "difficulty": 1, "materials": 1, "teaching": 1}}]
             $("#number_of_ratings").html(data.ratings);
-            $("#average_overall").html(data.overall);
-            $("#average_satisfaction").html(data.satisfaction);
-            $("#average_difficulty").html(data.difficulty);
-            $("#average_materials").html(data.materials);
-            $("#average_teaching").html(data.teaching);
+            $("#average_overall").html((data.overall).toFixed(1));
+            $("#average_satisfaction").html((data.satisfaction).toFixed(1));
+            $("#average_difficulty").html((data.difficulty).toFixed(1));
+            $("#average_materials").html((data.materials).toFixed(1));
+            $("#average_teaching").html((data.teaching).toFixed(1));
             console.log(data);
             username = data.username;
 
