@@ -11,14 +11,18 @@ from django.core import serializers
 from models import Course, Rating, University, UserProfile, Lecturer
 from rate_my_course.forms import RatingForm, UserForm, UserProfileForm, CourseForm
 from helpers import *
+from decimal import *
 import datetime
 import json
+
 
 def encode_url(url):
     return url.replace(" ", "_")
 
+
 def decode_url(url):
     return url.replace("_", " ")
+
 
 # FRONTEND VIEWS
 def index(request):
@@ -30,8 +34,8 @@ def index(request):
     popular = Course.objects.all().order_by('-hits')[:5]
 
     return render_to_response('index.html', locals(), context)
-	
-	
+
+
 def register(request):
     # Like before, get the request's context.
     context = RequestContext(request)
@@ -83,9 +87,10 @@ def register(request):
 
     # Render the template depending on the context.
     return render_to_response(
-            'register.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
-            context)	
+        'register.html',
+        {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
+        context)
+
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
@@ -144,6 +149,7 @@ def user_login(request):
 
         return render_to_response('login.html', locals(), context)
 
+
 @login_required
 def profile(request):
     context = RequestContext(request)
@@ -153,11 +159,13 @@ def profile(request):
     except:
         up = None
 
-    return render_to_response('profile.html', context)		
+    return render_to_response('profile.html', context)
+
 
 def results(request):
     context = RequestContext(request)
     return render_to_response('results.html', locals(), context)
+
 
 def top_rated(request):
     context = RequestContext(request)
@@ -173,11 +181,17 @@ def course(request, course_id):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
     form = RatingForm(request.GET)
+    if request.user.is_authenticated():
+        submitted = Rating.objects.filter(course=Course.objects.get(id=int(course_id)),
+                                          user=UserProfile.objects.get(user=int(request.user.id))).exists()
+    else:
+        submitted = False
     try:
+
         c = Course.objects.get(id=int(course_id))
         c.hit()
         c.save()
-        ratings = Rating.objects.all().filter(course = int(course_id))
+        ratings = Rating.objects.all().filter(course=int(course_id))
     except:
         return HttpResponseRedirect('/')
 
@@ -201,7 +215,7 @@ def api_get_latest(request, since=None):
     ticker = []
     if since is not None:
         latest_ratings = Rating.objects.all().order_by("-date").filter(date__range=(
-        datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S") + datetime.timedelta(0, 1), datetime.datetime.now()))
+            datetime.datetime.strptime(since, "%Y_%m_%d_%H_%M_%S") + datetime.timedelta(0, 1), datetime.datetime.now()))
         if len(latest_ratings) > 5:
             latest_ratings = latest_ratings[:5]
     else:
@@ -216,8 +230,9 @@ def api_get_latest(request, since=None):
 
 
 def api_get_uni_courses(request, uni):
-    results = build_course_list_for_api(courses = Course.objects.all().filter(uni=int(uni)))
+    results = build_course_list_for_api(courses=Course.objects.all().filter(uni=int(uni)))
     return HttpResponse(json.dumps(results), content_type="application/json")
+
 
 def api_search_results(request, term):
     term = term.replace("_", " ")
@@ -228,6 +243,7 @@ def api_search_results(request, term):
 
     return HttpResponse(json.dumps(results), content_type="application/json")
 
+
 def api_get_worst(request, amount):
     worst = Course.objects.all().filter(average_overall__isnull=False).order_by('average_overall')
     if len(worst) > amount:
@@ -236,6 +252,7 @@ def api_get_worst(request, amount):
 
     return HttpResponse(json.dumps(results), content_type="application/json")
 
+
 def api_get_top(request, amount):
     top = Course.objects.all().filter(average_overall__isnull=False).order_by('-average_overall')
     if len(top) > amount:
@@ -243,6 +260,7 @@ def api_get_top(request, amount):
     results = build_course_list_for_api(top)
 
     return HttpResponse(json.dumps(results), content_type="application/json")
+
 
 def api_add_rating(request, course_id):
     # Obtain the context from the HTTP request.
@@ -254,7 +272,7 @@ def api_add_rating(request, course_id):
         if form.is_valid():
             # Save the new category to the database.
             rating = form.save(commit=False)
-            rating.user = UserProfile.objects.get(id=int(request.user.id))
+            rating.user = UserProfile.objects.get(user=int(request.user.id))
             rating.date = datetime.datetime.now()
             try:
                 c = Course.objects.get(id=int(course_id))
@@ -265,36 +283,39 @@ def api_add_rating(request, course_id):
                 num = c.number_of_ratings
                 if num is None:
                     num = 0
-                c.number_of_ratings = num+1
-                num = num+1
-
-
-                c.average_difficulty = ((c.average_difficulty if c.average_difficulty else 0) * (num-1) + int(form.cleaned_data['difficulty_rating'])) / (
-                num)
-                c.average_teaching = ((c.average_teaching if c.average_teaching else 0)  * (num - 1) + int(form.cleaned_data['teaching_rating'])) / (num)
-                c.average_materials = ((c.average_materials if c.average_materials else 0) * (num - 1) + int(form.cleaned_data['materials_rating'])) / (num)
-                c.average_overall = ((c.average_overall if c.average_overall else 0) * (num - 1) + int(form.cleaned_data['overall_rating'])) / (num)
-                c.average_satisfaction = ((c.average_satisfaction if c.average_satisfaction else 0) * (num - 1) + int(
-                    form.cleaned_data['satisfaction_rating'])) / (num)
+                c.number_of_ratings = num + 1
+                num = num + 1
+                c.average_difficulty = ((c.average_difficulty if c.average_difficulty else 0) * (num - 1) +
+                                        Decimal(form.cleaned_data['difficulty_rating'])) / Decimal(num)
+                c.average_teaching = ((c.average_teaching if c.average_teaching else 0) * (num - 1) +
+                                      Decimal(form.cleaned_data['teaching_rating'])) / Decimal(num)
+                c.average_materials = ((c.average_materials if c.average_materials else 0) * (num - 1) +
+                                       Decimal(form.cleaned_data['materials_rating'])) / Decimal(num)
+                c.average_overall = ((c.average_overall if c.average_overall else 0) * (num - 1) +
+                                     Decimal(form.cleaned_data['overall_rating'])) / Decimal(num)
+                c.average_satisfaction = ((c.average_satisfaction if c.average_satisfaction else 0) * (num - 1) +
+                                          Decimal(form.cleaned_data['satisfaction_rating'])) / Decimal(num)
 
                 c.save()
 
                 msg = {"data": {
-                    "overall": c.average_overall,
-                    "satisfaction": c.average_satisfaction,
-                    "difficulty": c.average_difficulty,
-                    "teaching": c.average_teaching,
-                    "materials": c.average_materials,
-                    "ratings": num
+                    "overall": float(c.average_overall),
+                    "satisfaction": float(c.average_satisfaction),
+                    "difficulty": float(c.average_difficulty),
+                    "teaching": float(c.average_teaching),
+                    "materials": float(c.average_materials),
+                    "ratings": num,
+                    "username": request.user.username
                 }
                 }
                 results.append(msg)
             except Exception as e:
-               print e.message
-               import traceback
-               traceback.print_exc()
-               raise e
-               return HttpResponseRedirect('/')
+                print e.message
+                import traceback
+
+                traceback.print_exc()
+                raise e
+                return HttpResponseRedirect('/')
         else:
             print form.errors
             errors = {"errors": form.errors
@@ -311,8 +332,8 @@ def api_add_rating(request, course_id):
 
     else:
         return course(request, course_id)
-    
-    
+
+
 def browse(request):
     # Get the context of the HTTP
     context = RequestContext(request)
@@ -320,30 +341,34 @@ def browse(request):
     Universities = University.objects.all()
     for univ in Universities:
         univ.url = encode_url(univ.name)
-        univ.course_num = len(Course.objects.all().filter(uni = univ))
-    return render_to_response("browse.html",locals(), context)
+        univ.course_num = len(Course.objects.all().filter(uni=univ))
+    return render_to_response("browse.html", locals(), context)
 
 
 def get_uni_courses(request):
     context = RequestContext(request)
     uni_name = request.GET['university']
     uniID = University.objects.get(name=uni_name)
-    courses = Course.objects.all().filter(uni = uniID)
+    courses = Course.objects.all().filter(uni=uniID)
     for course in courses:
         course.url = encode_url(course.course_name)
     return render_to_response('course_list.html', locals(), context)
+
 
 def get_course_instances(request):
     context = RequestContext(request)
     c_name = request.GET['course']
     uni_name = request.GET['university']
-    university = University.objects.get(name = uni_name)
-    courseID = Course.objects.get(course_name = c_name)
-    c = Course.objects.get(course_name = courseID, uni = university)
+    university = University.objects.get(name=uni_name)
+    courseID = Course.objects.get(course_name=c_name)
+    c = Course.objects.get(course_name=courseID, uni=university)
     c.course_name = encode_url(c_name)
-    top_good_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course = courseID).order_by('-overall_rating')[:3]
-    top_worst_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course = courseID).order_by('overall_rating')[:3]
+    top_good_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course=courseID).order_by(
+        '-overall_rating')[:3]
+    top_worst_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course=courseID).order_by(
+        'overall_rating')[:3]
     return render_to_response('final_list.html', locals(), context)
+
 
 def get_lec_choices(uni):
     choices = []
@@ -352,7 +377,8 @@ def get_lec_choices(uni):
         choices.append([(l.id, l.name)])
 
     choices.append([(-1, "New Lecturer")])
-    
+
+
 def add_course(request):
     context = RequestContext(request)
     # Obtain the context from the HTTP request.
