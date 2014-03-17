@@ -8,8 +8,8 @@ from django.db.models import Q, F
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from models import Course, Rating, University, UserProfile, Lecturer
-from rate_my_course.forms import RatingForm, UserForm, UserProfileForm, CourseForm
+from models import Course, Rating, University, UserProfile, Lecturer, User
+from forms import RatingForm, UserForm, UserProfileForm, CourseForm
 from helpers import *
 from decimal import *
 import datetime
@@ -355,8 +355,19 @@ def api_add_course(request):
         results = []
         # Have we been provided with a valid form?
         if form.is_valid():
-            # Save the new category to the database.
-            c = form.save(commit=True)
+            c = form.save(commit=False)
+            if int(request.POST["lecturer"])==-1:
+
+                lec = Lecturer(name=request.POST["lecturer_name"],
+                                     uni=University.objects.get(id=int(request.POST["uni"])))
+                lec.save()
+                c.lecturer = lec
+            else:
+                c.lecturer = form.lecturer
+            print c.lecturer.name
+            print c.lecturer.id
+            c.save()
+
             return course(request, c.id)
         else:
             # The supplied form contained errors - just print them to the terminal.
@@ -371,9 +382,8 @@ def api_add_course(request):
     return add_course(request)
 
 
-def api_get_lecturers(uni):
-    lecturers = get_lec_choices(uni)
-    return json.dumps(lecturers)
+def api_get_lecturers(request, uni):
+    return HttpResponse(json.dumps(get_lec_choices(uni)), content_type="application/json")
 
 
 def browse(request):
@@ -414,11 +424,11 @@ def get_course_instances(request):
 
 def get_lec_choices(uni):
     choices = []
-    m = Lecturer.get(uni=uni)
+    m = Lecturer.objects.all().filter(uni=uni)
     for l in m:
-        choices.append([(l.id, l.name)])
+        choices.append((l.id, l.name))
 
-    choices.append([(-1, "New Lecturer")])
+    choices.append((-1, "New Lecturer"))
     return choices
 
 
