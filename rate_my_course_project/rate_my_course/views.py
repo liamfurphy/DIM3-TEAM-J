@@ -53,8 +53,12 @@ def register(request):
 
         # If the two forms are valid...
         if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database.
             user = user_form.save()
+
+            domains = [d for d in University.objects.all() if d.email_domain in user.email.split("@")[1]]
+            if len(domains) < 1:
+                return HttpResponse("Your email domain is invalid.")
+            # Save the user's form data to the database.
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
@@ -153,9 +157,8 @@ def user_login(request):
 @login_required
 def profile(request):
     context = RequestContext(request)
-
     try:
-        up = UserProfile.objects.get(user=u)
+        up = UserProfile.objects.get(user=request.user)
     except:
         up = None
 
@@ -334,6 +337,35 @@ def api_add_rating(request, course_id):
         return course(request, course_id)
 
 
+def api_add_course(request):
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        results = []
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            course = form.save(commit=True)
+            course_id = course.course_id
+            return course(request, course_id)
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = CourseForm()
+
+    # Bad form (or form details), no form supplied...
+    # Render the form with error messages (if any).
+    return render_to_response('templates/add_course.html', {'form': form}, context)
+
+
+def api_get_lecturers(uni):
+    lecturers = get_lec_choices(uni)
+    return json.dumps(lecturers)
+
+
 def browse(request):
     # Get the context of the HTTP
     context = RequestContext(request)
@@ -377,6 +409,7 @@ def get_lec_choices(uni):
         choices.append([(l.id, l.name)])
 
     choices.append([(-1, "New Lecturer")])
+    return choices
 
 
 def add_course(request):

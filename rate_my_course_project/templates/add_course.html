@@ -9,17 +9,17 @@
 
 <div class=" container col-xs-12 col-md-4 col-offset-1">
     <div class="panel panel-primary">
-        <div class="panel-heading">Add a new course</div>
+        <div class="panel-heading">Add a New Course</div>
         <div class="post-rating panel-body col-xs-12 col-lg-10">
             {% if user.is_authenticated %}
-            <form id="rating_form" method="post" action="/api/rating/{{ c.id }}/">
+            <form id="course_form" method="post" action="/api/add_course/">
             {% csrf_token %}
             {% for field in form.visible_fields %}
                 {{ field.help_text}}
                 {{ field }}<br/>
-                {{ field.errors }}<br/>
             {% endfor %}
-            <input type="submit" value="submit" />
+            <p><span style="color:#ff0000">Mandatory fields are marked with a *</span></p>
+            <input type="submit" value="Add Course" />
         </form>
             {% else %}
             <a href="/register/">Register Here</a><br />
