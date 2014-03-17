@@ -34,32 +34,32 @@
                 </li>
                 <li class="list-group-item">Number of Ratings:
 
-                    <div class="bluetext">{{c.number_of_ratings}}
+                    <div class="bluetext" id="number_of_ratings">{{c.number_of_ratings}}
                     </div>
                 </li>
                 <li class="list-group-item">Average Overall:
 
-                    <div class="bluetext">{{c.average_overall}}
+                    <div class="bluetext" id="average_overall">{{c.average_overall}}
                     </div>
                 </li>
                 <li class="list-group-item">Average Difficulty:
 
-                    <div class="bluetext">{{c.average_difficulty}}
+                    <div class="bluetext" id="average_difficulty">{{c.average_difficulty}}
                     </div>
                 </li>
                 <li class="list-group-item">Average Teaching:
 
-                    <div class="bluetext">{{c.average_teaching}}
+                    <div class="bluetext" id="average_teaching">{{c.average_teaching}}
                     </div>
                 </li>
                 <li class="list-group-item">Average Materials:
 
-                    <div class="bluetext">{{c.average_materials}}
+                    <div class="bluetext" id="average_materials">{{c.average_materials}}
                     </div>
                 </li>
                 <li class="list-group-item">Average Satisfaction:
 
-                    <div class="bluetext">{{c.average_satisfaction}}
+                    <div class="bluetext" id="average_satisfaction">{{c.average_satisfaction}}
                     </div>
                 </li>
                 <li class="list-group-item">Lecturer:
@@ -79,26 +79,30 @@
     <div class=" container col-xs-12 col-sm-6">
         <div class="panel panel-primary">
             <div class="panel-heading">Post New Rating</div>
-            <div class="post-rating panel-body">
+            <div class="post-rating panel-body" id="rating_panel">
                 {% if user.is_authenticated %}
-                <form class="form-inline col-xs-12" id="ratingform"
-                      method="post" role="form">
-                    {% csrf_token %}
+                    {% if submitted %}
+                        <span id="submitted">You have already submitted rating for this course</span>
+                    {% else %}
+                        <form class="form-inline col-xs-12" id="ratingform"
+                              method="post" role="form">
+                            {% csrf_token %}
 
-                    {% for field in form.visible_fields %}
-                    <div class="input-group">
-                        <span class="input-group-addon">{{field.help_text}}</span>{{field}}
-                    </div>
-                    <br/>
-                    {% endfor %}
+                            {% for field in form.visible_fields %}
+                            <div class="input-group">
+                                <span class="input-group-addon">{{field.help_text}}</span>{{field}}
+                            </div>
+                            <br/>
+                            {% endfor %}
 
-                    <br/>
-                    <button class="btn btn-primary col-xs-12" type="button" id="submitbtn" val="{{c.id}}">Submit
-                    </button>
-                </form>
+                            <br/>
+                            <button class="btn btn-primary col-xs-12" type="button" id="submitbtn" val="{{c.id}}">Submit
+                            </button>
+                        </form>
+                    {% endif %}
                 {% else %}
-                <a href="/register/">Register Here</a><br/>
-                <a href="/login/?next={{ request.path}}">Login</a><br/>
+                    <a href="/register/">Register Here</a><br/>
+                    <a href="/login/?next={{ request.path}}">Login</a><br/>
                 {% endif %}
             </div>
         </div>
@@ -106,16 +110,14 @@
     <div class=" container col-xs-12">
         <div class="panel panel-primary">
             <div class="panel-heading">Ratings</div>
-            <ul class="list-group">
+            <ul class="list-group" id="ratings">
             {% for rating in ratings %}
             <li class="list-group-item clearfix">
                 <div class="details col-xs-12 col-md-6">
                     {{rating.user.user.username}}
                 </div>
                 <div class="col-xs-12 col-md-6 ratingbreakdown">Overall: {{rating.overall_rating}}
-                    Difficulty: {{rating.difficulty_rating}}
-                    Teaching: {{rating.teaching_rating}}                     Materials: {{rating.teaching_rating}} Satisfaction: {{rating.satisfaction_rating}}
-
+                    Difficulty: {{rating.difficulty_rating}} Teaching: {{rating.teaching_rating}} Materials: {{rating.teaching_rating}} Satisfaction: {{rating.satisfaction_rating}}
                 </div>
 
                 <div class="col-xs-12 ratingcomment">"{{rating.comment}}"</div>
