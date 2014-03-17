@@ -45,13 +45,13 @@ class UserProfileForm(forms.ModelForm):
 		fields = ('date_of_birth',)
         
 class CourseForm(forms.ModelForm):
-    course_code = forms.CharField(help_text="Course Code: ")
-    course_name = forms.CharField(help_text="Course Name: ")
+    course_code = forms.CharField(help_text="Course Code*: ")
+    course_name = forms.CharField(help_text="Course Name*: ")
     description = forms.CharField(required=False, max_length=200, help_text="Course description: ",
                               widget=forms.Textarea(attrs={'rows': '4'}))
-    year_of_degree = forms.IntegerField(help_text="Enter year fo degree: ")
-    uni = forms.ModelChoiceField(queryset=University.objects.all(),help_text="Select a university: ")
-    lecturer = forms.ChoiceField(choices=[(-1,"-----------")],help_text="Select a lecturer: ")
+    year_of_degree = forms.IntegerField(help_text="Enter year fo degree*: ")
+    uni = forms.ModelChoiceField(queryset=University.objects.all(),help_text="Select a university*: ")
+    lecturer = forms.ChoiceField(choices=[(-1,"-please, select university-")],help_text="Select a lecturer*: ")
 
     class Meta:
         model = Course
