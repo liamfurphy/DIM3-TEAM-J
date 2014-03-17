@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from models import Course, Rating, University, UserProfile, Lecturer
 from rate_my_course.forms import RatingForm, UserForm, UserProfileForm, CourseForm
+from django.contrib.auth.models import User
 from helpers import *
 from decimal import *
 import datetime
