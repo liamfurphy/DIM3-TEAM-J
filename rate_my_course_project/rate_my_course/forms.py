@@ -27,7 +27,11 @@ class RatingForm(forms.ModelForm):
             'comment']
 			
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(help_text="Please enter a username.")
+    first_name = forms.CharField(help_text="Please enter a first name.")
+    last_name = forms.CharField(help_text="Please enter your last name.")
+    email = forms.CharField(help_text="Please enter your email.")
+    password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter a password.")
 
     class Meta:
         model = User
@@ -35,7 +39,7 @@ class UserForm(forms.ModelForm):
 	
 class UserProfileForm(forms.ModelForm):
 	
-    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'id':'datepicker'}))
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'id':'datepicker'}), help_text="Please enter your date of birth.")
 	
     class Meta:
 		model = UserProfile

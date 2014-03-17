@@ -148,8 +148,6 @@ def user_login(request):
 def profile(request):
     context = RequestContext(request)
 
-    u = User.objects.get(username=request.user)
-
     try:
         up = UserProfile.objects.get(user=u)
     except:
