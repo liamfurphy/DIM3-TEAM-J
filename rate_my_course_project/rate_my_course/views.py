@@ -8,8 +8,8 @@ from django.db.models import Q, F
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from models import Course, Rating, University, UserProfile
-from rate_my_course.forms import RatingForm, UserForm, UserProfileForm
+from models import Course, Rating, University, UserProfile, Lecturer
+from rate_my_course.forms import RatingForm, UserForm, UserProfileForm, CourseForm
 from helpers import *
 import datetime
 import json
@@ -344,5 +344,17 @@ def get_course_instances(request):
     top_good_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course = courseID).order_by('-overall_rating')[:3]
     top_worst_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course = courseID).order_by('overall_rating')[:3]
     return render_to_response('final_list.html', locals(), context)
+
+def get_lec_choices(uni):
+    choices = []
+    m = Lecturer.get(uni=uni)
+    for l in m:
+        choices.append([(l.id, l.name)])
+
+    choices.append([(-1, "New Lecturer")])
     
-    
+def add_course(request):
+    context = RequestContext(request)
+    # Obtain the context from the HTTP request.
+    form = CourseForm(request.GET)
+    return render_to_response('add_course.html', locals(), context)

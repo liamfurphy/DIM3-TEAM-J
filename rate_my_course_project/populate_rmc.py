@@ -7,10 +7,10 @@ def populate():
     gcu = add_uni("Glasgow Caledonian University", "gcu.uk", "", "", "")
     edu = add_uni("University of Edinburgh", "ed.ac.uk", "Scotland", "Edinburgh", "")
 
-    l1 = add_lecturer("Dr", "Leif Azzopardi", "Leif.Azzopardi@glasgow.ac.uk", "Computing Science")
-    l2 = add_lecturer("Dr", "Jonathan Nimmo", "jnimmo@glasgow.ac.uk", "Mathematics")
-    l3 = add_lecturer("Dr", "Colin Perkins", "colin.perkins@gla.ac.uk", "Computing Science")
-    l4 = add_lecturer("Dr", "Joe Sventek", "joe@gla.ac.uk", "Computing Science")
+    l1 = add_lecturer("Dr", "Leif Azzopardi", "Leif.Azzopardi@glasgow.ac.uk", "Computing Science", gu)
+    l2 = add_lecturer("Dr", "Jonathan Nimmo", "jnimmo@glasgow.ac.uk", "Mathematics", gu)
+    l3 = add_lecturer("Dr", "Colin Perkins", "colin.perkins@gla.ac.uk", "Computing Science", gu)
+    l4 = add_lecturer("Dr", "Joe Sventek", "joe@gla.ac.uk", "Computing Science", edu)
 
     u1 = add_user("jdoc", "jdoc@student.gla.ac.uk", "pass", first_name="John", last_name="Docherty")
     u2 = add_user("leifos", "Leif.Azzopardi@glasgow.ac.uk", "pass", can_add_course=True, first_name="Leif", last_name="Azzopardi")
@@ -75,8 +75,8 @@ def add_user(username, email, password, can_add_course=False, first_name=None, l
     up.save()
     return up
 
-def add_lecturer(title, name, email=None, dept=None):
-    l = Lecturer.objects.get_or_create(title=title, name=name,email=email, department=dept)[0]
+def add_lecturer(title, name, email=None, dept=None, uni=None):
+    l = Lecturer.objects.get_or_create(title=title, name=name,email=email, department=dept, uni=uni)[0]
     return l
 
 def add_course(code, name, numratings, lecturer, uni, avg_overall=None, avg_difficulty=None, avg_teaching=None, avg_materials=None, avg_satisfaction=None, year=None, desc=None, hits=0):
