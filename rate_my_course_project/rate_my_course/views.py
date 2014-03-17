@@ -2,17 +2,25 @@ import json
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.conf import settings
+from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Q, F
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from models import Course, Rating, University, UserProfile, Lecturer, User
-from forms import RatingForm, UserForm, UserProfileForm, CourseForm
+
+from models import Course, Rating, University, UserProfile, Lecturer
+from rate_my_course.forms import RatingForm, UserForm, UserProfileForm, CourseForm
+from django.contrib.sites.models import Site
+from django.contrib.auth.models import User
+
 from helpers import *
 from decimal import *
 import datetime
+import string
+import random
 import json
 
 
@@ -58,7 +66,7 @@ def register(request):
             domains = [d for d in University.objects.all() if d.email_domain in user.email.split("@")[1]]
             if len(domains) < 1:
                 return HttpResponse("Your email domain is invalid.")
-            # Save the user's form data to the database.
+                # Save the user's form data to the database.
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
@@ -70,9 +78,12 @@ def register(request):
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
+            profile.confirmation_code = ''.join(
+                random.choice(string.ascii_uppercase + string.digits) for _ in range(100))
 
             # Now we save the UserProfile model instance.
             profile.save()
+            send_registration_confirmation(request, profile)
 
             # Update our variable to tell the template registration was successful.
             registered = True
@@ -96,6 +107,24 @@ def register(request):
         context)
 
 
+def send_registration_confirmation(request, user):
+    title = "RateMyCourse account confirmation"
+    content = "http://" + request.get_host() + "/confirm/" + str(user.confirmation_code) + "/" + user.user.username
+    send_mail(title, content, settings.EMAIL_HOST_USER, [user.user.email], fail_silently=False)
+
+
+def confirm(request, confirmation_code, username):
+    try:
+        user = User.objects.get(username=username)
+        profile = UserProfile.objects.get(user=user)
+        if profile.confirmation_code == confirmation_code:
+            profile.is_email_verified = True
+            profile.save()
+            return HttpResponse("Confirmed!")
+        return HttpResponseRedirect("Not Confirmed")
+    except:
+        return HttpResponseRedirect('../../../../../')
+
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
@@ -106,13 +135,19 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
+	
 def user_login(request):
     # Like before, obtain the context for the user's request.
+    
     context = RequestContext(request)
+    
+    context_dict = {}
+	
     next = None
+	
     if "next" in request.GET:
-        next = request.GET["next"]
-
+	     next = request.GET["next"]
+    
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
 
@@ -138,12 +173,13 @@ def user_login(request):
                     return HttpResponseRedirect(next)
                 return HttpResponseRedirect('/')
             else:
-                # An inactive account was used - no logging in!
-                return HttpResponse("Your Rango account is disabled.")
+                context_dict['disabled_account'] = True
+                return render_to_response('login.html', context_dict, context)
         else:
             # Bad login details were provided. So we can't log the user in.
             print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
+            context_dict['bad_details'] = True
+            return render_to_response('login.html', context_dict, context)
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
@@ -158,7 +194,7 @@ def user_login(request):
 def profile(request):
     success = False
     u = User.objects.get(id=1)
-    
+
     if request.method == 'POST':
         upform = UserProfileForm(request.POST, instance=u.profile)
         if upform.is_valid():
@@ -167,13 +203,11 @@ def profile(request):
             up.save()
             success = True
     else:
-        upform = UserProfileForm(instance=u.profile)       
+        upform = UserProfileForm(instance=u.profile)
 
     return render_to_response('profile.html',
-        locals(), context_instance=RequestContext(request))	
+                              locals(), context_instance=RequestContext(request))
 
-	
-	
 
 def results(request):
     context = RequestContext(request)
