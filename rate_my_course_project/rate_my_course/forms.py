@@ -1,17 +1,16 @@
 from django import forms
 from django.db import models
-from rate_my_course.models import Course, Rating
-from rate_my_course.models import UserProfile
+from rate_my_course.models import Course, Rating, UserProfile, University, Lecturer
 from django.contrib.auth.models import User
 
 class RatingForm(forms.ModelForm):
-    overall_rating = forms.IntegerField(help_text="Course overall: ")
-    difficulty_rating = forms.IntegerField(help_text="Course difficulty: ")
-    teaching_rating = forms.IntegerField(help_text="Course teaching: ")
-    materials_rating = forms.IntegerField(help_text="Course materials: ")
-    satisfaction_rating = forms.IntegerField(help_text="Course satisfaction: ")
-    comment = forms.CharField(max_length=200, help_text="Comment about the course: ",
-                              widget=forms.Textarea(attrs={'rows': '4'}))
+    difficulty_rating = forms.ChoiceField(help_text="Difficulty Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    teaching_rating = forms.ChoiceField(help_text="Teaching Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    materials_rating = forms.ChoiceField(help_text="Materials Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    satisfaction_rating = forms.ChoiceField(help_text="Satisfaction Rating",  choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+    comment = forms.CharField(required=False, max_length=200, help_text="Comments", widget=forms.Textarea(attrs={'rows' : 5, 'class': 'form-control', 'placeholder': 'Enter comments about the course'}))
+    overall_rating = forms.ChoiceField(help_text= "Overall Rating", choices = [(str(x), str(x)) for x in range(1,11)], widget = forms.Select(attrs={'class': 'form-control'}))
+
     class Meta:
         model = Rating
         exclude = ('user', 'date', 'course')
@@ -45,3 +44,27 @@ class UserProfileForm(forms.ModelForm):
 		model = UserProfile
 		fields = ('date_of_birth',)
         
+class CourseForm(forms.ModelForm):
+    course_code = forms.CharField(help_text="Course Code: ")
+    course_name = forms.CharField(help_text="Course Name: ")
+    description = forms.CharField(required=False, max_length=200, help_text="Course description: ",
+                              widget=forms.Textarea(attrs={'rows': '4'}))
+    year_of_degree = forms.IntegerField(help_text="Enter year fo degree: ")
+    uni = forms.ModelChoiceField(queryset=University.objects.all(),help_text="Select a university: ")
+    lecturer = forms.ChoiceField(choices=[(-1,"-----------")],help_text="Select a lecturer: ")
+
+    class Meta:
+        model = Course
+        exclude = ('number_of_ratings','hits','average_overall','average_difficulty','average_teaching',
+                                            'average_materials', 'average_satisfaction')
+
+    def __init__(self, *args, **kwargs):
+        super(CourseForm, self).__init__(*args, **kwargs)
+        self.fields.keyOrder = [
+                'uni',
+                'course_name',
+                'course_code',
+                'year_of_degree',
+                'lecturer',
+                'description']
+

@@ -1,49 +1,105 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block head %}
 {% block title %}{{c.course_name}} Summary{% endblock %}
+{% block head %}
 <!--<link rel="stylesheet" type="text/css" href="{% static '' %}" media="screen"/> -->
+<script type="text/javascript" src="{% static 'js/course.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/course.css' %}" media="screen"/>
 {% endblock %}
 {% block content %}
-<div class=" container col-xs-12 col-md-4 col-offset-1">
-    <div class="panel panel-primary">
-        <div class="panel-heading">{{c.course_name}} Summary</div>
-        <div class="course-summary panel-body col-xs-12 col-lg-10">
-            Course code: {{c.course_code}} <br/>
-            Course name: {{c.course_name}} <br/>
-            Course description: Course name: {{c.description}} <br/>
-            Course year: {{c.year_of_degree}} <br/>
-            Course # of ratings: {{c.number_of_ratings}} <br/>
-            Course avg overall: {{c.average_overall}} <br/>
-            Course avg difficulty: {{c.average_difficulty}} <br/>
-            Course avg teaching: {{c.average_teaching}} <br/>
-            Course avg materials: {{c.average_materials}} <br/>
-            Course avg satisfaction: {{c.average_satisfaction}} <br/>
-            Course lecturer: {{c.lecturer.first_name}} {{c.lecturer.last_name}} <br/>
-            University: {{c.uni.name}} <br/>
+<div class="contain col-xs-12 col-lg-8 col-lg-offset-2">
+
+    <div class="col-xs-12">
+        <h2>{{c.course_name}} Summary</h2>
+    </div>
+    <div class=" container col-xs-12 col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Details</div>
+            <ul class="list-group">
+                <li class="list-group-item">Course code:
+
+                    <div class="bluetext">{{c.course_code}}</div>
+                </li>
+                <li class="list-group-item">Course name:
+
+                    <div class="bluetext">{{c.course_name}}</div>
+                </li>
+                <li class="list-group-item">Course Description:
+
+                    <div class="bluetext"> {{c.description}}</div>
+                </li>
+                <li class="list-group-item">Year of Degree:
+
+                    <div class="bluetext">{{c.year_of_degree}}</div>
+                </li>
+                <li class="list-group-item">Number of Ratings:
+
+                    <div class="bluetext">{{c.number_of_ratings}}
+                    </div>
+                </li>
+                <li class="list-group-item">Average Overall:
+
+                    <div class="bluetext">{{c.average_overall}}
+                    </div>
+                </li>
+                <li class="list-group-item">Average Difficulty:
+
+                    <div class="bluetext">{{c.average_difficulty}}
+                    </div>
+                </li>
+                <li class="list-group-item">Average Teaching:
+
+                    <div class="bluetext">{{c.average_teaching}}
+                    </div>
+                </li>
+                <li class="list-group-item">Average Materials:
+
+                    <div class="bluetext">{{c.average_materials}}
+                    </div>
+                </li>
+                <li class="list-group-item">Average Satisfaction:
+
+                    <div class="bluetext">{{c.average_satisfaction}}
+                    </div>
+                </li>
+                <li class="list-group-item">Lecturer:
+
+                    <div class="bluetext">{{c.lecturer}}
+                    </div>
+                </li>
+                <li class="list-group-item">Uni:
+
+                    <div class="bluetext"><a href="/summary/uni/{{c.uni.id}}">{{c.uni.name}}</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
 
-<div class=" container col-xs-12 col-md-4 col-offset-1">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Post new rating for {{c.course_name}}</div>
-        <div class="post-rating panel-body col-xs-12 col-lg-10">
-            {% if user.is_authenticated %}
-            <form id="rating_form" method="post" action="/api/rating/{{ c.id }}/">
-            {% csrf_token %}
-            Input scores between 1 and 10<br />
-            {% for field in form.visible_fields %}
-                {{ field.help_text}}
-                {{ field }}<br/>
-                {{ field.errors }}<br/>
-            {% endfor %}
-            <input type="submit" value="submit" />
-        </form>
-            {% else %}
-            <a href="/register/">Register Here</a><br />
-            <a href="/login/?next={{ request.path}}">Login</a><br />
-            {% endif %}
+    <div class=" container col-xs-12 col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Post New Rating</div>
+            <div class="post-rating panel-body">
+                {% if user.is_authenticated %}
+                <form class="form-inline col-xs-12" id="ratingform"
+                      method="post" role="form">
+                    {% csrf_token %}
+
+                    {% for field in form.visible_fields %}
+                    <div class="input-group">
+                        <span class="input-group-addon">{{field.help_text}}</span>{{field}}
+                    </div>
+                    <br/>
+                    {% endfor %}
+
+                    <br/>
+                    <button class="btn btn-primary col-xs-12" type="button" id="submitbtn" val="{{c.id}}">Submit</button>
+                </form>
+                {% else %}
+                <a href="/register/">Register Here</a><br/>
+                <a href="/login/?next={{ request.path}}">Login</a><br/>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

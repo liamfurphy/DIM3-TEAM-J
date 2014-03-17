@@ -66,7 +66,7 @@ function loadResults() {
                 console.log(nullshow);
                 console.log(value);
 
-                if(show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10) ){
+                if((show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10)) || value != 0 ){
                     nullshow = false;
                 }
 

@@ -6,15 +6,15 @@ function googleDone() {
     $(document).ready(function () {
 
         $(window).resize(function () {
-        loadGraph();
-    });
+            loadGraph();
+        });
 
         $(".dropdown-menu li a").click(function () {
-        show = $(this).attr("val");
-        $(this).closest(".btn-group").children().first().text($(this).text());
-        $(this).closest(".btn-group").children().first().append('   <span class="caret"></span>');
-        loadGraph();
-    });
+            show = $(this).attr("val");
+            $(this).closest(".btn-group").children().first().text($(this).text());
+            $(this).closest(".btn-group").children().first().append('   <span class="caret"></span>');
+            loadGraph();
+        });
 
         $.get("/api/courses/" + $("#statspanel").attr("val"), function (data) {
             courses = data;
@@ -34,7 +34,7 @@ function loadGraph() {
     var data = google.visualization.arrayToDataTable(data);
     var options = {
         legend: { position: 'none' },
-         histogram: { bucketSize: 1 }
+        histogram: { bucketSize: 1 }
     };
 
     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
