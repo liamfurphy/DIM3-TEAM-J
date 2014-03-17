@@ -30,8 +30,8 @@ def index(request):
     popular = Course.objects.all().order_by('-hits')[:5]
 
     return render_to_response('index.html', locals(), context)
-	
-	
+
+
 def register(request):
     # Like before, get the request's context.
     context = RequestContext(request)
@@ -49,8 +49,12 @@ def register(request):
 
         # If the two forms are valid...
         if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database.
             user = user_form.save()
+
+            domains = [d for d in University.objects.all() if d.email_domain in user.email.split("@")[1]]
+            if len(domains) < 1:
+                return HttpResponse("Your email domain is invalid.")
+            # Save the user's form data to the database.
 
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
@@ -85,7 +89,7 @@ def register(request):
     return render_to_response(
             'register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
-            context)	
+            context)
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
@@ -153,7 +157,7 @@ def profile(request):
     except:
         up = None
 
-    return render_to_response('profile.html', context)		
+    return render_to_response('profile.html', context)
 
 def results(request):
     context = RequestContext(request)
@@ -311,7 +315,7 @@ def api_add_rating(request, course_id):
 
     else:
         return course(request, course_id)
-    
+
 
 def api_add_course(request):
         # Obtain the context from the HTTP request.
@@ -380,7 +384,7 @@ def get_lec_choices(uni):
 
     choices.append([(-1, "New Lecturer")])
     return choices
-    
+
 def add_course(request):
     context = RequestContext(request)
     # Obtain the context from the HTTP request.
