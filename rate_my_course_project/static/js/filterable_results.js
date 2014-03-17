@@ -82,7 +82,7 @@ function loadResults() {
                     results[i].lecturer + '<br/>' +
                     '<a href="/summary/uni/' + results[i].uni_id + '" class="unilink">' + results[i].uni + '</a>' +
                     '</div>' +
-                    '<div class="col-sm-8 clearfix">' + ((results[i].average_overall == null) ? "<div class=\"norating col-xs-12\">No Ratings" : "<div class=\"ratinggroup\"><div class=\"col-sm-6 col-lg-4\">Overall Rating" +
+                    '<div class="col-sm-8 clearfix">' + ((results[i].average_overall == 0) ? "<div class=\"norating col-xs-12\">No Ratings" : "<div class=\"ratinggroup\"><div class=\"col-sm-6 col-lg-4\">Overall Rating" +
                     ": " + results[i].average_overall + "</div><div class=\"col-sm-6 col-lg-4\">Materials Rating: " + results[i].average_materials + "</div><div class=\"col-sm-6 col-lg-4\">" +
                     "Difficulty Rating: " + results[i].average_difficulty + "</div><div class=\"col-sm-6 col-lg-4\">Teaching Rating: " + results[i].average_teaching + "</div>" +
                     "<div class=\"col-sm-6 col-lg-4\">Satisfaction Rating: " + results[i].average_satisfaction + "</div>") + '</div>' +
