@@ -23,7 +23,8 @@
 		<li class="list-group-item nopadding clearfix">
 			<ul class="list-group no-margin indexpanel">
 				<div class="details col-xs-10 col-sm-9 col-lg-10 spanned">
-					<div class="panel-heading green title_good "><h3 class="review_title ">Top Good reviews: </h3></div>
+					<div class="panel-heading green title_good "><h3 class="review_title ">Top Good reviews:
+					<span id = "gIcon" class = "glyphicon glyphicon-chevron-down pull-right"> </span> </h3></div>
 					{% for r in top_good_reviews%}
 						<li class="list-group-item gcollapse light_green clearfix">
 							<div class="details col-xs-10 col-sm-9 col-lg-10">
@@ -41,7 +42,8 @@
 	{% if top_worst_reviews %}
 		<li class="list-group-item nopadding clearfix ">
 			<ul class="list-group no-margin indexpanel">
-					<div class="panel-heading red title_bad"><h3 class="review_title">Top Bad reviews: </h3></div>
+					<div class="panel-heading red title_bad"><h3 class="review_title">Top Bad reviews: 
+					<span id = "bIcon" class = "glyphicon glyphicon-chevron-down pull-right"> </span> </h3></div>
 					{% for r in top_worst_reviews%}
 						<li class="list-group-item bcollapse light_red clearfix">
 							<div class="details col-xs-10 col-sm-9 col-lg-10">

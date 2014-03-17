@@ -17,23 +17,26 @@
 }
 
 .green{
-	background: #4EEE94;
+	background: #A4E7C1;
 }
 
 .red {
- 	background: #F5785A;
+ 	background: #F0AA99;
 }
 
 .light_blue{
+	
 	background: #BFEFFF;
 }
 
 .light_red {
-	background: #EED5D2;
+	display:none;
+	background: #EEE2E0;
 }
 
 .light_green{
-	background: #CCFFCC;
+	display:none;
+	background: #DDEBDD;
 }
 
 .spanned {
