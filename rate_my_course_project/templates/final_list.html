@@ -1,15 +1,16 @@
+
 <div class="panel panel-primary">
 <div class="panel-heading"><h1 class="panel-title">Course description</h1></div>
 <ul class="list-group indexpanel">
 	{% if c.description %}
-		<li class="list-group-item course  light_blue clearfix">
+		<li class="list-group-item course clearfix">
 		<div class="details col-xs-10 col-sm-9 col-lg-10">
 			<h4>Description:</h4>{{c.description}}
 		</div>
 		</li>
 	{% endif %}
 	
-	<li class="list-group-item course  light_blue clearfix">
+	<li class="list-group-item course  clearfix">
 	<div class="details col-xs-10 col-sm-9 col-lg-10">
 		<h3>Year of teaching: {{c.year_of_degree}} <br>
 		Taught by: {{c.lecturer}}<br></h3>
@@ -23,9 +24,10 @@
 		<li class="list-group-item nopadding clearfix">
 			<ul class="list-group no-margin indexpanel">
 				<div class="details col-xs-10 col-sm-9 col-lg-10 spanned">
-					<div class="panel-heading green title_good "><h3 class="review_title ">Top Good reviews: </h3></div>
+					<div class="panel-heading title_good review_title "><h3>Top Good reviews:
+					<span id = "gIcon" class = "glyphicon glyphicon-chevron-down pull-right"> </span> </h3></div>
 					{% for r in top_good_reviews%}
-						<li class="list-group-item gcollapse light_green clearfix">
+						<li class="list-group-item gcollapse clearfix">
 							<div class="details col-xs-10 col-sm-9 col-lg-10">
 								<h5 class = "bold">By: {{r.user}} <br>
 									On {{r.date}} <br>
@@ -41,9 +43,10 @@
 	{% if top_worst_reviews %}
 		<li class="list-group-item nopadding clearfix ">
 			<ul class="list-group no-margin indexpanel">
-					<div class="panel-heading red title_bad"><h3 class="review_title">Top Bad reviews: </h3></div>
+					<div class="panel-heading title_bad review_title"><h3>Top Bad reviews: 
+					<span id = "bIcon" class = "glyphicon glyphicon-chevron-down pull-right"> </span> </h3></div>
 					{% for r in top_worst_reviews%}
-						<li class="list-group-item bcollapse light_red clearfix">
+						<li class="list-group-item bcollapse  clearfix">
 							<div class="details col-xs-10 col-sm-9 col-lg-10">
 								<h5 class = "bold">By: {{r.user}} <br>
 									On {{r.date}} <br>

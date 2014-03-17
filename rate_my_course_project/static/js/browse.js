@@ -27,10 +27,26 @@
 	   				
 	   				
 	   				$(".title_good").click(function(){
-	   					$(".gcollapse").slideToggle();	   					
+	   					$(".gcollapse").slideToggle();
+	   					if ($("#gIcon").hasClass("glyphicon-chevron-down")){
+	   						$("#gIcon").removeClass("glyphicon-chevron-down");
+	   						$("#gIcon").addClass("glyphicon-chevron-up")
+	   					}  	
+	   					else{
+	   						$("#gIcon").removeClass("glyphicon-chevron-up");
+	   						$("#gIcon").addClass("glyphicon-chevron-down")
+	   					}	   					
 	   				});
 	   				$(".title_bad").click(function(){
-	   					$(".bcollapse").slideToggle();	   					
+	   					$(".bcollapse").slideToggle();
+	   					if ($("#bIcon").hasClass("glyphicon-chevron-down")){
+	   						$("#bIcon").removeClass("glyphicon-chevron-down");
+	   						$("#bIcon").addClass("glyphicon-chevron-up")
+	   					}  	
+	   					else{
+	   						$("#bIcon").removeClass("glyphicon-chevron-up");
+	   						$("#bIcon").addClass("glyphicon-chevron-down")
+	   					}		   					
 	   				});
 	   				
 	   				
