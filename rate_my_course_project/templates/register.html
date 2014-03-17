@@ -3,7 +3,7 @@
 
         {% if registered %}
         <strong>Thank you for registering with RateMyCourse!</strong>
-        <a href="/">Return to the homepage.</a><br/>
+        <p> You can login here. <a href="/login/"> Login</a></p>
         {% else %}
 		
 		
@@ -23,15 +23,16 @@
 		
 		
 		
-        <form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/register/"
+        <form class="form-inline col-sm-10 col-sm-offset-1 col-md-9 col-md-offset-9 col-lg-5 col-lg-offset-4" method="post" role="form" action="/register/"
                 enctype="multipart/form-data">
 
             {% csrf_token %}
+            <h2 class="form-signin-heading">Sign up Here</h2>
 
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
 
-			<button class="btn btn-primary col-xs-12" type="submit">Sign Up</button>
+			<button class="btn btn-primary col-xs-10" type="submit">Sign Up</button>
         </form>
 		{% endif %}
 {% endblock %}
