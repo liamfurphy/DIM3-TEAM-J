@@ -14,29 +14,15 @@
 
 .review_title{
 	font-size: 15pt;
+	background: rgb(206, 218, 235);
 }
 
-.green{
-	background: #A4E7C1;
+.bcollapse {
+	display:none
 }
 
-.red {
- 	background: #F0AA99;
-}
-
-.light_blue{
-	
-	background: #BFEFFF;
-}
-
-.light_red {
-	display:none;
-	background: #EEE2E0;
-}
-
-.light_green{
-	display:none;
-	background: #DDEBDD;
+.gcollapse {
+	display:none
 }
 
 .spanned {
