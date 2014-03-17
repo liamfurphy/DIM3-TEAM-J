@@ -1,0 +1,54 @@
+#course_list{
+	display: none;
+}
+#final_list{
+	display: none;
+}
+
+.list_item{
+	font-size: 18pt;
+}
+.bold{
+	font-weight:bold;
+}
+
+.review_title{
+	font-size: 15pt;
+}
+
+.green{
+	background: #4EEE94;
+}
+
+.red {
+ 	background: #F5785A;
+}
+
+.light_blue{
+	background: #BFEFFF;
+}
+
+.light_red {
+	background: #EED5D2;
+}
+
+.light_green{
+	background: #CCFFCC;
+}
+
+.spanned {
+	width: 100%;
+	padding-left: 0px!important;
+	padding-right: 0px!important;
+}
+
+.no-margin {
+	margin-bottom: 0px!important;
+}
+
+.nopadding {
+	padding: 0px!important;
+	padding-left: 0px!important;
+	padding-right: 0px!important;
+}
+

@@ -13,6 +13,11 @@ from rate_my_course.forms import RatingForm
 import datetime
 import json
 
+def encode_url(url):
+    return url.replace(" ", "_")
+
+def decode_url(url):
+    return url.replace("_", " ")
 
 def api_get_latest(request, since=None):
     ticker = []
@@ -182,7 +187,7 @@ def api_add_rating(request, course_id):
             }
             results.append(msg)
             #except:
-             #   return HttpResponseRedirect('/')
+            #   return HttpResponseRedirect('/')
         else:
             print form.errors
             errors = {"errors": form.errors
@@ -198,3 +203,38 @@ def api_add_rating(request, course_id):
 
     else:
         return course(request, course_id)
+    
+    
+def browse(request):
+    # Get the context of the HTTP
+    context = RequestContext(request)
+    # Ger all the univeristies list for choosing
+    Universities = University.objects.all()
+    for univ in Universities:
+        univ.url = encode_url(univ.name)
+        univ.course_num = len(Course.objects.all().filter(uni = univ))
+    return render_to_response("browse.html",locals(), context)
+
+
+def get_uni_courses(request):
+    context = RequestContext(request)
+    uni_name = request.GET['university']
+    uniID = University.objects.get(name=uni_name)
+    courses = Course.objects.all().filter(uni = uniID)
+    for course in courses:
+        course.url = encode_url(course.course_name)
+    return render_to_response('course_list.html', locals(), context)
+
+def get_course_instances(request):
+    context = RequestContext(request)
+    c_name = request.GET['course']
+    uni_name = request.GET['university']
+    university = University.objects.get(name = uni_name)
+    courseID = Course.objects.get(course_name = c_name)
+    c = Course.objects.get(course_name = courseID, uni = university)
+    c.course_name = encode_url(c_name)
+    top_good_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course = courseID).order_by('-overall_rating')[:3]
+    top_worst_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course = courseID).order_by('overall_rating')[:3]
+    return render_to_response('final_list.html', locals(), context)
+    
+    

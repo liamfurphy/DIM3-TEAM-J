@@ -13,6 +13,9 @@ urlpatterns = patterns('',
                        url(r'^api/rating/(?P<course_id>\w+)/$', views.api_add_rating, name='api_rating'),
                        url(r'^api/latest/(?P<since>\w+)/$', views.api_get_latest, name='api_latest'),
                        url(r'^api/latest/$', views.api_get_latest, name='api_latest'),
+                       url(r'^browse/$', views.browse, name='browse'),
+                       url(r'^get_uni_courses/$', views.get_uni_courses, name='get_uni_courses'),
+                       url(r'^get_course_instances/$', views.get_course_instances, name='get_course_instances'),
                        )
 
 # UNDERNEATH your urlpatterns definition, add the following two lines:

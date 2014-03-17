@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<script type="text/javascript" src="{% static 'js/browse.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/browse.css' %}" media="screen"/>
+{% endblock %}
+{% block title %}Browse{% endblock %}
+{% block content %}
+
+	<div class=" container col-xs-12 col-sm-6 col-md-4">
+        <div class="panel panel-primary">
+            <div id= "uni_header" class="panel-heading"><h1 class="panel-title">Select a University..</h1>
+			</div>
+            <ul id = "uni_list" class="list-group indexpanel">
+                {% for uni in Universities %}
+                <li class="list-group-item uni clearfix">
+                    <div class="details col-xs-10 col-sm-9 col-lg-10">
+                        <a href = "/summary/uni/{{uni.url}}/"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        <span id = "uni_name" class = "list_item">{{uni.name}}</span>
+                    </div>
+                    <span class="badge pull-right">{{uni.course_num}}</span>
+                    
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+    
+    
+    
+    <div id = "course_list" class=" container col-xs-12 col-sm-6 col-md-4"></div>
+    
+    <div id = "final_list" class=" container col-xs-12 col-sm-6 col-md-4"></div>
+
+{% endblock %}

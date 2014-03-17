@@ -56,7 +56,7 @@ h1 {
 
 }
 
-li {
+.nav_li {
     display: inline-block;
     margin-right: 14px;
 }

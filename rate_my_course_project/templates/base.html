@@ -34,16 +34,16 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li
+                <li class ="nav_li"
                 {% if request.path == '/' %}class="active"{% endif %}><a href="/">Index</a></li>
-                <li
+                <li class ="nav_li"
                 {% if request.path == '/browse/' %}class="active"{% endif %}><a href="/browse/">Browse Courses</a></li>
-                <li
+                <li class ="nav_li"
                 {% if request.path == '/top/' %}class="active"{% endif %}><a href="/top/">Top Rated</a></li>
-                <li
+                <li class ="nav_li"
                 {% if request.path == '/worst/' %}class="active"{% endif %}><a href="/worst/">Worst Rated</a></li>
                 {% if user_can_add_course %}
-                <li
+                <li class ="nav_li"
                 {% if request.path == '/addcourse/' %}class="active"{% endif %}><a href="/addcourse/">Add a
                 Course</a></li>
                 {% endif %}
