@@ -9,8 +9,6 @@
     <p>Email: {{ user.email }}</p>
 
     {% if userprofile %}
-        <p>Website: <a href="{{ userprofile.website }}">{{ userprofile.website }}</a></p>
-        <br/>
         {% if userprofile.picture %}
             <img src="{{ userprofile.picture.url }}"  />
         {% endif %}
