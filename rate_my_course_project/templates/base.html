@@ -35,8 +35,6 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class ="nav_li"
-                {% if request.path == '/' %}class="active"{% endif %}><a href="/">Index</a></li>
-                <li class ="nav_li"
                 {% if request.path == '/browse/' %}class="active"{% endif %}><a href="/browse/">Browse Courses</a></li>
                 <li class ="nav_li"
                 {% if request.path == '/top/' %}class="active"{% endif %}><a href="/top/">Top Rated</a></li>
@@ -55,15 +53,15 @@
                 {% if request.path == '/register/' %}class="active"{% endif %}><a href="/register/">Sign Up</a></li>
                 <li
                 {% if request.path == '/login/' %}class="active"{% endif %}><a href="/login/">Sign In</a></li>
-                
-				
+
+
 				{% else %}
-				
+
 				<li {% if request.path == '/profile/' %}class="active"{% endif %}><a href="/profile/">Account</a></li>
-				
+
                 <li><a href="/logout/">Sign Out {{user.username}}</a></li>
-				
-                
+
+
 				{% endif %}
             </ul>
         </div>
