@@ -58,7 +58,7 @@
                 
 				
 				{% else %}
-				<li><a href="/profile/">Account</a></li>
+				<li % if request.path == '/profile/' %}class="active"{% endif %}><a href="/profile/">Account</a></li>
                 <li><a href="/logout/">Sign Out {{user.username}}</a></li>
                 {% endif %}
 
