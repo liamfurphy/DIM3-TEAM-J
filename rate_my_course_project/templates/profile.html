@@ -9,12 +9,17 @@
         <h2>Account Details</h2>
 		<br/>
     </div>
-	
+    <div class="input-group">
+      <span class="input-group-addon">First Name</span><label type="text" class="form-control" name="first_name">{{user.first_name}}</label></div>
+    <br/>
+    <div class="input-group">
+      <span class="input-group-addon">Last Name</span><label type="text" class="form-control" name="last_name">{{user.last_name}}</label></div>
+    <br/>
      <div class="input-group">
-      <span class="input-group-addon">Username</span><input type="text" placeholder={{user.profile}} class="form-control" name="username" value="" size="50"/></div>
+      <span class="input-group-addon" for="inputSuccess3">Username</span><input type="text" class="form-control" name="username" value={{user.profile}} size="50"/></div>
     <br/>
 	 <div class="input-group">
-  <span class="input-group-addon">email</span> <input type="text" placeholder= {{user.email}}  class="form-control" name="email" value="" size="50"/></div>
+  <span class="input-group-addon">email</span> <input type="text" class="form-control" name="email" value={{user.email}} size="50"/></div>
     <br/>
 	<div class="input-group">
   <span class="input-group-addon">New Password</span> <input class="form-control" placeholder="Password" type="password" name="password" value="" size="50"/></div>
