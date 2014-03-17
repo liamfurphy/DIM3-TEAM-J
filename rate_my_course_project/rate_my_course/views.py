@@ -106,22 +106,30 @@ def register(request):
 
 
 def send_registration_confirmation(request, user):
-    title = "RateMyCourse account confirmation"
-    content = "http://" + request.get_host() + "/confirm/" + str(user.confirmation_code) + "/" + user.user.username
+    title = "RateMyCourse Account Verification"
+    content = "Hi, \nplease follow the following links to verify your email and be able to rate courses with RateMyCourse! \n\n" + \
+              "http://" + request.get_host() + "/confirm/" + str(
+        user.confirmation_code) + "/" + user.user.username + "\n\n" + \
+              "Thanks, \n RateMyCourse Team."
     send_mail(title, content, settings.EMAIL_HOST_USER, [user.user.email], fail_silently=False)
 
 
 def confirm(request, confirmation_code, username):
+    context = RequestContext(request)
+    username = username
+    success= False
     try:
         user = User.objects.get(username=username)
         profile = UserProfile.objects.get(user=user)
         if profile.confirmation_code == confirmation_code:
             profile.is_email_verified = True
             profile.save()
-            return HttpResponse("Confirmed!")
-        return HttpResponseRedirect("Not Confirmed")
-    except:
-        return HttpResponseRedirect('../../../../../')
+            success = True
+    except: pass
+    return render_to_response(
+        'confirm.html',
+        locals(),
+        context)
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
@@ -133,19 +141,18 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
-	
 def user_login(request):
     # Like before, obtain the context for the user's request.
-    
+
     context = RequestContext(request)
-    
+
     context_dict = {}
-	
+
     next = None
-	
+
     if "next" in request.GET:
-	     next = request.GET["next"]
-    
+        next = request.GET["next"]
+
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
 
@@ -408,6 +415,11 @@ def api_get_lecturers(uni):
     return json.dumps(lecturers)
 
 
+def api_resend_confirmation(request, username):
+    send_registration_confirmation(request, UserProfile.objects.get(user=User.objects.get(username=username)))
+    return HttpResponse("Resent!")
+
+
 def browse(request):
     # Get the context of the HTTP
     context = RequestContext(request)
@@ -460,3 +472,5 @@ def add_course(request):
     form = CourseForm(request.GET)
     #return api_add_course(request)
     return render_to_response('add_course.html', locals(), context)
+
+
