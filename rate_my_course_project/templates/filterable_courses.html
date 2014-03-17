@@ -1,0 +1,85 @@
+<div class=" container col-xs-12 col-lg-3 col-lg-offset-1 filters hidden" id="accordion">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#filterlist">
+                    Filters
+                </a>
+            </h4>
+        </div>
+        <ul class="list-group filters-list collapse in" id="filterlist">
+            <li class="list-group-item clearfix">
+                <div class="col-xs-12 filter-heading">
+                    Sort By
+                </div>
+                <div class="btn-group col-xs-12">
+                    <button id="rating-sort" type="button" class="btn btn-primary btn-xs dropdown-toggle"
+                            data-toggle="dropdown">
+                        Select to sort <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" val="average_overall">Overall Rating</a></li>
+                        <li><a href="#" val="average_difficulty">Difficulty Rating</a></li>
+                        <li><a href="#" val="average_satisfaction">Satisfaction Rating</a></li>
+                        <li><a href="#" val="average_teaching">Teaching Rating</a></li>
+                        <li><a href="#" val="average_materials">Materials Rating</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12">
+                    <button id="asc" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-arrow-up"></span>
+                    </button>
+                    <button id="desc" class="btn btn-primary btn-xs"><span
+                            class="glyphicon glyphicon-arrow-down"></span></button>
+                </div>
+
+            </li>
+            <li class="list-group-item clearfix hidden" id="uniCheckSection">
+                <div class="col-xs-12 filter-heading">
+                    Filter By Uni
+                </div>
+                <div class="checklist col-xs-12" id="uniCheckList">
+                    <button type="button" class="btn btn-primary btn-xs" id="unireset">Reset</button>
+                    <br>
+
+                </div>
+
+            </li>
+            <li class="list-group-item clearfix hidden" id="lecCheckSection">
+                <div class="col-xs-12 filter-heading">
+                    Filter By Lecturer
+                </div>
+                <div class="checklist col-xs-12" id="lecCheckList">
+                    <button type="button" class="btn btn-primary btn-xs" id="lecreset">Reset</button>
+                    <br>
+
+                </div>
+
+            </li>
+            <li class="list-group-item clearfix"><p>
+
+                <div class="col-xs-12 filter-heading">
+                    Filter By Rating Range
+                </div>
+                <div class="col-xs-12" id="sliders"></div>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+</div>
+<div class=" container col-xs-12 results-container">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1 class="panel-title">{{title}}</h1></div>
+        <div class="panel-body loading">
+
+        </div>
+        <ul class="list-group indexpanel results hidden">
+
+
+        </ul>
+
+
+    </div>
+</div>

@@ -1,6 +1,8 @@
 from django import forms
 from django.db import models
 from rate_my_course.models import Course, Rating
+from rate_my_course.models import UserProfile
+from django.contrib.auth.models import User
 
 class RatingForm(forms.ModelForm):
     overall_rating = forms.IntegerField(help_text="Course overall: ")
@@ -23,3 +25,19 @@ class RatingForm(forms.ModelForm):
             'materials_rating',
             'satisfaction_rating',
             'comment']
+			
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username','first_name','last_name', 'email', 'password')
+	
+class UserProfileForm(forms.ModelForm):
+	
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'id':'datepicker'}))
+	
+    class Meta:
+		model = UserProfile
+		fields = ('date_of_birth',)
+        

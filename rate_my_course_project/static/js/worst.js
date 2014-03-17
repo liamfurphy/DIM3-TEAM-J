@@ -1,0 +1,1 @@
+var url = "/api/worst/50";

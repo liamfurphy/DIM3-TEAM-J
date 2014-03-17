@@ -1,0 +1,24 @@
+.panel-body{
+    font-weight: bold;
+}
+.bluetext{
+    font-weight: normal;
+    color: #285e8e;
+}
+
+@media(min-width: 768px){
+.list-group{
+    min-height: 304px;
+    max-height: 304px;
+}}
+
+h2{
+    margin-top: -10px;
+    margin-bottom: 40px;
+    font-weight: bolder;
+    color: #285e8e;
+}
+
+#ratingselector{
+    text-align: center;
+}

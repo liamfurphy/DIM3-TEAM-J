@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     is_email_verified = models.BooleanField(default=False)
-
+	
     def __unicode__(self):
         return self.user.username
 
