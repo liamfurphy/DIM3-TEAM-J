@@ -6,11 +6,11 @@ var checked_lecturers = [];
 
 
 cols = ["average_overall", "average_difficulty", "average_materials", "average_satisfaction", "average_teaching"];
-column_details = {"average_overall": {"currentmin": 0, "currentmax": 100, "text": "Overall"},
-    "average_difficulty": {"currentmin": 0, "currentmax": 100, "text": "Diffculty"},
-    "average_materials": {"currentmin": 0, "currentmax": 100, "text": "Materials"},
-    "average_satisfaction": {"currentmin": 0, "currentmax": 100, "text": "Satisfaction"},
-    "average_teaching": {"currentmin": 0, "currentmax": 100, "text": "Teaching"}
+column_details = {"average_overall": {"currentmin": 1, "currentmax": 10, "text": "Overall"},
+    "average_difficulty": {"currentmin": 1, "currentmax": 10, "text": "Diffculty"},
+    "average_materials": {"currentmin": 1, "currentmax": 10, "text": "Materials"},
+    "average_satisfaction": {"currentmin": 1, "currentmax": 10, "text": "Satisfaction"},
+    "average_teaching": {"currentmin": 1, "currentmax": 10, "text": "Teaching"}
 
 }
 
@@ -48,6 +48,7 @@ function loadResults() {
     for (var i = 0; i < results.length; i++) {
         if ((checked_lecturers.length == 0 || checked_lecturers.indexOf(results[i].lecturer) != -1) && (checked_unis.length == 0 || checked_unis.indexOf(results[i].uni) != -1)) {
             var show = true;
+            var nullshow = true;
             for (var key in results[i]) {
 
 
@@ -60,16 +61,26 @@ function loadResults() {
                 if (value > column_details[key].currentmax) {
                     show = false;
                 }
+
+                console.log(show);
+                console.log(nullshow);
+                console.log(value);
+
+                if(show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10) ){
+                    nullshow = false;
+                }
+
             }
 
-            if (show === true) {
+
+            if (show === true || nullshow ==true) {
                 match++;
                 $(".results").append('<li class="list-group-item course clearfix">' +
                     '<div class="details col-xs-12 col-sm-4">' +
                     '<a href="/summary/course/' + results[i].course_id + '/" class="courselink">' + results[i].course_code + ': ' +
                     results[i].course_name + '</a><br/>' +
                     results[i].lecturer + '<br/>' +
-                    '<a href="/summary/checked_unis/' + results[i].uni_id + '" class="unilink">' + results[i].uni + '</a>' +
+                    '<a href="/summary/uni/' + results[i].uni_id + '" class="unilink">' + results[i].uni + '</a>' +
                     '</div>' +
                     '<div class="col-sm-8 clearfix">' + ((results[i].average_overall == null) ? "<div class=\"norating col-xs-12\">No Ratings" : "<div class=\"ratinggroup\"><div class=\"col-sm-6 col-lg-4\">Overall Rating" +
                     ": " + results[i].average_overall + "</div><div class=\"col-sm-6 col-lg-4\">Materials Rating: " + results[i].average_materials + "</div><div class=\"col-sm-6 col-lg-4\">" +
@@ -185,9 +196,9 @@ $(document).ready(function () {
         var current = $(this);
         current.slider({
             range: true,
-            min: 0,
-            max: 100,
-            values: [0, 100],
+            min: 1,
+            max: 10,
+            values: [1, 10],
             slide: function (event, ui) {
                 column_details[current.attr('id')].currentmax = ui.values[1];
                 column_details[current.attr('id')].currentmin = ui.values[0];

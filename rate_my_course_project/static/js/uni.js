@@ -34,7 +34,7 @@ function loadGraph() {
     var data = google.visualization.arrayToDataTable(data);
     var options = {
         legend: { position: 'none' },
-         histogram: { bucketSize: 10 }
+         histogram: { bucketSize: 1 }
     };
 
     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
