@@ -55,7 +55,10 @@
                 {% if request.path == '/register/' %}class="active"{% endif %}><a href="/register/">Sign Up</a></li>
                 <li
                 {% if request.path == '/login/' %}class="active"{% endif %}><a href="/login/">Sign In</a></li>
-                {% else %}
+                
+				
+				{% else %}
+				<li><a href="/profile/">Account</a></li>
                 <li><a href="/logout/">Sign Out {{user.username}}</a></li>
                 {% endif %}
 
