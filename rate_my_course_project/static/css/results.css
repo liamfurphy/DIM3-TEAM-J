@@ -9,6 +9,10 @@
     }
 }
 
+.details{
+    z-index:50;
+}
+
 .filter-heading {
     color: #428bca;
     font-weight: bold;
