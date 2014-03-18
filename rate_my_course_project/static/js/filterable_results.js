@@ -62,10 +62,6 @@ function loadResults() {
                     show = false;
                 }
 
-                console.log(show);
-                console.log(nullshow);
-                console.log(value);
-
                 if ((show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10)) || value != 0) {
                     nullshow = false;
                 }
@@ -180,7 +176,7 @@ $(document).ready(function () {
 
     $(".dropdown-menu li a").click(function () {
         var txt = $(this).text();
-        $(this).closest(".btn-group").children().first().val($(this).val());
+        $(this).closest(".btn-group").children().first().val($(this).attr("val"));
         $(this).closest(".btn-group").children().first().text($(this).text().split(" Rating")[0]);
         $(this).closest(".btn-group").children().first().append('   <span class="caret"></span>');
         loadResults();
