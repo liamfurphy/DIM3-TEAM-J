@@ -7,7 +7,8 @@
     <title>{% block title %}RateMyCourse{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/redmond/jquery-ui-1.10.4.custom.css' %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/redmond/jquery-ui-1.10.4.custom.css' %}"
+          media="screen"/>
     <script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-ui-1.10.4.custom.js' %}"></script>
 
@@ -34,14 +35,14 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class ="nav_li"
+                <li class="nav_li"
                 {% if request.path == '/browse/' %}class="active"{% endif %}><a href="/browse/">Browse Courses</a></li>
-                <li class ="nav_li"
+                <li class="nav_li"
                 {% if request.path == '/top/' %}class="active"{% endif %}><a href="/top/">Top Rated</a></li>
-                <li class ="nav_li"
+                <li class="nav_li"
                 {% if request.path == '/worst/' %}class="active"{% endif %}><a href="/worst/">Worst Rated</a></li>
                 {% if user_can_add_course %}
-                <li class ="nav_li"
+                <li class="nav_li"
                 {% if request.path == '/addcourse/' %}class="active"{% endif %}><a href="/addcourse/">Add a
                 Course</a></li>
                 {% endif %}
@@ -55,14 +56,15 @@
                 {% if request.path == '/login/' %}class="active"{% endif %}><a href="/login/">Sign In</a></li>
 
 
-				{% else %}
+                {% else %}
 
-				<li {% if request.path == '/profile/' %}class="active"{% endif %}><a href="/profile/">Account</a></li>
+                <li
+                {% if request.path == '/profile/' %}class="active"{% endif %}><a href="/profile/">Account</a></li>
 
                 <li><a href="/logout/">Sign Out {{user.username}}</a></li>
 
 
-				{% endif %}
+                {% endif %}
             </ul>
         </div>
         <!--/.nav-collapse -->

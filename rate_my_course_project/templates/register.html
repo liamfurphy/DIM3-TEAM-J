@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-        {% load static %}
+{% load static %}
 {% block title %}Register{% endblock %}
 {% block head %}
 
@@ -7,31 +7,31 @@
 {% endblock %}
 {% block content %}
 
-        {% if registered %}
-        <div class=" col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-            <h2>Thank you for registering with RateMyCourse!</h2><br>
-            We have sent you a verification email, you will have to complete this step to be able to rate courses
-            {% if not user.is_authenticated %}, however you
-            may already log in <a href="/login/">here</a> {% endif %}
-        </div>
-        {% else %}
+{% if registered %}
+<div class=" col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+    <h2>Thank you for registering with RateMyCourse!</h2><br>
+    We have sent you a verification email, you will have to complete this step to be able to rate courses
+    {% if not user.is_authenticated %}, however you
+    may already log in <a href="/login/">here</a> {% endif %}
+</div>
+{% else %}
 
-		
-		
-        <form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/register/"
-                enctype="multipart/form-data">
 
-            {% csrf_token %}
+<form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post"
+      role="form" action="/register/"
+      enctype="multipart/form-data">
 
-            {% for field in user_form.visible_fields %}
-                    <div class="input-group">
-                        <span class="input-group-addon">{{field.help_text}}</span>{{field}}
-                    </div>
-                    <br/>
-                    {% endfor %}
-            {{ profile_form.as_p }}
+    {% csrf_token %}
 
-			<button class="btn btn-primary col-xs-12" type="submit">Sign Up</button>
-        </form>
-		{% endif %}
+    {% for field in user_form.visible_fields %}
+    <div class="input-group">
+        <span class="input-group-addon">{{field.help_text}}</span>{{field}}
+    </div>
+    <br/>
+    {% endfor %}
+    {{ profile_form.as_p }}
+
+    <button class="btn btn-primary col-xs-12" type="submit">Sign Up</button>
+</form>
+{% endif %}
 {% endblock %}

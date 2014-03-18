@@ -1,25 +1,27 @@
-.panel-body{
+.panel-body {
     font-weight: bold;
 }
-.bluetext{
+
+.bluetext {
     font-weight: normal;
     color: #285e8e;
 }
 
-@media(min-width: 768px){
-.list-group{
-    min-height: 304px;
-    max-height: 304px;
-    overflow-y: scroll;
-}}
+@media (min-width: 768px) {
+    .list-group {
+        min-height: 304px;
+        max-height: 304px;
+        overflow-y: scroll;
+    }
+}
 
-h2{
+h2 {
     margin-top: -10px;
     margin-bottom: 40px;
     font-weight: bolder;
     color: #285e8e;
 }
 
-#ratingselector{
+#ratingselector {
     text-align: center;
 }

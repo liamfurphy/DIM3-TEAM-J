@@ -26,7 +26,6 @@ def build_course_list_for_api(courses):
     return results
 
 
-
 def clean_passwords(self):
     password1 = self.cleaned_data.get('password')
     password2 = self.cleaned_data.get('conf_password')

@@ -9,7 +9,9 @@
                 {{ course.lecturer }} <br/>
                 <a href="/summary/uni/{{course.uni.id}}/" class="unilink">{{ course.uni }}</a>
             </div>
-            <div class="rating col-sm-3 col-lg-2 clearfix">{% if course.average_overall != None %}{{ course.average_overall|floatformat }}{% else %}N/A {% endif %}</div>
+            <div class="rating col-sm-3 col-lg-2 clearfix">{% if course.average_overall != None %}{{
+                course.average_overall|floatformat }}{% else %}N/A {% endif %}
+            </div>
         </li>
         {% endfor %}
 

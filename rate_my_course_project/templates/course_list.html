@@ -1,35 +1,40 @@
-{% if courses %}
-<div class="panel panel-primary">
-<div id= "uni_header" class="panel-heading">
+<div id="courseAccordion">
+    {% if courses %}
+
+    <div class="panel panel-primary">
+        <div id="uni_header" class="panel-heading">
 <span class="panel-title">
 <div>
-	Select a Course..
+    <a data-toggle="collapse" data-parent="#courseAccordion" href="#c_list">
+        Select a Course
+    </a>
 </div>
 </span>
-</div>
+        </div>
 
-	<ul id = "c_list" class="list-group indexpanel">
-	{% for c in courses %}
-		<li class="list-group-item course clearfix">
-			<div class="vertical-align">
-			
-			<span id = "course_name" class = "list_item">{{c}}</span>
-			<h4><a href = "/summary/course/{{c.id}}/"><span class="glyphicon glyphicon-info-sign pull-right"></span></a></h4>
-			</div>
-		</li>
-	{% endfor %}
-	</ul>
-</div>
+        <ul id="c_list" class="list-group indexpanel collapse in">
+            {% for c in courses %}
+            <li class="list-group-item course clearfix">
+                <div class="vertical-align">
 
-{% else %}
+                    <span id="course_name" class="list_item col-xs-8">{{c}}</span>
+                    <button class="btn btn-primary col-xs-4" val="/summary/course/{{c.id}}/"> Full Summary</button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<ul class="list-group indexpanel">
-<div class="panel panel-primary">
-<div class="panel-heading"><h1 class="panel-title">Select a Course..</h1></div>
-		<li class="list-group-item course clearfix">
-			<div class="details col-xs-10 col-sm-9 col-lg-10">
-			<h3>The university has no courses</h3>
-			</div>
-		</li>
+    {% else %}
+
+    <ul class="list-group indexpanel">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h1 class="panel-title">Select a Course</h1></div>
+            <li class="list-group-item course clearfix">
+                <div class="details col-xs-10 col-sm-9 col-lg-10">
+                    <h3>This university has no courses.</h3>
+                </div>
+            </li>
+        </div>
+        {% endif %}
 </div>
-{% endif %}

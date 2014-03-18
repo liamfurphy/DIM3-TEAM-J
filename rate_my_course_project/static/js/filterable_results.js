@@ -66,14 +66,14 @@ function loadResults() {
                 console.log(nullshow);
                 console.log(value);
 
-                if((show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10)) || value != 0 ){
+                if ((show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10)) || value != 0) {
                     nullshow = false;
                 }
 
             }
 
 
-            if (show === true || nullshow ==true) {
+            if (show === true || nullshow == true) {
                 match++;
                 $(".results").append('<li class="list-group-item course clearfix">' +
                     '<div class="details col-xs-12 col-sm-4">' +

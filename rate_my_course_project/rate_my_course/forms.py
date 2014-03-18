@@ -26,7 +26,8 @@ class RatingForm(forms.ModelForm):
                               max_length=200,
                               help_text="Comments",
                               widget=forms.Textarea(
-                              attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Enter comments about the course'}))
+                                  attrs={'rows': 5, 'class': 'form-control',
+                                         'placeholder': 'Enter comments about the course'}))
 
     overall_rating = forms.ChoiceField(help_text="Overall Rating",
                                        choices=[(str(x), str(x)) for x in range(1, 11)],
@@ -81,7 +82,8 @@ class CourseForm(forms.ModelForm):
                                   help_text="Course Description",
                                   widget=forms.Textarea(attrs={'rows': '4', "class": "form-control"}))
 
-    year_of_degree = forms.IntegerField(help_text="Year of Degree", widget=forms.TextInput(attrs={"class": "form-control"}))
+    year_of_degree = forms.IntegerField(help_text="Year of Degree",
+                                        widget=forms.TextInput(attrs={"class": "form-control"}))
 
     uni = forms.ModelChoiceField(queryset=University.objects.all(),
                                  help_text="University",

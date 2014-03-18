@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-                {% load static %}
+{% load static %}
 {% block title %}Confirmation{% endblock %}
 
 {% block head %}
@@ -18,7 +18,8 @@
     {% endif %}
     {% else %}
     <h2>Confirmation Unsuccessful!</h2><br>
-    Please try again, or alternatively we can resend a confirmation email for {{username}} if you click <a href="#" id="reset"
+    Please try again, or alternatively we can resend a confirmation email for {{username}} if you click <a href="#"
+                                                                                                           id="reset"
                                                                                                            val="{{username}}">here.</a>
     {% endif %}
 </div>

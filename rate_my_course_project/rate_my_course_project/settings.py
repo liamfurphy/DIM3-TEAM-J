@@ -16,10 +16,10 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': DATABASE_PATH,
-        }                     # Set to empty string for default. Not used with sqlite3.
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': DATABASE_PATH,
+    }                     # Set to empty string for default. Not used with sqlite3.
 
 }
 
@@ -119,6 +119,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'rate_my_course.context_processors.can_add_course',
+    'rate_my_course.context_processors.email_is_verified',
     'django.contrib.auth.context_processors.auth',
 
 )

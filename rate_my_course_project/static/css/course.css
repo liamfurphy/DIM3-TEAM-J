@@ -1,26 +1,30 @@
-.panel-body{
+.panel-body {
     font-weight: bold;
 }
-.ratingbreakdown{
-        font-weight: normal;
-    color: #285e8e;
-    display: inline-block;
-}
-.bluetext{
+
+.ratingbreakdown {
     font-weight: normal;
     color: #285e8e;
     display: inline-block;
 }
-.input-group-addon{
-    min-width:145px;
+
+.bluetext {
+    font-weight: normal;
+    color: #285e8e;
+    display: inline-block;
 }
-h2{
+
+.input-group-addon {
+    min-width: 145px;
+}
+
+h2 {
     margin-top: -10px;
     margin-bottom: 40px;
     font-weight: bolder;
     color: #285e8e;
 }
 
-.ratingcomment{
+.ratingcomment {
     font-style: italic;
 }

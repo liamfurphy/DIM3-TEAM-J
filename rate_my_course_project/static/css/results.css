@@ -3,22 +3,22 @@
     text-align: center;
 }
 
-@media(min-width: 992px){
-.filters {
-    max-width:300px;
-}
+@media (min-width: 992px) {
+    .filters {
+        max-width: 300px;
+    }
 }
 
-.filter-heading{
+.filter-heading {
     color: #428bca;
     font-weight: bold;
 }
 
-.btn-group{
+.btn-group {
     margin-bottom: 5px;
 }
 
-#sliders > label{
-    margin-top:10px;
+#sliders > label {
+    margin-top: 10px;
     margin-bottom: 5px;
 }
