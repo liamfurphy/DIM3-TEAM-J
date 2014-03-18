@@ -200,16 +200,24 @@ def user_login(request):
 
 @login_required
 def profile(request):
+    
+    context_dict = {}
+    user = User.objects.get(pk=request.user.id)
     if request.method == 'POST':
-        if 'save' in request.POST:
-            user = User.objects.get(pk=request.user.id)
-            user.user = request.POST.get('username')
-            user.email= request.POST.get('email')
-            user.set_password(form.clean_passwords())
+            
+            user.username = request.POST['username']
+            user.email= request.POST['email']
+            password1 = request.POST['password']
+            password2 = request.POST['conf_password']
+            if password1 == password2:
+                user.set_password('password')
+            else:
+                print "Passwords Not match: {0}, {1}".format(password1,password2)
+                context_dict['Not_matched'] = True
+                return render_to_response('profile.html', context_dict, context_instance=RequestContext(request))
+            
             user.save()
-            
-            
-            return HttpResponseRedirect('/view_profile/') 
+            return HttpResponseRedirect('/profile/') 
 
     user_profile = request.user.get_profile()
     return render_to_response('profile.html',

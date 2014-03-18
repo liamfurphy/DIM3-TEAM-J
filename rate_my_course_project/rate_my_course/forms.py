@@ -33,16 +33,7 @@ class RatingForm(forms.ModelForm):
             'materials_rating',
             'satisfaction_rating',
             'comment']
-
-def clean_passwords(self):
-    password1 = self.cleaned_data.get('password')
-    password2 = self.cleaned_data.get('conf_password')
-
-    if not password2:
-        raise forms.ValidationError("You must confirm your password")
-    if password1 != password2:
-        raise forms.ValidationError("Your passwords do not match")
-    return password2            
+      
             
 
 class UserForm(forms.ModelForm):
