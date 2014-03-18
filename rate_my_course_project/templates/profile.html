@@ -6,8 +6,11 @@
 
 <form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/profile/"
                 enctype="multipart/form-data">
-    
+    {% if Not_matched %}
+    <p style="color:red;"><strong>Passwords don't match</strong></p>
+    {% endif %}
    {% csrf_token %}
+   
 
     <div class="col-xs-12">
         <h2>Account Details</h2>
@@ -20,7 +23,7 @@
       <span class="input-group-addon">Last Name</span><label type="text" class="form-control" name="last_name">{{user.last_name}}</label></div>
     <br/>
      <div class="input-group">
-      <span class="input-group-addon" for="inputSuccess3">Username</span><input type="text" class="form-control" name="username" value={{user.profile}} size="50"/></div>
+      <span class="input-group-addon" for="inputSuccess3">Username</span><input type="text" class="form-control" name="username" value={{user.username}} size="50"/></div>
     <br/>
 	 <div class="input-group">
   <span class="input-group-addon">email</span> <input type="text" class="form-control" name="email" value={{user.email}} size="50"/></div>
