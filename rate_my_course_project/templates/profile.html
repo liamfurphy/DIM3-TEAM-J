@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
+        {% load static %}
 
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+        {% block head %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" media="screen"/>
+{% endblock %}
+
 
 <form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/profile/"
                 enctype="multipart/form-data">
@@ -26,7 +32,7 @@
       <span class="input-group-addon" for="inputSuccess3">Username</span><input type="text" class="form-control" name="username" value={{user.username}} size="50"/></div>
     <br/>
 	 <div class="input-group">
-  <span class="input-group-addon">email</span> <input type="text" class="form-control" name="email" value={{user.email}} size="50"/></div>
+  <span class="input-group-addon">Email</span> <input type="text" class="form-control" name="email" value={{user.email}} size="50"/></div>
     <br/>
 	<div class="input-group">
   <span class="input-group-addon">New Password</span> <input class="form-control" placeholder="Password" type="password" name="password" value="" size="50"/></div>

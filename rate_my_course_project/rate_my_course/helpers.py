@@ -1,5 +1,9 @@
-__author__ = 'liamfurphy'
+from django import forms
+from django.conf import settings
+from django.core.mail import send_mail
 
+
+#helper for building a dict of course info to return as json
 def build_course_list_for_api(courses):
     results = []
     for r in courses:
@@ -20,3 +24,25 @@ def build_course_list_for_api(courses):
             "uni_id": r.uni.id}
         results.append(o)
     return results
+
+
+
+def clean_passwords(self):
+    password1 = self.cleaned_data.get('password')
+    password2 = self.cleaned_data.get('conf_password')
+
+    if not password2:
+        raise forms.ValidationError("You must confirm your password")
+    if password1 != password2:
+        raise forms.ValidationError("Your passwords do not match")
+    return password2
+
+
+#helper to send verification emails
+def send_registration_confirmation(request, user):
+    title = "RateMyCourse Account Verification"
+    content = "Hi, \nplease follow the following links to verify your email and be able to rate courses with RateMyCourse! \n\n" + \
+              "http://" + request.get_host() + "/confirm/" + str(
+        user.confirmation_code) + "/" + user.user.username + "\n\n" + \
+              "Thanks, \n RateMyCourse Team."
+    send_mail(title, content, settings.EMAIL_HOST_USER, [user.user.email], fail_silently=False)

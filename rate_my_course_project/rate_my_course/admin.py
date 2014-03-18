@@ -7,12 +7,15 @@ from models import *
 class UserInline(admin.StackedInline):
     model = UserProfile
 
+
 class UserProfileAdmin(UserAdmin):
     inlines = [UserInline]
+
 
 class UniversityAdmin(admin.ModelAdmin):
     list_display = ('name', 'email_domain')
     search_fields = ['name', 'email_domain', 'country', 'city']
+
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('course_code', 'course_name', 'lecturer', 'uni')
@@ -23,13 +26,16 @@ class LecturerAdmin(admin.ModelAdmin):
     list_display = ('title', 'name', 'email')
     search_fields = ['name', 'email']
 
+
 class RatingAdmin(admin.ModelAdmin):
     list_display = ('id', 'course', 'user', 'date')
     search_fields = ['course', 'user']
     list_filter = ['date']
 
+
 class SearchAdmin(admin.ModelAdmin):
     list_display = ['search', 'hits']
+
 
 admin.site.register(University, UniversityAdmin)
 admin.site.register(Course, CourseAdmin)

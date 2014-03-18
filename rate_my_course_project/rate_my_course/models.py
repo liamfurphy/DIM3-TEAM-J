@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class University(models.Model):
     name = models.CharField(max_length=200)
     email_domain = models.CharField(max_length=50)
@@ -14,27 +15,28 @@ class University(models.Model):
     class Meta:
         verbose_name_plural = "Universities"
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     is_email_verified = models.BooleanField(default=False)
     confirmation_code = models.CharField(max_length=200)
 
-	
+
     def __unicode__(self):
         return self.user.username
-		
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 
 class Lecturer(models.Model):
-    title = models.CharField(max_length=10,null=True)
+    title = models.CharField(max_length=10, null=True)
     name = models.CharField(max_length=128)
     email = models.EmailField(null=True, blank=True)
     department = models.CharField(max_length=128, null=True, blank=True)
     uni = models.ForeignKey(University)
+
     def __unicode__(self):
         return "{0}. {1}".format(self.title, self.name)
+
 
 class Course(models.Model):
     course_code = models.CharField(max_length=30)

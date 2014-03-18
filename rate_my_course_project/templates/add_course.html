@@ -2,30 +2,26 @@
 {% load static %}
 {% block head %}
 <script type="text/javascript" src="{% static 'js/add_course.js' %}"></script>
-<!--<link rel="stylesheet" type="text/css" href="{% static '' %}" media="screen"/> -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/add-course.css' %}" media="screen"/>
 {% endblock %}
 {% block title %}Add New Course{% endblock %}
 {% block content %}
-
-<div class=" container col-xs-12 col-md-4 col-offset-1">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Add a New Course</div>
-        <div class="post-rating panel-body col-xs-12 col-lg-10">
-            {% if user.is_authenticated %}
-            <form id="course_form" method="post" action="/api/add_course/">
-            {% csrf_token %}
-            {% for field in form.visible_fields %}
-                {{ field.help_text}}
-                {{ field }}<br/>
-            {% endfor %}
-            <p><span style="color:#ff0000">Mandatory fields are marked with a *</span></p>
-            <input type="submit" value="Add Course" />
-        </form>
-            {% else %}
-            <a href="/register/">Register Here</a><br />
-            <a href="/login/?next={{ request.path}}">Login</a><br />
-            {% endif %}
+        <div class=" col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+            <h2>Add a new course</h2>
         </div>
-    </div>
-</div>
+         <form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/api/add_course/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {% for field in form.visible_fields %}
+                    <div class="input-group">
+                        <span class="input-group-addon">{{field.help_text}}</span>{{field}}
+                    </div>
+                    <br/>
+                    {% endfor %}
+
+			<button class="btn btn-primary col-xs-12" type="submit">Add Course</button>
+        </form>
+
 {% endblock %}
