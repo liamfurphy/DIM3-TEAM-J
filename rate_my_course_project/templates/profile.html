@@ -1,62 +1,46 @@
 {% extends 'base.html' %}
-{% load static %}
+        {% load static %}
 
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-{% block head %}
+        {% block head %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" media="screen"/>
 {% endblock %}
 
 
-<form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post"
-      role="form" action="/profile/"
-      enctype="multipart/form-data">
+<form class="form-inline col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" method="post" role="form" action="/profile/"
+                enctype="multipart/form-data">
     {% if Not_matched %}
     <p style="color:red;"><strong>Passwords don't match</strong></p>
     {% endif %}
-    {% csrf_token %}
+   {% csrf_token %}
 
 
     <div class="col-xs-12">
         <h2>Account Details</h2>
-        <br/>
+		<br/>
     </div>
     <div class="input-group">
-        <span class="input-group-addon">First Name</span><label type="text" class="form-control" name="first_name">{{user.first_name}}</label>
-    </div>
+      <span class="input-group-addon">First Name</span><label type="text" class="form-control" name="first_name">{{user.first_name}}</label></div>
     <br/>
-
     <div class="input-group">
-        <span class="input-group-addon">Last Name</span><label type="text" class="form-control" name="last_name">{{user.last_name}}</label>
-    </div>
+      <span class="input-group-addon">Last Name</span><label type="text" class="form-control" name="last_name">{{user.last_name}}</label></div>
     <br/>
-
-    <div class="input-group">
-        <span class="input-group-addon" for="inputSuccess3">Username</span><input type="text" class="form-control"
-                                                                                  name="username"
-                                                                                  value={{user.username}} size="50"/>
-    </div>
+     <div class="input-group">
+      <span class="input-group-addon" for="inputSuccess3">Username</span><input type="text" class="form-control" name="username" value={{user.username}} size="50"/></div>
     <br/>
-
-    <div class="input-group">
-        <span class="input-group-addon">Email</span> <input type="text" class="form-control" name="email"
-                                                            value={{user.email}} size="50"/></div>
+	 <div class="input-group">
+  <span class="input-group-addon">Email</span> <input type="text" class="form-control" name="email" value={{user.email}} size="50"/></div>
     <br/>
-
-    <div class="input-group">
-        <span class="input-group-addon">New Password</span> <input class="form-control" placeholder="Password"
-                                                                   type="password" name="password" value="" size="50"/>
-    </div>
-    <br/>
-
-    <div class="input-group">
-        <span class="input-group-addon">Confirm Password</span> <input class="form-control" placeholder="Password"
-                                                                       type="password" name="conf_password" value=""
-                                                                       size="50"/></div>
+	<div class="input-group">
+  <span class="input-group-addon">New Password</span> <input class="form-control" placeholder="Password" type="password" name="password" value="" size="50"/></div>
+  <br/>
+	<div class="input-group">
+  <span class="input-group-addon">Confirm Password</span> <input class="form-control" placeholder="Password" type="password" name="conf_password" value="" size="50"/></div>
     <br/>
     <button class="btn btn-primary col-xs-12" type="save">Save</button>
-</form>
+  </form>
 
 {% endblock %}

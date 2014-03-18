@@ -81,31 +81,31 @@
             <div class="panel-heading">Post New Rating</div>
             <div class="post-rating panel-body" id="rating_panel">
                 {% if user.is_authenticated %}
-                {% if not user_email_verified %}
+                    {% if not user_email_verified %}
                 <span id="verify">Please verify your email to submit ratings. Check your email for your verification link.</span>
 
-                {% elif submitted %}
-                <span id="submitted">You have already submitted rating for this course</span>
-                {% else %}
-                <form class="form-inline col-xs-12" id="ratingform"
-                      method="post" role="form">
-                    {% csrf_token %}
+                    {% elif submitted %}
+                        <span id="submitted">You have already submitted rating for this course</span>
+                    {% else %}
+                        <form class="form-inline col-xs-12" id="ratingform"
+                              method="post" role="form">
+                            {% csrf_token %}
 
-                    {% for field in form.visible_fields %}
-                    <div class="input-group">
-                        <span class="input-group-addon">{{field.help_text}}</span>{{field}}
-                    </div>
-                    <br/>
-                    {% endfor %}
+                            {% for field in form.visible_fields %}
+                            <div class="input-group">
+                                <span class="input-group-addon">{{field.help_text}}</span>{{field}}
+                            </div>
+                            <br/>
+                            {% endfor %}
 
-                    <br/>
-                    <button class="btn btn-primary col-xs-12" type="button" id="submitbtn" val="{{c.id}}">Submit
-                    </button>
-                </form>
-                {% endif %}
+                            <br/>
+                            <button class="btn btn-primary col-xs-12" type="button" id="submitbtn" val="{{c.id}}">Submit
+                            </button>
+                        </form>
+                    {% endif %}
                 {% else %}
-                <a href="/register/">Register Here</a><br/>
-                <a href="/login/?next={{ request.path}}">Login</a><br/>
+                    <a href="/register/">Register Here</a><br/>
+                    <a href="/login/?next={{ request.path}}">Login</a><br/>
                 {% endif %}
             </div>
         </div>
@@ -114,28 +114,27 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Ratings</div>
             <ul class="list-group" id="ratings">
-                {% if ratings.length > 0 %}
-                {% for rating in ratings %}
-                <li class="list-group-item clearfix">
-                    <div class="details col-xs-12 col-md-6">
-                        {{rating.user.user.username}}
-                    </div>
-                    <div class="col-xs-12 col-md-6 ratingbreakdown">Overall: {{rating.overall_rating}}
-                        Difficulty: {{rating.difficulty_rating}} Teaching: {{rating.teaching_rating}} Materials:
-                        {{rating.teaching_rating}} Satisfaction: {{rating.satisfaction_rating}}
-                    </div>
+             {% if ratings.length > 0 %}
+            {% for rating in ratings %}
+            <li class="list-group-item clearfix">
+                <div class="details col-xs-12 col-md-6">
+                    {{rating.user.user.username}}
+                </div>
+                <div class="col-xs-12 col-md-6 ratingbreakdown">Overall: {{rating.overall_rating}}
+                    Difficulty: {{rating.difficulty_rating}} Teaching: {{rating.teaching_rating}} Materials: {{rating.teaching_rating}} Satisfaction: {{rating.satisfaction_rating}}
+                </div>
 
-                    <div class="col-xs-12 ratingcomment">"{{rating.comment}}"</div>
-                </li>
-                {% endfor %}
+                <div class="col-xs-12 ratingcomment">"{{rating.comment}}"</div>
+            </li>
+            {% endfor %}
                 {% else %}
                 <li class="list-group-item clearfix">
-                    No Ratings.
-                </li>
+                No Ratings.
+            </li>
                 {% endif %}
 
-            </ul>
+        </ul>
 
-        </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
