@@ -290,7 +290,6 @@ def api_get_top(request, amount):
 
 #add a rating for courseID
 def api_add_rating(request, course_id):
-    context = RequestContext(request)
     if request.method == 'POST':
         form = RatingForm(request.POST)
         results = []
@@ -361,18 +360,18 @@ def api_add_course(request):
         if form.is_valid():
             c = form.save(commit=False)
 
-            if int(request.POST["lecturer"]) == -1:
+            if int(request.POST["lecturer_id"]) == -1:
 
-                lec = Lecturer(title=request.POST["lecturer_title"],
-                               name=request.POST["lecturer_name"],
-                               department=request.POST["lecturer_dept"],
-                               email=request.POST["lecturer_email"],
-                               uni=University.objects.get(id=int(request.POST["uni"])))
+                lec = Lecturer.objects.get_or_create(title=request.POST["lecturer_title"],
+                                                     name=request.POST["lecturer_name"],
+                                                     department=request.POST["lecturer_dept"],
+                                                     email=request.POST["lecturer_email"],
+                                                     uni=University.objects.get(id=int(request.POST["uni"])))[0]
                 lec.save()
                 c.lecturer = lec
 
             else:
-                c.lecturer = form.lecturer
+                c.lecturer = Lecturer(id=int(form.data["lecturer_id"]))
             c.save()
 
             return course(request, c.id)
