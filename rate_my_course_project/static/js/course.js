@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $("#submitbtn").click(function () {
         var username;
+        var comment = $('#id_comment').val();
         $.post('/api/rating/' + $('#submitbtn').attr("val") + "/", $('#ratingform').serialize(), function (d) {
             var data = d[0].data;
             //[{"data": {"ratings": 9, "overall": 1, "satisfaction": 1, "difficulty": 1, "materials": 1, "teaching": 1}}]
@@ -12,7 +13,7 @@ $(document).ready(function () {
             $("#average_teaching").html((data.teaching).toFixed(1));
             console.log(data);
             username = data.username;
-
+            $("#norating").remove();
             $("#ratings").append("<li class=\"list-group-item clearfix\">" +
                 "<div class=\"details col-xs-12 col-md-6\">" + username + "</div>" +
                 "<div class=\"col-xs-12 col-md-6 ratingbreakdown\">" +
@@ -22,7 +23,7 @@ $(document).ready(function () {
                 " Materials: " + $('#id_materials_rating').find(":selected").text() +
                 " Satisfaction: " + $('#id_satisfaction_rating').find(":selected").text() +
                 "</div>" +
-                "<div class=\"col-xs-12 ratingcomment\">\"" + $('#id_comment').text() + "\"</div>" +
+                "<div class=\"col-xs-12 ratingcomment\">\"" + comment + "\"</div>" +
                 "</li>");
             $("#rating_panel").html("<span id=\"submitted\">You have already submitted rating for this course</span>");
             alert("Rating added!");

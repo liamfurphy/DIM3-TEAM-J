@@ -114,7 +114,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Ratings</div>
             <ul class="list-group" id="ratings">
-             {% if ratings.length > 0 %}
+             {% if ratings|length > 0 %}
             {% for rating in ratings %}
             <li class="list-group-item clearfix">
                 <div class="details col-xs-12 col-md-6">
@@ -128,7 +128,7 @@
             </li>
             {% endfor %}
                 {% else %}
-                <li class="list-group-item clearfix">
+                <li class="list-group-item clearfix" id="norating">
                 No Ratings.
             </li>
                 {% endif %}

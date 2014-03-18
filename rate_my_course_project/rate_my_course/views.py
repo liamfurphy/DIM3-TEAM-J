@@ -345,7 +345,6 @@ def api_add_rating(request, course_id):
             errors = {"errors": form.errors
             }
             results.append(errors)
-        print "Going to return"
         return HttpResponse(json.dumps(results), content_type="application/json")
 
     else:
