@@ -12,7 +12,7 @@ $(document).ready(function () {
     })
 
     $(".uni").click(function () {
-        uni = $(this).find("#uni_name").text();
+        uni = $(this).find("#uni_id").text();
         $(".uni").removeClass("light_blue");
         $("#final_list").fadeOut();
         $(this).addClass("light_blue");
@@ -27,7 +27,7 @@ $(document).ready(function () {
                 $("#course_header").click(function () {
                     $("#c_list").removeClass("hidden-xs");
                 });
-                course = $(this).find("#course_name").text();
+                course = $(this).find("#course_id").text();
                 $(".course").removeClass("light_blue");
                 $(this).addClass("light_blue");
 

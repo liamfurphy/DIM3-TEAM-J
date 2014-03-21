@@ -19,15 +19,6 @@ import string
 import random
 import json
 
-
-def encode_url(url):
-    return url.replace(" ", "_")
-
-
-def decode_url(url):
-    return url.replace("_", " ")
-
-
 # FRONTEND VIEWS
 def index(request):
     context = RequestContext(request)
@@ -220,6 +211,15 @@ def uni(request, uni_id):
 
     return render_to_response('uni.html', locals(), context)
 
+def browse(request):
+    # Get the context of the HTTP
+    context = RequestContext(request)
+    # Ger all the univeristies list for choosing
+    Universities = University.objects.all()
+    for univ in Universities:
+        univ.course_num = len(Course.objects.all().filter(uni=univ))
+    return render_to_response("browse.html", locals(), context)
+
 #page for course adding
 def add_course(request):
     context = RequestContext(request)
@@ -385,50 +385,23 @@ def api_resend_confirmation(request, username):
     return HttpResponse("Resent!")
 
 
-def browse(request):
-    # Get the context of the HTTP
-    context = RequestContext(request)
-    # Ger all the univeristies list for choosing
-    Universities = University.objects.all()
-    for univ in Universities:
-        univ.url = encode_url(univ.name)
-        univ.course_num = len(Course.objects.all().filter(uni=univ))
-    return render_to_response("browse.html", locals(), context)
-
-
 def get_uni_courses(request):
     context = RequestContext(request)
-    uni_name = request.GET['university']
-    uniID = University.objects.get(name=uni_name)
-    courses = Course.objects.all().filter(uni=uniID)
-    for course in courses:
-        course.url = encode_url(course.course_name)
+    uniID = int(request.GET['university'])
+    uni = University.objects.get(id=uniID)
+    courses = Course.objects.all().filter(uni=uni)
     return render_to_response('course_list.html', locals(), context)
 
 
 def get_course_instances(request):
     context = RequestContext(request)
-    c_name = request.GET['course']
-    uni_name = request.GET['university']
-    university = University.objects.get(name=uni_name)
-    courseID = Course.objects.get(course_name=c_name)
+    cid = int(request.GET['course'])
+    uid = int(request.GET['university'])
+    university = University.objects.get(id=uid)
+    courseID = Course.objects.get(id=cid)
     c = Course.objects.get(course_name=courseID, uni=university)
-    c.course_name = encode_url(c_name)
     top_good_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course=courseID).order_by(
         '-overall_rating')[:3]
     top_worst_reviews = Rating.objects.all().filter(overall_rating__isnull=False, course=courseID).order_by(
         'overall_rating')[:3]
     return render_to_response('final_list.html', locals(), context)
-
-
-def get_lec_choices(uni):
-    choices = []
-    m = Lecturer.objects.all().filter(uni=uni)
-    for l in m:
-        choices.append((l.id, l.name))
-
-    choices.append((-1, "New Lecturer"))
-    return choices
-
-
-

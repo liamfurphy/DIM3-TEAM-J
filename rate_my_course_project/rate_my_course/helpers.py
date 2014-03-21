@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.core.mail import send_mail
-
+from models import *
 
 #helper for building a dict of course info to return as json
 def build_course_list_for_api(courses):
@@ -45,3 +45,16 @@ def send_registration_confirmation(request, user):
         user.confirmation_code) + "/" + user.user.username + "\n\n" + \
               "Thanks, \n RateMyCourse Team."
     send_mail(title, content, settings.EMAIL_HOST_USER, [user.user.email], fail_silently=False)
+
+# get all the lectuers for a university
+def get_lec_choices(uni):
+    choices = []
+    m = Lecturer.objects.all().filter(uni=uni)
+    for l in m:
+        choices.append((l.id, l.name))
+
+    choices.append((-1, "New Lecturer"))
+    return choices
+
+
+

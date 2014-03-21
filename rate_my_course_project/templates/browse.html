@@ -25,6 +25,7 @@
                 <ul id="uni_list" class="list-group indexpanel collapse in">
                     {% for uni in Universities %}
                         <li class="list-group-item uni clearfix">
+                            <span id="uni_id" class="hidden">{{uni.id}}</span>
                             <span id="uni_name" class="list_item col-xs-8">{{uni.name}}</span>
                             <button class="btn btn-primary col-xs-4" val="/summary/uni/{{uni.id}}/">Summary</button>
                         </li>
