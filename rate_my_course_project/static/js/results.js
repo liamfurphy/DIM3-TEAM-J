@@ -1,3 +1,7 @@
+/* Function to get the value of a URL parameter from the window,
+   needed here to pass the search parameter to the API URL
+ */
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');

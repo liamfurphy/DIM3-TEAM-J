@@ -1,8 +1,9 @@
 var courses;
-var show = "average_overall";
+var show = "average_overall";/*which graph are we showing? */
 google.load("visualization", "1", {packages: ["corechart"]});
-google.setOnLoadCallback(googleDone);
-function googleDone() {
+google.setOnLoadCallback(googleToolkitLoaded);
+
+function googleToolkitLoaded() {
     $(document).ready(function () {
 
         $(window).resize(function () {
@@ -12,7 +13,7 @@ function googleDone() {
         $(".dropdown-menu li a").click(function () {
             show = $(this).attr("val");
             $(this).closest(".btn-group").children().first().text($(this).text());
-            $(this).closest(".btn-group").children().first().append('   <span class="caret"></span>');
+            $(this).closest(".btn-group").children().first().append('<span class="caret"></span>');
             loadGraph();
         });
 

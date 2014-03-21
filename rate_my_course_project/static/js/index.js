@@ -1,7 +1,5 @@
 var since;
 $(document).ready(function () {
-
-
     $.get("/api/latest/", function (data) {
         parse_data(data);
     });
@@ -13,7 +11,8 @@ function loadSince() {
         parse_data(data);
     });
 }
-function updateTicker(data) {
+
+function updateTickerData(data) {
     $("#ticker-form").append("            <ul id=\"js-news\" class=\"js-hidden\"></ul>");
     for (var i = 0; i < data.length; i++) {
         var x = data[i];
@@ -25,13 +24,10 @@ function updateTicker(data) {
 function parse_data(data) {
     if (data.length > 0) {
         since = data[0].datestr;
-        updateTicker(data);
+        updateTickerData(data);
         updateticker();
-
     }
     window.setTimeout(loadSince, 15000);
-
-
 }
 
 function updateticker() {

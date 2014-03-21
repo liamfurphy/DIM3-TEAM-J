@@ -7,20 +7,21 @@ $(document).ready(function () {
     width = $(window).width();
 
     $(".btn").click(function () {
+        /* if we click a summary button, redirect */
         window.location.replace($(this).attr("val"));
     })
 
     $(".uni").click(function () {
-
         uni = $(this).find("#uni_name").text();
         $(".uni").removeClass("light_blue");
         $("#final_list").fadeOut();
         $(this).addClass("light_blue");
         $("#uni_list").addClass("hidden-xs");
-        $.get('/get_uni_courses/', {university: uni}, function (data) {
 
+        $.get('/get_uni_courses/', {university: uni}, function (data) {
             $("#course_list").html(data);
             $("#course_list").slideDown();
+
             $(".course").click(function () {
                 $("#c_list").addClass("hidden-xs");
                 $("#course_header").click(function () {
@@ -29,9 +30,11 @@ $(document).ready(function () {
                 course = $(this).find("#course_name").text();
                 $(".course").removeClass("light_blue");
                 $(this).addClass("light_blue");
+
                 $(".btn").click(function () {
                     window.location.replace($(this).attr("val"));
                 })
+
                 $.get('/get_course_instances/', {course: course, university: uni}, function (data) {
                     $("#final_list").html(data);
                     $("#final_list").slideDown();
@@ -48,6 +51,7 @@ $(document).ready(function () {
                             $("#gIcon").addClass("glyphicon-chevron-down")
                         }
                     });
+
                     $("#title_bad").click(function () {
                         $(".bcollapse").slideToggle();
                         if ($("#bIcon").hasClass("glyphicon-chevron-down")) {
@@ -59,8 +63,6 @@ $(document).ready(function () {
                             $("#bIcon").addClass("glyphicon-chevron-down")
                         }
                     });
-
-
                 });
             });
 

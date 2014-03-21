@@ -21,7 +21,6 @@ function loadResults() {
 
     if (results.length === 0) {
         $(".results").append("<li class='list-group-item noresults clearfix'>No results found.</li>")
-
         return;
     }
 
@@ -48,9 +47,8 @@ function loadResults() {
     for (var i = 0; i < results.length; i++) {
         if ((checked_lecturers.length == 0 || checked_lecturers.indexOf(results[i].lecturer) != -1) && (checked_unis.length == 0 || checked_unis.indexOf(results[i].uni) != -1)) {
             var show = true;
-            var nullshow = true;
+            var nullshow = true; /* Are we showing Null values? I.E courses with no ratings. */
             for (var key in results[i]) {
-
 
                 if (cols.indexOf(key) == -1) continue; // Skip over the N values.
                 var value = Number(results[i][key]);
@@ -65,9 +63,7 @@ function loadResults() {
                 if ((show == false && value == 0 && (column_details[key].currentmin > 1 || column_details[key].currentmax < 10)) || value != 0) {
                     nullshow = false;
                 }
-
             }
-
 
             if (show === true || nullshow == true) {
                 match++;
@@ -89,7 +85,6 @@ function loadResults() {
 
     if (match === 0) {
         $(".results").append("<li class='list-group-item noresults clearfix'>No results found.</li>")
-
         return;
     }
 }
@@ -110,6 +105,30 @@ function createChecks(attr, cid) {
 
 }
 
+function checkEvent(selector, array){
+    $(selector).each(function () {
+            $(this).change(function () {
+                if ($(this).prop("checked")) {
+                    array.push($(this).attr("id"));
+                }
+                else {
+                    array.splice($.inArray($(this).attr("id"), array), 1);
+                }
+                loadResults();
+            });
+        });
+}
+
+function resetEvent(resetSelector, checkSelector, array){
+    $(resetSelector).click(function () {
+        $(checkSelector).each(function () {
+            $(this).prop("checked", false);
+        });
+        array.length = 0;
+        loadResults();
+    });
+}
+
 $(document).ready(function () {
 
     width = $(window).width();
@@ -122,29 +141,8 @@ $(document).ready(function () {
         createChecks("uni", "uni");
         createChecks("lecturer", "lec");
 
-        $(".lecchk").each(function () {
-            $(this).change(function () {
-                if ($(this).prop("checked")) {
-                    checked_lecturers.push($(this).attr("id"));
-                }
-                else {
-                    checked_lecturers.splice($.inArray($(this).attr("id"), checked_unis), 1);
-                }
-                loadResults();
-            });
-        });
-        $(".unichk").each(function () {
-            $(this).change(function () {
-                if ($(this).prop("checked")) {
-                    checked_unis.push($(this).attr("id"));
-                }
-                else {
-                    checked_unis.splice($.inArray($(this).attr("id"), checked_unis), 1);
-                }
-                loadResults();
-            });
-        });
-
+        checkEvent(".lecchk", checked_lecturers);
+        checkEvent(".unichk", checked_unis);
 
         loadResults();
     });
@@ -158,21 +156,8 @@ $(document).ready(function () {
         loadResults();
     });
 
-    $("#lecreset").click(function () {
-        $(".lecchk").each(function () {
-            $(this).prop("checked", false);
-        });
-        checked_lecturers = [];
-        loadResults();
-    });
-
-    $("#unireset").click(function () {
-        $(".unichk").each(function () {
-            $(this).prop("checked", false);
-        });
-        checked_unis = [];
-        loadResults();
-    });
+    resetEvent("#lecreset", ".lecchk", checked_lecturers);
+    resetEvent("#unireset", ".unichk", checked_unis);
 
     $(".dropdown-menu li a").click(function () {
         var txt = $(this).text();
