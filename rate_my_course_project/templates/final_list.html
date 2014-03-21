@@ -5,54 +5,54 @@
             <div class="details col-xs-10 col-sm-9 col-lg-10">
                 <h3>Taught by: {{c.lecturer}}<br></h3>
 
-                <h4>Degree Year: {{c.year_of_degree}} <br>Overall Rating: {{c.average_overall}}<br> Number of
-                    Ratings:{{c.number_of_ratings}}</h4>
+                <h4>Degree Year: {{c.year_of_degree}} <br>
+                    Overall Rating: {{c.average_overall}}<br>
+                    Number of Ratings:{{c.number_of_ratings}}
+                </h4>
                 Difficulty Rating: {{c.average_difficulty}} <br>
                 Teaching Rating: {{c.average_teaching}} <br>
                 Materials Rating: {{c.average_materials}} <br>
                 Satisfaction Rating: {{c.average_satisfaction}} <br>
             </div>
             {% if top_good_reviews%}
-        <li class="list-group-item nopadding clearfix">
-            <ul class="list-group no-margin indexpanel">
-                <div class="details col-xs-10 col-sm-9 col-lg-10 spanned">
-                    <div id="title_good" class="panel-heading light_blue review_title "><h3>Top Reviews:
-                        <span id="gIcon" class="glyphicon glyphicon-chevron-down pull-right"> </span></h3></div>
-                    {% for r in top_good_reviews%}
-                    <li class="list-group-item gcollapse clearfix">
-                        <div class="details col-xs-10 col-sm-9 col-lg-10">
-                            <h5 class="bold">By: {{r.user}} <br>
-                                On {{r.date}} <br>
-                                Overall Rating: {{r.overall_rating}}<br></h5>
-                            Comment: {{r.comment}}
+                <li class="list-group-item nopadding clearfix">
+                    <ul class="list-group no-margin indexpanel">
+                        <div class="details col-xs-10 col-sm-9 col-lg-10 spanned">
+                            <div id="title_good" class="panel-heading light_blue review_title "><h3>Top Reviews:
+                                <span id="gIcon" class="glyphicon glyphicon-chevron-down pull-right"> </span></h3></div>
+                            {% for r in top_good_reviews%}
+                                <li class="list-group-item gcollapse clearfix">
+                                    <div class="details col-xs-10 col-sm-9 col-lg-10">
+                                        <h5 class="bold">By: {{r.user}} <br>
+                                            On {{r.date}} <br>
+                                            Overall Rating: {{r.overall_rating}}<br></h5>
+                                        Comment: {{r.comment}}
+                                    </div>
+                                </li>
+                            {% endfor %}
                         </div>
-                    </li>
-                    {% endfor %}
-                </div>
-            </ul>
-        </li>
-        {% endif %}
-        {% if top_worst_reviews %}
-        <li class="list-group-item nopadding clearfix ">
-            <ul class="list-group no-margin indexpanel">
-                <div id="title_bad" class="panel-heading light_blue review_title"><h3>Worst Reviews:
-                    <span id="bIcon" class="glyphicon glyphicon-chevron-down pull-right"> </span></h3></div>
-                {% for r in top_worst_reviews%}
-                <li class="list-group-item bcollapse  clearfix">
-                    <div class="details col-xs-10 col-sm-9 col-lg-10">
-                        <h5 class="bold">By: {{r.user}} <br>
-                            On {{r.date}} <br>
-                            Rating: {{r.overall_rating}}<br></h5>
-                        Comment: {{r.comment}}
-                    </div>
+                    </ul>
                 </li>
-                {% endfor %}
-</div>
-</ul>
-</li>
-{% endif %}
+            {% endif %}
+            {% if top_worst_reviews %}
+                <li class="list-group-item nopadding clearfix ">
+                    <ul class="list-group no-margin indexpanel">
+                        <div id="title_bad" class="panel-heading light_blue review_title"><h3>Worst Reviews:
+                            <span id="bIcon" class="glyphicon glyphicon-chevron-down pull-right"> </span></h3></div>
+                        {% for r in top_worst_reviews%}
+                            <li class="list-group-item bcollapse  clearfix">
+                                <div class="details col-xs-10 col-sm-9 col-lg-10">
+                                    <h5 class="bold">By: {{r.user}} <br>
+                                        On {{r.date}} <br>
+                                        Rating: {{r.overall_rating}}<br></h5>
+                                    Comment: {{r.comment}}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                 </li>
+            {% endif %}
 
-</li>
-
-</ul>
+        </li>
+    </ul>
 </div>

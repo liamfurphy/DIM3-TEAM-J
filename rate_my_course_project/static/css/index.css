@@ -10,7 +10,7 @@
 }
 
 @media (max-width: 992px) {
-    .popularpanel {
+    #popularpanel {
         display: None;
     }
 }

@@ -163,7 +163,7 @@ def profile(request):
             user.set_password('password')
         else:
             print "Passwords did match: {0}, {1}".format(password1, password2)
-            Not_matched = True
+            not_matched = True
             return render_to_response('profile.html', locals(), context_instance=RequestContext(request))
 
         user.save()
